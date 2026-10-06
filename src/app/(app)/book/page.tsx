@@ -1,5 +1,6 @@
 import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { blobEnabled } from "@/lib/pdf-storage";
 import { BookViewer } from "./BookViewer";
 
 export default async function BookPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
@@ -15,6 +16,8 @@ export default async function BookPage({ searchParams }: { searchParams: Promise
       pdf={pdf ? { filename: pdf.filename, size: pdf.size, lastPage: pdf.lastPage } : null}
       initialPage={Number.isInteger(requested) && requested > 0 ? requested : (pdf?.lastPage ?? 1)}
       savedPages={pageBookmarks.map((b) => Number(b.ref))}
+      storage={blobEnabled() ? "blob" : "db"}
+      userId={user.id}
     />
   );
 }

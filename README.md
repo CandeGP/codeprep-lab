@@ -132,6 +132,23 @@ docker compose cp ./content codeprep:/tmp/content
 docker compose exec codeprep npm run content:import -- --dir=/tmp/content
 ```
 
+## Desplegar en Vercel (gratis)
+
+En Vercel no hay disco persistente, así que la base va en **Turso** (SQLite en la nube) y los PDFs en **Vercel Blob** (privado). En local y en Docker no cambia nada: si no hay variables de Turso/Blob se usa el SQLite local.
+
+1. **Turso**: crea una base en [turso.tech](https://turso.tech) (elige la región `aws-us-east-1`, cerca de Vercel) y copia su URL (`libsql://...`) y un token.
+2. **Vercel**: importa el repo de GitHub. En *Settings → Environment Variables* agrega:
+   `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `ADMIN_USERNAMES` y `COOKIE_SECURE=true`.
+3. **Blob**: en el proyecto de Vercel, *Storage → Create → Blob*, acceso **Private**, y conéctalo al proyecto (agrega `BLOB_READ_WRITE_TOKEN`).
+4. **Deploy**: el script `vercel-build` aplica las migraciones en Turso (`scripts/migrate-turso.mjs`) y luego compila. Cada `git push` a `main` vuelve a desplegar.
+5. **Contenido**: desde tu PC, con la carpeta `content/`:
+   ```powershell
+   $env:TURSO_DATABASE_URL="libsql://..."; $env:TURSO_AUTH_TOKEN="..."; npm run content:import
+   ```
+6. **Admin**: entra a la URL y registra tu usuario de `ADMIN_USERNAMES` antes de compartirla.
+
+Los PDFs se suben directo del navegador a Blob y el visor los lee por rangos de ≤ 4 MB, porque las funciones de Vercel no aceptan ni devuelven más de 4.5 MB por petición.
+
 ## Stack
 
-Next.js 15 (App Router) · TypeScript · Tailwind CSS 4 · Prisma + SQLite · Anthropic SDK (structured outputs) · Monaco Editor · Pyodide · pdf.js · Fuse.js
+Next.js 15 (App Router) · TypeScript · Tailwind CSS 4 · Prisma + SQLite / Turso · Vercel Blob · Anthropic SDK (structured outputs) · Monaco Editor · Pyodide · pdf.js · Fuse.js

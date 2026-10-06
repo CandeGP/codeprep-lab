@@ -9,7 +9,7 @@
 //   flashcards/batch-NN.json    lotes de flashcards
 import fs from "node:fs";
 import path from "node:path";
-import { PrismaClient } from "@prisma/client";
+import { createPrismaClient } from "../src/lib/prisma";
 import {
   courseFileSchema,
   flashcardFileSchema,
@@ -98,7 +98,7 @@ function load(): { courses: Loaded[]; errors: string[] } {
 }
 
 async function seed(courses: Loaded[]) {
-  const db = new PrismaClient();
+  const db = createPrismaClient();
   try {
     for (const { course, questions, flashcards } of courses) {
       const { domains, topics, ...meta } = course;

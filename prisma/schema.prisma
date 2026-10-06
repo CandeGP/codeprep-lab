@@ -125,6 +125,8 @@ model PdfFile {
   size       Int
   uploadedAt DateTime @default(now())
   lastPage   Int      @default(1)
+  // URL en Vercel Blob (despliegue en Vercel); si es null los bytes están en PdfBlob
+  blobUrl    String?
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   blob       PdfBlob?
 }

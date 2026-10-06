@@ -1,26 +1,24 @@
 import { db } from "@/lib/db";
 import { apiUser } from "@/lib/auth";
+import { blobEnabled, deletePdf, servePdf } from "@/lib/pdf-storage";
 
 export const runtime = "nodejs";
 
-// Cada usuario tiene su propia copia en la base de datos; nunca se comparte entre usuarios.
+// Cada usuario tiene su propia copia; nunca se comparte entre usuarios.
 const MAX_BYTES = 200 * 1024 * 1024;
 
-/** Devuelve el PDF del usuario autenticado. */
-export async function GET() {
+/** Devuelve el PDF del usuario autenticado (admite Range: el visor lo lee por partes). */
+export async function GET(req: Request) {
   const user = await apiUser();
   if (user instanceof Response) return user;
-  const blob = await db.pdfBlob.findUnique({ where: { userId: user.id } });
-  if (!blob) return Response.json({ error: "No has cargado un PDF" }, { status: 404 });
-  return new Response(new Uint8Array(blob.data), {
-    headers: { "Content-Type": "application/pdf", "Cache-Control": "private, no-store" },
-  });
+  return servePdf(user.id, req.headers.get("range"));
 }
 
-/** Sube (o reemplaza) el PDF del usuario. */
+/** Sube (o reemplaza) el PDF del usuario a la base de datos. Con Vercel Blob se usa /api/pdf/upload. */
 export async function POST(req: Request) {
   const user = await apiUser();
   if (user instanceof Response) return user;
+  if (blobEnabled()) return Response.json({ error: "Usa la subida directa (/api/pdf/upload)" }, { status: 400 });
   const form = await req.formData().catch(() => null);
   const file = form?.get("file");
   if (!(file instanceof File)) return Response.json({ error: "Falta el archivo" }, { status: 400 });
@@ -39,6 +37,7 @@ export async function POST(req: Request) {
       size: file.size,
       uploadedAt: new Date(),
       lastPage: 1,
+      blobUrl: null,
       blob: { upsert: { create: { data: bytes }, update: { data: bytes } } },
     },
   });
@@ -56,10 +55,10 @@ export async function PATCH(req: Request) {
   return Response.json({ ok: true });
 }
 
-/** Elimina el PDF del usuario (los bytes se borran en cascada). */
+/** Elimina el PDF del usuario. */
 export async function DELETE() {
   const user = await apiUser();
   if (user instanceof Response) return user;
-  await db.pdfFile.deleteMany({ where: { userId: user.id } });
+  await deletePdf(user.id);
   return Response.json({ ok: true });
 }

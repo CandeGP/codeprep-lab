@@ -11,9 +11,34 @@ type Props = {
   pdf: { filename: string; size: number; lastPage: number } | null;
   initialPage: number;
   savedPages: number[];
+  /** "blob": sube directo a Vercel Blob; "db": sube a /api/pdf (local y Docker). */
+  storage: "blob" | "db";
+  userId: string;
 };
 
-export function BookViewer({ pdf, initialPage, savedPages }: Props) {
+const RANGE_CHUNK = 1024 * 1024;
+const MAX_REQUEST = 4 * 1024 * 1024;
+
+/** Descarga [begin, end) de /api/pdf en peticiones de hasta 4 MB. */
+async function fetchRange(begin: number, end: number): Promise<Uint8Array> {
+  const out = new Uint8Array(end - begin);
+  for (let from = begin; from < end; from += MAX_REQUEST) {
+    const to = Math.min(from + MAX_REQUEST, end);
+    const res = await fetch("/api/pdf", { headers: { Range: `bytes=${from}-${to - 1}` } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const buf = new Uint8Array(await res.arrayBuffer());
+    if (buf.length !== to - from) throw new Error("respuesta incompleta");
+    out.set(buf, from - begin);
+  }
+  return out;
+}
+
+async function postJson(url: string, body: unknown) {
+  const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `HTTP ${res.status}`);
+}
+
+export function BookViewer({ pdf, initialPage, savedPages, storage, userId }: Props) {
   const router = useRouter();
   const ai = useAiEnabled();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -36,7 +61,15 @@ export function BookViewer({ pdf, initialPage, savedPages }: Props) {
       try {
         const pdfjs = await import("pdfjs-dist");
         pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-        const loaded = await pdfjs.getDocument({ url: "/api/pdf", withCredentials: true }).promise;
+        // Se lee por rangos (≤ 4 MB por petición) para funcionar también en Vercel.
+        const transport = new pdfjs.PDFDataRangeTransport(pdf.size, null);
+        transport.requestDataRange = (begin: number, end: number) => {
+          fetchRange(begin, end)
+            .then((chunk) => transport.onDataRange(begin, chunk))
+            .catch((e) => !cancelled && setError(`No se pudo leer el PDF: ${(e as Error).message}`));
+        };
+        const loaded = await pdfjs.getDocument({ range: transport, rangeChunkSize: RANGE_CHUNK, disableAutoFetch: true })
+          .promise;
         if (!cancelled) {
           setDoc(loaded);
           setPage((p) => Math.min(Math.max(1, p), loaded.numPages));
@@ -114,12 +147,26 @@ export function BookViewer({ pdf, initialPage, savedPages }: Props) {
   async function upload(file: File) {
     setUploading(true);
     setError(null);
-    const form = new FormData();
-    form.append("file", file);
-    const res = await fetch("/api/pdf", { method: "POST", body: form });
-    setUploading(false);
-    if (!res.ok) {
-      setError((await res.json().catch(() => ({ error: "Error al subir" }))).error);
+    try {
+      if (storage === "blob") {
+        // Directo del navegador a Vercel Blob; luego se registra en la base.
+        const { upload: uploadToBlob } = await import("@vercel/blob/client");
+        const blob = await uploadToBlob(`pdf/${userId}/${file.name.replace(/[^\w.-]+/g, "_")}`, file, {
+          access: "private",
+          handleUploadUrl: "/api/pdf/upload",
+          contentType: "application/pdf",
+          multipart: file.size > 20 * 1024 * 1024,
+        });
+        await postJson("/api/pdf/commit", { url: blob.url, filename: file.name });
+      } else {
+        const form = new FormData();
+        form.append("file", file);
+        const res = await fetch("/api/pdf", { method: "POST", body: form });
+        if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? "Error al subir");
+      }
+    } catch (e) {
+      setUploading(false);
+      setError((e as Error).message);
       return;
     }
     router.refresh();
@@ -152,8 +199,8 @@ export function BookViewer({ pdf, initialPage, savedPages }: Props) {
       <div className="max-w-2xl mx-auto px-4 md:px-8 py-10">
         <h1 className="text-3xl font-bold">Mi libro (PDF)</h1>
         <p className="text-muted mt-2">
-          Carga tu propia copia del libro en PDF para leerla en pantalla junto a tus notas por página. El archivo se guarda en
-          la base de datos asociado a tu cuenta y únicamente tu usuario puede abrirlo.
+          Carga tu propia copia del libro en PDF para leerla en pantalla junto a tus notas por página. El archivo se guarda de
+          forma privada asociado a tu cuenta y únicamente tu usuario puede abrirlo.
         </p>
         <label className="card mt-6 p-10 flex flex-col items-center justify-center gap-3 border-dashed cursor-pointer hover:border-accent">
           <span className="text-4xl">▤</span>

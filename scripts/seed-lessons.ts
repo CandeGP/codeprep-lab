@@ -8,7 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { PrismaClient } from "@prisma/client";
+import { createPrismaClient } from "../src/lib/prisma";
 import { contentDir } from "./content-dir";
 
 const root = path.join(contentDir(), "lessons");
@@ -93,7 +93,7 @@ function load(): { lessons: LoadedLesson[]; errors: string[] } {
 }
 
 async function seed(lessons: LoadedLesson[]) {
-  const db = new PrismaClient();
+  const db = createPrismaClient();
   try {
     for (const l of lessons) {
       const meta = { order: l.order, title: l.title, summary: l.summary, tags: JSON.stringify(l.tags), markdown: l.markdown };
