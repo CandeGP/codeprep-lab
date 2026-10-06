@@ -90,16 +90,18 @@ export function CourseSearch({ courses, aiEnabled }: { courses: Item[]; aiEnable
       {query.trim().length >= 2 && (
         <div className="card p-5 mt-4 border-dashed">
           <div className="font-semibold">¿No está el curso que buscas?</div>
-          <p className="text-sm text-muted mt-1">
-            La IA arma la estructura oficial del examen (dominios, pesos y temas) de <b>“{query.trim()}”</b> y después
-            puedes generar preguntas y flashcards en lotes de 10.
-          </p>
+          {aiEnabled && (
+            <p className="text-sm text-muted mt-1">
+              La IA arma la estructura oficial del examen (dominios, pesos y temas) de <b>“{query.trim()}”</b> y después
+              puedes generar preguntas y flashcards en lotes de 10.
+            </p>
+          )}
           {aiEnabled ? (
             <button className="btn-primary mt-3" onClick={create} disabled={creating}>
               {creating ? "Creando curso… (puede tardar un minuto)" : "✦ Crear curso con IA"}
             </button>
           ) : (
-            <p className="text-sm text-warn mt-3">Configura ANTHROPIC_API_KEY en .env para crear cursos con IA.</p>
+            <p className="text-sm text-muted mt-3">Pídele al administrador que lo cree.</p>
           )}
           {error && <p className="text-sm text-bad mt-2">{error}</p>}
         </div>

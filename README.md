@@ -18,6 +18,12 @@ npm run dev            # http://localhost:3000
 
 Crea una cuenta en `/register`. Cada usuario tiene sus notas privadas, progreso, guardados y PDF.
 
+### Acceso y administración
+
+- Los usuarios de `ADMIN_USERNAMES` son administradores y su cuenta se aprueba sola al registrarse. **Crea tu cuenta de admin antes de compartir la URL**, para que nadie más registre ese nombre.
+- Las demás cuentas quedan **pendientes** hasta que el admin las aprueba en **Configuración → Solicitudes de acceso**. Desde ahí también puede rechazar, bloquear (cierra sus sesiones al instante) o borrar cuentas no aprobadas.
+- La **IA** (tutor y generación de cursos, preguntas y flashcards) sólo la ve y usa el admin, para controlar el gasto de la API.
+
 ### Activar la IA
 
 Edita `.env`:

@@ -18,7 +18,9 @@ const NAV = [
   { href: "/settings", label: "Configuración", icon: "⚙" },
 ];
 
-export function Sidebar({ username, dueCount, certDueCount = 0 }: { username: string; dueCount: number; certDueCount?: number }) {
+type Props = { username: string; dueCount: number; certDueCount?: number; showAsk?: boolean; pendingCount?: number };
+
+export function Sidebar({ username, dueCount, certDueCount = 0, showAsk = false, pendingCount = 0 }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -62,7 +64,7 @@ export function Sidebar({ username, dueCount, certDueCount = 0 }: { username: st
           <button className="md:hidden text-muted" onClick={() => setOpen(false)} aria-label="Cerrar">✕</button>
         </div>
         <nav className="flex-1 overflow-y-auto px-3 space-y-0.5">
-          {NAV.map((item) => (
+          {NAV.filter((item) => showAsk || item.href !== "/ask").map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -77,6 +79,11 @@ export function Sidebar({ username, dueCount, certDueCount = 0 }: { username: st
               )}
               {item.href === "/certs" && certDueCount > 0 && (
                 <span className="rounded-full bg-accent text-accent-fg text-[10px] font-bold px-1.5 py-0.5">{certDueCount}</span>
+              )}
+              {item.href === "/settings" && pendingCount > 0 && (
+                <span className="rounded-full bg-warn text-white text-[10px] font-bold px-1.5 py-0.5" title="Solicitudes de acceso">
+                  {pendingCount}
+                </span>
               )}
             </Link>
           ))}

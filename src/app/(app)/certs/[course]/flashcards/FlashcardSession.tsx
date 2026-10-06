@@ -74,7 +74,7 @@ export function FlashcardSession({
             <GeneratorStatus g={gen} label="flashcards" />
           </>
         ) : (
-          <p className="text-sm text-muted mt-1">Configura ANTHROPIC_API_KEY para generarlas con IA.</p>
+          <p className="text-sm text-muted mt-1">El administrador puede generarlas con IA.</p>
         )}
       </div>
     );

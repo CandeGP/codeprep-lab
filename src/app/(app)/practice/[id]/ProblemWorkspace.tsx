@@ -7,6 +7,7 @@ import type { Problem } from "@/lib/content";
 import { runCode, type Language, type RunOutput } from "@/lib/runner";
 import { BookmarkButton } from "@/components/BookmarkButton";
 import { ChatPanel } from "@/components/ChatPanel";
+import { useAiEnabled } from "@/components/AiContext";
 import { DifficultyChip } from "../../learn/[slug]/LessonView";
 
 const Editor = dynamic(() => import("@monaco-editor/react"), {
@@ -38,6 +39,7 @@ function readDraft(id: string, lang: Language): string | null {
 export function ProblemWorkspace({ problem, lessonTitle, descriptionHtml, solutionHtml, saved, lastSubmission }: Props) {
   const [language, setLanguage] = useState<Language>(lastSubmission?.language ?? "javascript");
   const [code, setCode] = useState<string>(lastSubmission?.code ?? problem.starter[language]);
+  const ai = useAiEnabled();
   const [tab, setTab] = useState<Tab>("description");
   const [hintsShown, setHintsShown] = useState(0);
   const [output, setOutput] = useState<RunOutput | null>(null);
@@ -120,7 +122,9 @@ export function ProblemWorkspace({ problem, lessonTitle, descriptionHtml, soluti
                 ["solution", "Solución"],
                 ["ai", "Tutor IA"],
               ] as [Tab, string][]
-            ).map(([t, label]) => (
+            )
+              .filter(([t]) => ai || t !== "ai")
+              .map(([t, label]) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}
@@ -148,7 +152,7 @@ export function ProblemWorkspace({ problem, lessonTitle, descriptionHtml, soluti
             </div>
           )}
           {tab === "solution" && <SolutionTab problem={problem} solutionHtml={solutionHtml} language={language} />}
-          {tab === "ai" && (
+          {tab === "ai" && ai && (
             <ChatPanel
               lessonSlug={problem.lessonSlug}
               focus={`Problema "${problem.title}". Mi código actual (${language}):\n${code}`}

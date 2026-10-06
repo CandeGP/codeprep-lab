@@ -44,16 +44,49 @@ export async function getUser(): Promise<SessionUser | null> {
   if (!id) return null;
   const session = await db.session.findUnique({
     where: { id },
-    include: { user: { select: { id: true, username: true, lang: true } } },
+    include: { user: { select: { id: true, username: true, lang: true, status: true } } },
   });
   if (!session || session.expiresAt < new Date()) return null;
-  return { ...session.user, lang: session.user.lang === "es" ? "es" : "en" };
+  // Si el admin bloquea la cuenta, la sesión deja de valer en la siguiente petición.
+  const { status, ...user } = session.user;
+  if (status !== "APPROVED" && !isAdminUsername(user.username)) return null;
+  return { ...user, lang: user.lang === "es" ? "es" : "en" };
+}
+
+function isAdminUsername(username: string) {
+  const admins = (process.env.ADMIN_USERNAMES ?? "").split(",").map((u) => u.trim()).filter(Boolean);
+  return admins.includes(username);
 }
 
 /** Admins definidos en ADMIN_USERNAMES (separados por coma). */
-export function isAdmin(user: SessionUser) {
-  const admins = (process.env.ADMIN_USERNAMES ?? "").split(",").map((u) => u.trim()).filter(Boolean);
-  return admins.includes(user.username);
+export function isAdmin(user: Pick<SessionUser, "username">) {
+  return isAdminUsername(user.username);
+}
+
+/** Las cuentas de ADMIN_USERNAMES no necesitan aprobación; el resto sí. */
+export function initialStatus(username: string) {
+  return isAdminUsername(username) ? "APPROVED" : "PENDING";
+}
+
+/** La IA (tutor y generación de preguntas) sólo la usa el admin, para controlar el gasto de la API. */
+export function canUseAi(user: SessionUser) {
+  return !!process.env.ANTHROPIC_API_KEY && isAdmin(user);
+}
+
+/** Para route handlers de IA: devuelve el usuario admin o una respuesta 401/403. */
+export async function apiAiUser(): Promise<SessionUser | Response> {
+  const user = await apiUser();
+  if (user instanceof Response) return user;
+  if (!isAdmin(user)) return Response.json({ error: "La IA sólo está disponible para el administrador" }, { status: 403 });
+  return user;
+}
+
+/** Para route handlers de administración. */
+export async function apiAdmin(): Promise<SessionUser | Response> {
+  const user = await apiUser();
+  if (user instanceof Response) return user;
+  if (!isAdmin(user)) return Response.json({ error: "Sólo para administradores" }, { status: 403 });
+  return user;
 }
 
 /** Para páginas: el middleware ya redirige si no hay cookie, pero la sesión puede haber expirado. */

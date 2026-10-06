@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireUser } from "@/lib/auth";
+import { canUseAi, requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { courseInsights } from "@/lib/certs/analytics";
-import { aiAvailable } from "@/lib/certs/generate";
 import { PctBar } from "@/components/certs/QuestionView";
 import { StartExamButton } from "@/components/certs/StartExam";
 import { CustomExamCard, DeleteCourseButton, FullExamCard, GenerateBankCard } from "./Launchers";
@@ -49,7 +48,7 @@ export default async function CoursePage({
     totalQuestions,
   };
   const topicList = topics.map((t) => ({ slug: t.slug, name: t.name, questions: t._count.questions }));
-  const ai = aiAvailable();
+  const ai = canUseAi(user);
   const pass = course.passingPct;
 
   return (

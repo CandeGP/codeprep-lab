@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireUser } from "@/lib/auth";
+import { canUseAi, requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { aiAvailable } from "@/lib/certs/generate";
 import { canManageBank } from "@/lib/certs/permissions";
 import { QuestionBank } from "./QuestionBank";
 
@@ -34,7 +33,7 @@ export default async function QuestionsPage({
         domains={course.domains.map((d) => ({ slug: d.slug, name: d.name }))}
         topics={course.topics.map((t) => ({ slug: t.slug, name: t.name }))}
         canManage={canManageBank(user)}
-        aiEnabled={aiAvailable()}
+        aiEnabled={canUseAi(user)}
         initialPending={pendientes === "1"}
         initialLang={user.lang}
       />

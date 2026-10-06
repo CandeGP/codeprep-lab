@@ -1,6 +1,9 @@
+import { notFound } from "next/navigation";
 import { ChatPanel } from "@/components/ChatPanel";
+import { isAdmin, requireUser } from "@/lib/auth";
 
-export default function AskPage() {
+export default async function AskPage() {
+  if (!isAdmin(await requireUser())) notFound();
   const configured = !!process.env.ANTHROPIC_API_KEY;
   return (
     <div className="max-w-3xl mx-auto px-4 md:px-8 py-6">

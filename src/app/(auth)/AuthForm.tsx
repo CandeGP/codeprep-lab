@@ -9,6 +9,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const params = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [pending, setPending] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,8 +22,13 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
       body: JSON.stringify({ username: form.get("username"), password: form.get("password") }),
     });
     setLoading(false);
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      setError((await res.json()).error ?? "Error");
+      setError(data.error ?? "Error");
+      return;
+    }
+    if (data.pending) {
+      setPending(String(form.get("username")));
       return;
     }
     const next = params.get("next");
@@ -31,6 +37,27 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   }
 
   const isLogin = mode === "login";
+
+  if (pending) {
+    return (
+      <div className="min-h-screen grid place-items-center px-4">
+        <div className="w-full max-w-sm card p-7 shadow-sm space-y-4">
+          <div>
+            <div className="text-xs font-semibold tracking-widest text-accent uppercase">CodePrep</div>
+            <h1 className="text-2xl font-bold mt-1">Solicitud enviada</h1>
+          </div>
+          <p className="text-sm">
+            La cuenta <b>{pending}</b> se creó y está <b>pendiente de aprobación</b>. Avísale al administrador; cuando la
+            apruebe podrás iniciar sesión con tu usuario y contraseña.
+          </p>
+          <Link href="/login" className="btn-primary w-full">
+            Ir a iniciar sesión
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen grid place-items-center px-4">
       <form onSubmit={onSubmit} className="w-full max-w-sm card p-7 shadow-sm space-y-4">
@@ -38,7 +65,9 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
           <div className="text-xs font-semibold tracking-widest text-accent uppercase">CodePrep</div>
           <h1 className="text-2xl font-bold mt-1">{isLogin ? "Iniciar sesión" : "Crear cuenta"}</h1>
           <p className="text-sm text-muted mt-1">
-            {isLogin ? "Continúa donde te quedaste." : "Tus notas privadas solo las verás tú."}
+            {isLogin
+              ? "Continúa donde te quedaste."
+              : "Tu cuenta quedará pendiente hasta que el administrador la apruebe."}
           </p>
         </div>
         <label className="block">

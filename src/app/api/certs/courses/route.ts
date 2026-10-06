@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { apiUser } from "@/lib/auth";
+import { apiAiUser, apiUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { aiAvailable, aiErrorMessage, generateOutline, saveCourse } from "@/lib/certs/generate";
 
@@ -20,7 +20,7 @@ const schema = z.object({ query: z.string().trim().min(2).max(120) });
 
 /** Crea un curso nuevo a partir de su nombre: la IA arma dominios, pesos y temas. */
 export async function POST(req: Request) {
-  const user = await apiUser();
+  const user = await apiAiUser();
   if (user instanceof Response) return user;
   if (!aiAvailable()) {
     return Response.json({ error: "Falta configurar ANTHROPIC_API_KEY en .env para crear cursos con IA." }, { status: 503 });

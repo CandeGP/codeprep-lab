@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { createSession, hashPassword } from "@/lib/auth";
+import { createSession, hashPassword, initialStatus } from "@/lib/auth";
 import { recordLoginEvent } from "@/lib/request-meta";
 
 const schema = z.object({
@@ -19,8 +19,11 @@ export async function POST(req: Request) {
   const { username, password } = parsed.data;
   const existing = await db.user.findUnique({ where: { username } });
   if (existing) return Response.json({ error: "Ese usuario ya existe" }, { status: 409 });
-  const user = await db.user.create({ data: { username, passwordHash: await hashPassword(password) } });
-  await createSession(user.id);
+  const status = initialStatus(username);
+  const user = await db.user.create({ data: { username, passwordHash: await hashPassword(password), status } });
   await recordLoginEvent(user.id, "REGISTER", req);
+  // Las cuentas nuevas esperan a que el admin las apruebe en Configuración.
+  if (status !== "APPROVED") return Response.json({ pending: true });
+  await createSession(user.id);
   return Response.json({ ok: true });
 }

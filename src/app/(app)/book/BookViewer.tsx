@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { PDFDocumentProxy, RenderTask } from "pdfjs-dist";
 import { NotesPanel } from "@/components/NotesPanel";
 import { ChatPanel } from "@/components/ChatPanel";
+import { useAiEnabled } from "@/components/AiContext";
 
 type Props = {
   pdf: { filename: string; size: number; lastPage: number } | null;
@@ -14,6 +15,7 @@ type Props = {
 
 export function BookViewer({ pdf, initialPage, savedPages }: Props) {
   const router = useRouter();
+  const ai = useAiEnabled();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const renderTask = useRef<RenderTask | null>(null);
@@ -198,7 +200,7 @@ export function BookViewer({ pdf, initialPage, savedPages }: Props) {
             <span className={saved.has(page) ? "text-warn" : ""}>{saved.has(page) ? "★" : "☆"}</span> Página
           </button>
           <button className="btn" onClick={() => setSide(side === "notes" ? null : "notes")}>✎ Notas</button>
-          <button className="btn" onClick={() => setSide(side === "ai" ? null : "ai")}>✦ IA</button>
+          {ai && <button className="btn" onClick={() => setSide(side === "ai" ? null : "ai")}>✦ IA</button>}
           <label className="btn cursor-pointer">
             Reemplazar
             <input type="file" accept="application/pdf" className="hidden" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
@@ -222,7 +224,7 @@ export function BookViewer({ pdf, initialPage, savedPages }: Props) {
             <button className="text-muted cursor-pointer" onClick={() => setSide(null)}>✕</button>
           </div>
           <div className="flex-1 overflow-y-auto p-4">
-            {side === "notes" ? (
+            {side === "notes" || !ai ? (
               <NotesPanel key={page} pdfPage={page} />
             ) : (
               <ChatPanel

@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireUser } from "@/lib/auth";
+import { canUseAi, requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { aiAvailable } from "@/lib/certs/generate";
 import { FlashcardSession } from "./FlashcardSession";
 
 const SESSION_NEW = 20;
@@ -94,7 +93,7 @@ export default async function FlashcardsPage({
         nextDueAt={nextDue ? new Date(nextDue).toISOString() : null}
         totalCards={cards.length}
         courseSlug={slug}
-        aiEnabled={aiAvailable()}
+        aiEnabled={canUseAi(user)}
       />
     </div>
   );

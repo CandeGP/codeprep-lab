@@ -13,6 +13,8 @@ model User {
   passwordHash  String
   // Idioma de las preguntas de certificación: "en" | "es"
   lang          String         @default("en")
+  // "PENDING" (espera aprobación del admin) | "APPROVED" | "REJECTED" (rechazado o bloqueado)
+  status        String         @default("PENDING")
   createdAt     DateTime       @default(now())
   sessions      Session[]
   notes         Note[]

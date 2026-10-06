@@ -48,3 +48,4 @@ next-env.d.ts
 /content/
 !.env.example
 /public/pdf.worker.min.mjs
+/content.zip

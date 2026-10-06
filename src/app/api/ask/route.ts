@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { apiUser } from "@/lib/auth";
+import { apiAiUser, apiUser } from "@/lib/auth";
 import { getLesson } from "@/lib/content";
 
 export const runtime = "nodejs";
@@ -26,7 +26,7 @@ Cómo enseñas:
 - Sé conciso: prefiere respuestas enfocadas antes que ensayos largos.`;
 
 export async function POST(req: Request) {
-  const user = await apiUser();
+  const user = await apiAiUser();
   if (user instanceof Response) return user;
   if (!process.env.ANTHROPIC_API_KEY) {
     return Response.json(

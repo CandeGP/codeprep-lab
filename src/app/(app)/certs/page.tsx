@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { requireUser } from "@/lib/auth";
+import { canUseAi, requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { aiAvailable } from "@/lib/certs/generate";
 import { CourseSearch } from "./CourseSearch";
 
 export const metadata = { title: "Certificaciones · CodePrep" };
@@ -79,7 +78,7 @@ export default async function CertsPage() {
         </div>
       )}
 
-      <CourseSearch courses={items} aiEnabled={aiAvailable()} />
+      <CourseSearch courses={items} aiEnabled={canUseAi(user)} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import type { Heading, QuizQuestion } from "@/lib/content";
 import { BookmarkButton } from "@/components/BookmarkButton";
 import { NotesPanel } from "@/components/NotesPanel";
 import { ChatPanel } from "@/components/ChatPanel";
+import { useAiEnabled } from "@/components/AiContext";
 import { QuizCard } from "@/components/Quiz";
 
 type Props = {
@@ -21,6 +22,7 @@ type Props = {
 type Panel = "notes" | "ai" | null;
 
 export function LessonView({ lesson, quiz, problems, completed: initialCompleted, savedRefs, prev, next }: Props) {
+  const ai = useAiEnabled();
   const [completed, setCompleted] = useState(initialCompleted);
   const [panel, setPanel] = useState<Panel>(null);
   const [focus, setFocus] = useState<string | null>(null);
@@ -115,12 +117,14 @@ export function LessonView({ lesson, quiz, problems, completed: initialCompleted
           <div className="flex flex-wrap gap-2 mt-4">
             <BookmarkButton type="LESSON" refId={lesson.slug} label={lesson.title} initial={saved.has(`LESSON:${lesson.slug}`)} />
             <button className="btn" onClick={() => setPanel(panel === "notes" ? null : "notes")}>✎ Notas</button>
-            <button className="btn" onClick={() => setPanel(panel === "ai" ? null : "ai")}>✦ Preguntar a la IA</button>
+            {ai && <button className="btn" onClick={() => setPanel(panel === "ai" ? null : "ai")}>✦ Preguntar a la IA</button>}
             <button className={`btn ${completed ? "!border-ok text-ok" : ""}`} onClick={toggleComplete}>
               {completed ? "✓ Completada" : "Marcar como completada"}
             </button>
           </div>
-          <p className="text-xs text-muted mt-3">Tip: selecciona cualquier texto para preguntarle a la IA o crear una nota sobre él.</p>
+          <p className="text-xs text-muted mt-3">
+            Tip: selecciona cualquier texto para {ai ? "preguntarle a la IA o " : ""}crear una nota sobre él.
+          </p>
 
           <div ref={contentRef} className="prose-lesson mt-6" dangerouslySetInnerHTML={{ __html: lesson.html }} />
 
@@ -167,12 +171,12 @@ export function LessonView({ lesson, quiz, problems, completed: initialCompleted
           <div className="flex items-center justify-between px-4 h-14 border-b border-border">
             <div className="inline-flex rounded-lg border border-border p-0.5 text-sm">
               <button onClick={() => setPanel("notes")} className={`px-3 py-1 rounded-md cursor-pointer ${panel === "notes" ? "bg-surface-2 font-semibold" : "text-muted"}`}>Notas</button>
-              <button onClick={() => setPanel("ai")} className={`px-3 py-1 rounded-md cursor-pointer ${panel === "ai" ? "bg-surface-2 font-semibold" : "text-muted"}`}>IA</button>
+              {ai && <button onClick={() => setPanel("ai")} className={`px-3 py-1 rounded-md cursor-pointer ${panel === "ai" ? "bg-surface-2 font-semibold" : "text-muted"}`}>IA</button>}
             </div>
             <button className="btn" onClick={() => setPanel(null)}>✕</button>
           </div>
           <div className="flex-1 overflow-y-auto p-4">
-            {panel === "notes" ? (
+            {panel === "notes" || !ai ? (
               <NotesPanel lessonSlug={lesson.slug} draftTitle={noteDraft} />
             ) : (
               <ChatPanel
@@ -193,16 +197,18 @@ export function LessonView({ lesson, quiz, problems, completed: initialCompleted
           style={{ left: selection.x, top: selection.y - 6 }}
           onMouseDown={(e) => e.preventDefault()}
         >
-          <button
-            className="btn !border-0 !text-xs"
-            onClick={() => {
-              setFocus(selection.text);
-              setPanel("ai");
-              setSelection(null);
-            }}
-          >
-            ✦ Preguntar a la IA
-          </button>
+          {ai && (
+            <button
+              className="btn !border-0 !text-xs"
+              onClick={() => {
+                setFocus(selection.text);
+                setPanel("ai");
+                setSelection(null);
+              }}
+            >
+              ✦ Preguntar a la IA
+            </button>
+          )}
           <button
             className="btn !border-0 !text-xs"
             onClick={() => {

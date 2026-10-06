@@ -2,11 +2,17 @@ import { isAdmin, requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { describeUserAgent } from "@/lib/request-meta";
 import { LangSetting } from "./LangSetting";
+import { UserActions } from "./UserActions";
 
 const fmt = (d: Date | null | undefined) =>
   d ? d.toLocaleString("es", { dateStyle: "short", timeStyle: "short" }) : "—";
 
 const KIND = { REGISTER: "Registro", LOGIN: "Inicio de sesión" } as Record<string, string>;
+
+const STATUS: Record<string, { label: string; className: string }> = {
+  PENDING: { label: "PENDIENTE", className: "bg-warn/15 text-warn" },
+  REJECTED: { label: "BLOQUEADO", className: "bg-bad/15 text-bad" },
+};
 
 type Event = { id: string; kind: string; ip: string | null; userAgent: string | null; language: string | null; createdAt: Date };
 
@@ -61,6 +67,7 @@ export default async function SettingsPage() {
         select: {
           id: true,
           username: true,
+          status: true,
           createdAt: true,
           pdf: { select: { filename: true } },
           sessions: { where: { expiresAt: { gt: new Date() } }, select: { id: true } },
@@ -69,6 +76,8 @@ export default async function SettingsPage() {
         },
       })
     : [];
+  const pending = users.filter((u) => u.status === "PENDING" && !isAdmin(u));
+  const others = users.filter((u) => !pending.includes(u));
 
   return (
     <div className="max-w-5xl mx-auto px-4 md:px-8 py-8">
@@ -93,19 +102,57 @@ export default async function SettingsPage() {
 
       {admin && (
         <section className="mt-10">
-          <h2 className="font-semibold text-lg">Usuarios registrados ({users.length})</h2>
+          <h2 className="font-semibold text-lg">Solicitudes de acceso ({pending.length})</h2>
+          <p className="text-sm text-muted mt-1">
+            Las cuentas nuevas no pueden entrar hasta que las apruebes. Si no reconoces a alguien, recházala o bórrala.
+          </p>
+          {pending.length === 0 ? (
+            <p className="text-sm text-muted mt-3">No hay solicitudes pendientes.</p>
+          ) : (
+            <div className="mt-3 space-y-2">
+              {pending.map((u) => {
+                const reg = u.loginEvents.find((e) => e.kind === "REGISTER");
+                return (
+                  <div key={u.id} className="card p-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <span className="font-semibold">{u.username}</span>
+                    <span className="text-xs text-muted">Solicitó: {fmt(u.createdAt)}</span>
+                    <span className="text-xs text-muted font-mono">{reg?.ip ?? ""}</span>
+                    <span className="text-xs text-muted">{reg ? describeUserAgent(reg.userAgent) : ""}</span>
+                    <div className="ml-auto">
+                      <UserActions userId={u.id} status={u.status} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      )}
+
+      {admin && (
+        <section className="mt-10">
+          <h2 className="font-semibold text-lg">Usuarios registrados ({others.length})</h2>
           <p className="text-sm text-muted mt-1">
             Solo lo ven los usuarios en <code>ADMIN_USERNAMES</code>. La IP y el navegador se guardan a partir de ahora en cada
             registro e inicio de sesión; los usuarios anteriores no tienen ese historial.
           </p>
           <div className="mt-3 space-y-3">
-            {users.map((u) => {
+            {others.map((u) => {
               const last = u.loginEvents[0];
               const reg = u.loginEvents.find((e) => e.kind === "REGISTER");
               return (
                 <details key={u.id} className="card p-4 group">
                   <summary className="cursor-pointer list-none flex flex-wrap items-baseline gap-x-4 gap-y-1">
                     <span className="font-semibold">{u.username}</span>
+                    {isAdmin(u) ? (
+                      <span className="rounded-full bg-accent/10 text-accent text-[10px] font-bold px-1.5 py-0.5">ADMIN</span>
+                    ) : (
+                      STATUS[u.status] && (
+                        <span className={`rounded-full text-[10px] font-bold px-1.5 py-0.5 ${STATUS[u.status].className}`}>
+                          {STATUS[u.status].label}
+                        </span>
+                      )
+                    )}
                     <span className="text-xs text-muted">Registro: {fmt(u.createdAt)}</span>
                     <span className="text-xs text-muted">Último acceso: {fmt(last?.createdAt)}</span>
                     <span className="text-xs text-muted font-mono">{last?.ip ?? ""}</span>
@@ -113,6 +160,7 @@ export default async function SettingsPage() {
                     <span className="ml-auto text-xs text-accent group-open:hidden">Ver detalles ▾</span>
                   </summary>
                   <div className="mt-3 space-y-3">
+                    {!isAdmin(u) && <UserActions userId={u.id} status={u.status} />}
                     <dl className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
                       <Stat label="Sesiones activas" value={u.sessions.length} />
                       <Stat label="Inicios de sesión" value={u._count.loginEvents} />

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { apiUser } from "@/lib/auth";
+import { apiAiUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import {
   MAX_BATCH,
@@ -27,7 +27,7 @@ const schema = z.object({
  * así ninguna petición es larga y el progreso se ve en pantalla.
  */
 export async function POST(req: Request, { params }: { params: Promise<{ slug: string }> }) {
-  const user = await apiUser();
+  const user = await apiAiUser();
   if (user instanceof Response) return user;
   if (!aiAvailable()) {
     return Response.json({ error: "Falta configurar ANTHROPIC_API_KEY en .env para generar con IA." }, { status: 503 });
