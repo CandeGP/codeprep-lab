@@ -12,7 +12,7 @@ Plataforma local para estudiar entrevistas técnicas y certificaciones: leccione
 ```bash
 npm install            # instala dependencias, copia el worker de pdf.js y genera Prisma
 npx prisma migrate deploy
-npm run seed:certs     # carga los cursos de certificación (idempotente)
+npm run content:import # carga lecciones y cursos desde ./content a la base
 npm run dev            # http://localhost:3000
 ```
 
@@ -67,26 +67,35 @@ Si `ADMIN_USERNAMES` tiene usuarios, sólo ellos pueden editar/ocultar/borrar pr
 ### Agregar contenido curado
 
 ```
-content/certs/<curso>/
+<contenido>/certs/<curso>/
   course.json               # meta, dominios (peso %, suman 100) y temas
   questions/batch-NN.json   # [{ id, domain, topics, stem, options, correct: [índices], explanation, notes?, difficulty }]
   flashcards/batch-NN.json  # [{ id, topic, front, back }]
 ```
 
 ```bash
-npm run check:certs   # valida los JSON (índices, duplicados, temas y dominios)
-npm run seed:certs    # carga/actualiza en la base de datos
+npm run content:check   # valida los JSON (índices, duplicados, temas y dominios)
+npm run content:import  # carga/actualiza en la base de datos
 ```
 
 ## Privacidad de datos
 
 - Contraseñas con bcrypt; sesión con cookie `httpOnly`.
 - Las notas `PRIVATE` sólo las devuelve la API a su autor; las `SHARED` las ve cualquier usuario autenticado y sólo su autor las edita o borra.
-- El PDF de cada usuario se guarda en `storage/pdf/<userId>.pdf` (ignorado por git) y sólo lo puede descargar su dueño.
+- El PDF de cada usuario se guarda en la base de datos (tabla `PdfBlob`) y sólo lo puede descargar su dueño.
 
 ## Contenido
 
-Las lecciones, quizzes y ejercicios están en `content/lessons/NN-slug/`:
+El contenido (lecciones, quizzes, ejercicios y cursos de certificación) **no está en el repositorio ni en la imagen de Docker**: la app lo lee de la base de datos. Se mantiene en una carpeta aparte (por defecto `./content`, ignorada por git y Docker) y se carga con:
+
+```bash
+npm run content:import                  # desde ./content
+npm run content:import -- --dir=<ruta>  # desde otra carpeta (o CONTENT_DIR=<ruta>)
+```
+
+La importación es una sincronización: las lecciones que ya no estén en la carpeta se borran de la base (el progreso de los usuarios se conserva).
+
+Cada lección va en `<contenido>/lessons/NN-slug/`:
 
 ```
 lesson.md            # markdown con frontmatter (title, order, summary, tags)
@@ -94,7 +103,7 @@ quiz.json            # [{ id, question, options, answer, explanation }]
 problems/*.json      # enunciado, código inicial JS/Py, pruebas, pistas y solución
 ```
 
-Para agregar una lección, crea una carpeta nueva con esa estructura. Los ejercicios con listas enlazadas o árboles usan `argAdapters` / `returnAdapter` (`"list"` o `"tree"`) para convertir arreglos a `ListNode` / `TreeNode`.
+Para agregar una lección, crea una carpeta nueva con esa estructura y vuelve a importar. Los ejercicios con listas enlazadas o árboles usan `argAdapters` / `returnAdapter` (`"list"` o `"tree"`) para convertir arreglos a `ListNode` / `TreeNode`.
 
 Verifica que todas las soluciones de referencia pasen sus pruebas:
 
@@ -108,7 +117,14 @@ npm run verify
 docker compose up --build   # http://localhost:3000
 ```
 
-La base de datos y los PDFs se guardan en volúmenes (`codeprep-data`, `codeprep-storage`). Si lo publicas detrás de HTTPS, pon `COOKIE_SECURE=true`.
+Todo (usuarios, contenido y PDFs) vive en la base SQLite del volumen `codeprep-data`. Si lo publicas detrás de HTTPS, pon `COOKIE_SECURE=true`.
+
+La imagen arranca sin contenido. Para cargarlo (o actualizarlo) en el contenedor:
+
+```bash
+docker compose cp ./content codeprep:/tmp/content
+docker compose exec codeprep npm run content:import -- --dir=/tmp/content
+```
 
 ## Stack
 

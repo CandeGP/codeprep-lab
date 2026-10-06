@@ -8,7 +8,8 @@ import vm from "node:vm";
 import { spawnSync } from "node:child_process";
 
 const root = path.resolve(import.meta.dirname, "..");
-const lessonsDir = path.join(root, "content", "lessons");
+const dirArg = process.argv.find((a) => a.startsWith("--dir="));
+const lessonsDir = path.join(path.resolve(dirArg ? dirArg.slice(6) : (process.env.CONTENT_DIR ?? "content")), "lessons");
 const withPython = process.argv.includes("--python");
 
 const problems = [];

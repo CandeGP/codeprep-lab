@@ -124,6 +124,49 @@ model PdfFile {
   uploadedAt DateTime @default(now())
   lastPage   Int      @default(1)
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blob       PdfBlob?
+}
+
+// Bytes del PDF, aparte de PdfFile para no cargarlos al leer sólo la metadata
+model PdfBlob {
+  userId String  @id
+  data   Bytes
+  file   PdfFile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+// Contenido de las lecciones (se carga con `npm run content:import`)
+model Lesson {
+  slug      String           @id
+  order     Int              @default(999)
+  title     String
+  summary   String           @default("")
+  tags      String           @default("[]") // JSON string[]
+  markdown  String
+  updatedAt DateTime         @updatedAt
+  questions LessonQuestion[]
+  problems  Problem[]
+}
+
+// Pregunta de quiz; id = "<slug>:<id>" (lo referencian ReviewCard.questionId)
+model LessonQuestion {
+  id         String @id
+  lessonSlug String
+  order      Int
+  data       String // JSON { question, options, answer, explanation }
+  lesson     Lesson @relation(fields: [lessonSlug], references: [slug], onDelete: Cascade)
+
+  @@index([lessonSlug, order])
+}
+
+// Ejercicio de práctica (lo referencian Submission.problemId)
+model Problem {
+  id         String @id
+  lessonSlug String
+  order      Int
+  data       String // JSON con el resto de los campos de Problem
+  lesson     Lesson @relation(fields: [lessonSlug], references: [slug], onDelete: Cascade)
+
+  @@index([lessonSlug, order])
 }
 
 // Metadata de cada registro/inicio de sesión (para el panel de admin)

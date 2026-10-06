@@ -43,9 +43,8 @@ next-env.d.ts
 # datos locales
 /prisma/*.db
 /prisma/*.db-journal
-/storage/*
-!/storage/pdf/
-/storage/pdf/*
-!/storage/pdf/.gitkeep
+/storage/
+# Contenido de lecciones y cursos: vive fuera del repo y se importa a la base con `npm run content:import`
+/content/
 !.env.example
 /public/pdf.worker.min.mjs

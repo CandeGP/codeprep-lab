@@ -10,10 +10,8 @@ services:
       COOKIE_SECURE: "false"
       ADMIN_USERNAMES: ${ADMIN_USERNAMES:-}
     volumes:
-      - codeprep-data:/app/data       # base de datos SQLite
-      - codeprep-storage:/app/storage # PDFs de cada usuario
+      - codeprep-data:/app/data # base de datos SQLite (incluye contenido y PDFs)
     restart: unless-stopped
 
 volumes:
   codeprep-data:
-  codeprep-storage:

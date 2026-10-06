@@ -10,6 +10,8 @@
     "postinstall": "node scripts/copy-pdf-worker.mjs && prisma generate",
     "db:migrate": "prisma migrate deploy",
     "verify": "node scripts/verify-problems.mjs --python",
+    "content:import": "node scripts/import-content.mjs",
+    "content:check": "node scripts/import-content.mjs --check",
     "seed:certs": "tsx scripts/seed-certs.ts",
     "check:certs": "tsx scripts/seed-certs.ts --check",
     "serve": "next build && next start"

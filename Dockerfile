@@ -20,8 +20,9 @@ ENV NODE_ENV=production \
     PORT=3000 \
     DATABASE_URL="file:/app/data/codeprep.db"
 COPY --from=build /app ./
-RUN mkdir -p /app/data /app/storage/pdf
-VOLUME ["/app/data", "/app/storage"]
+RUN mkdir -p /app/data
+VOLUME ["/app/data"]
 EXPOSE 3000
-# Aplica migraciones pendientes, carga los cursos de certificación y arranca el servidor
-CMD ["sh", "-c", "npx prisma migrate deploy && npx tsx scripts/seed-certs.ts && npx next start -p ${PORT}"]
+# Aplica migraciones pendientes y arranca el servidor.
+# El contenido (lecciones, cursos) no viene en la imagen: se carga con `npm run content:import`.
+CMD ["sh", "-c", "npx prisma migrate deploy && npx next start -p ${PORT}"]

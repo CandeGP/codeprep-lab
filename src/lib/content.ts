@@ -1,7 +1,4 @@
 import "server-only";
-import fs from "node:fs/promises";
-import path from "node:path";
-import matter from "gray-matter";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
@@ -10,8 +7,7 @@ import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
 import GithubSlugger from "github-slugger";
-
-const LESSONS_DIR = path.join(process.cwd(), "content", "lessons");
+import { db } from "@/lib/db";
 
 export type LessonMeta = {
   slug: string;
@@ -53,44 +49,19 @@ export type Problem = {
   solution: { javascript: string; python: string; explanation: string };
 };
 
-async function exists(p: string) {
-  try {
-    await fs.access(p);
-    return true;
-  } catch {
-    return false;
-  }
+// El HTML renderizado se cachea por versión (updatedAt) para no repetir shiki en cada request.
+const htmlCache = new Map<string, string>();
+
+function toMeta(l: { slug: string; order: number; title: string; summary: string; tags: string }): LessonMeta {
+  return { slug: l.slug, order: l.order, title: l.title, summary: l.summary, tags: JSON.parse(l.tags) as string[] };
 }
 
-const cache = new Map<string, unknown>();
-const dev = process.env.NODE_ENV !== "production";
-
-async function cached<T>(key: string, fn: () => Promise<T>): Promise<T> {
-  if (!dev && cache.has(key)) return cache.get(key) as T;
-  const value = await fn();
-  cache.set(key, value);
-  return value;
-}
-
-export function listLessons(): Promise<LessonMeta[]> {
-  return cached("lessons", async () => {
-    const dirs = await fs.readdir(LESSONS_DIR, { withFileTypes: true });
-    const metas: LessonMeta[] = [];
-    for (const d of dirs) {
-      if (!d.isDirectory()) continue;
-      const file = path.join(LESSONS_DIR, d.name, "lesson.md");
-      if (!(await exists(file))) continue;
-      const { data } = matter(await fs.readFile(file, "utf8"));
-      metas.push({
-        slug: d.name,
-        order: Number(data.order ?? 999),
-        title: String(data.title ?? d.name),
-        summary: String(data.summary ?? ""),
-        tags: (data.tags as string[]) ?? [],
-      });
-    }
-    return metas.sort((a, b) => a.order - b.order);
+export async function listLessons(): Promise<LessonMeta[]> {
+  const rows = await db.lesson.findMany({
+    select: { slug: true, order: true, title: true, summary: true, tags: true },
+    orderBy: [{ order: "asc" }, { slug: "asc" }],
   });
+  return rows.map(toMeta);
 }
 
 function extractHeadings(markdown: string): Heading[] {
@@ -126,58 +97,43 @@ async function renderMarkdown(markdown: string) {
 
 export { renderMarkdown };
 
-export function getLesson(slug: string): Promise<Lesson | null> {
-  return cached(`lesson:${slug}`, async () => {
-    if (!/^[\w-]+$/.test(slug)) return null;
-    const file = path.join(LESSONS_DIR, slug, "lesson.md");
-    if (!(await exists(file))) return null;
-    const { data, content } = matter(await fs.readFile(file, "utf8"));
-    return {
-      slug,
-      order: Number(data.order ?? 999),
-      title: String(data.title ?? slug),
-      summary: String(data.summary ?? ""),
-      tags: (data.tags as string[]) ?? [],
-      markdown: content,
-      headings: extractHeadings(content),
-      html: await renderMarkdown(content),
-    };
-  });
+export async function getLesson(slug: string): Promise<Lesson | null> {
+  const row = await db.lesson.findUnique({ where: { slug } });
+  if (!row) return null;
+  const key = `${slug}:${row.updatedAt.getTime()}`;
+  let html = htmlCache.get(key);
+  if (html === undefined) {
+    html = await renderMarkdown(row.markdown);
+    htmlCache.set(key, html);
+  }
+  return { ...toMeta(row), markdown: row.markdown, headings: extractHeadings(row.markdown), html };
 }
 
-export function getQuiz(slug: string): Promise<QuizQuestion[]> {
-  return cached(`quiz:${slug}`, async () => {
-    const file = path.join(LESSONS_DIR, slug, "quiz.json");
-    if (!(await exists(file))) return [];
-    const questions = JSON.parse(await fs.readFile(file, "utf8")) as Omit<QuizQuestion, "id">[] & { id?: string }[];
-    return questions.map((q, i) => ({ ...(q as QuizQuestion), id: `${slug}:${(q as { id?: string }).id ?? i}` }));
-  });
+export async function getQuiz(slug: string): Promise<QuizQuestion[]> {
+  const rows = await db.lessonQuestion.findMany({ where: { lessonSlug: slug }, orderBy: { order: "asc" } });
+  return rows.map((r) => ({ ...(JSON.parse(r.data) as Omit<QuizQuestion, "id">), id: r.id }));
 }
 
-export function getProblems(slug: string): Promise<Problem[]> {
-  return cached(`problems:${slug}`, async () => {
-    const dir = path.join(LESSONS_DIR, slug, "problems");
-    if (!(await exists(dir))) return [];
-    const files = (await fs.readdir(dir)).filter((f) => f.endsWith(".json")).sort();
-    const problems: Problem[] = [];
-    for (const f of files) {
-      const p = JSON.parse(await fs.readFile(path.join(dir, f), "utf8"));
-      problems.push({ ...p, lessonSlug: slug });
-    }
-    return problems;
-  });
+function toProblem(r: { id: string; lessonSlug: string; data: string }): Problem {
+  return { ...(JSON.parse(r.data) as Omit<Problem, "id" | "lessonSlug">), id: r.id, lessonSlug: r.lessonSlug };
+}
+
+export async function getProblems(slug: string): Promise<Problem[]> {
+  const rows = await db.problem.findMany({ where: { lessonSlug: slug }, orderBy: { order: "asc" } });
+  return rows.map(toProblem);
 }
 
 export async function getAllProblems(): Promise<Problem[]> {
-  const lessons = await listLessons();
-  return (await Promise.all(lessons.map((l) => getProblems(l.slug)))).flat();
+  const rows = await db.problem.findMany({ orderBy: [{ lesson: { order: "asc" } }, { order: "asc" }] });
+  return rows.map(toProblem);
 }
 
 export async function getProblem(id: string): Promise<Problem | null> {
-  return (await getAllProblems()).find((p) => p.id === id) ?? null;
+  const row = await db.problem.findUnique({ where: { id } });
+  return row ? toProblem(row) : null;
 }
 
 export async function getAllQuestions(): Promise<QuizQuestion[]> {
-  const lessons = await listLessons();
-  return (await Promise.all(lessons.map((l) => getQuiz(l.slug)))).flat();
+  const rows = await db.lessonQuestion.findMany({ orderBy: [{ lesson: { order: "asc" } }, { order: "asc" }] });
+  return rows.map((r) => ({ ...(JSON.parse(r.data) as Omit<QuizQuestion, "id">), id: r.id }));
 }

@@ -150,8 +150,8 @@ export function BookViewer({ pdf, initialPage, savedPages }: Props) {
       <div className="max-w-2xl mx-auto px-4 md:px-8 py-10">
         <h1 className="text-3xl font-bold">Mi libro (PDF)</h1>
         <p className="text-muted mt-2">
-          Carga tu propia copia del libro en PDF para leerla en pantalla junto a tus notas por página. El archivo se guarda solo
-          en este equipo (carpeta <code>storage/pdf/</code>) y únicamente tu usuario puede abrirlo.
+          Carga tu propia copia del libro en PDF para leerla en pantalla junto a tus notas por página. El archivo se guarda en
+          la base de datos asociado a tu cuenta y únicamente tu usuario puede abrirlo.
         </p>
         <label className="card mt-6 p-10 flex flex-col items-center justify-center gap-3 border-dashed cursor-pointer hover:border-accent">
           <span className="text-4xl">▤</span>

@@ -4,5 +4,6 @@ node_modules
 .env
 prisma/*.db
 prisma/*.db-journal
-storage/pdf/*.pdf
+content
+storage
 public/pdf.worker.min.mjs

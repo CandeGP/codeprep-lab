@@ -1,6 +1,7 @@
-// Carga (idempotente) los cursos curados de content/certs/<curso>/ en la base de datos.
-//   npx tsx scripts/seed-certs.ts          → valida y carga
-//   npx tsx scripts/seed-certs.ts --check  → sólo valida los JSON
+// Carga (idempotente) los cursos curados de <dir>/certs/<curso>/ en la base de datos.
+//   npx tsx scripts/seed-certs.ts               → valida y carga desde ./content
+//   npx tsx scripts/seed-certs.ts --dir=<ruta>  → otra carpeta (también CONTENT_DIR)
+//   npx tsx scripts/seed-certs.ts --check       → sólo valida los JSON
 //
 // Estructura de cada curso:
 //   course.json                 meta, dominios (con peso %) y temas
@@ -16,8 +17,9 @@ import {
   stemHash,
   type CourseFile,
 } from "../src/lib/certs/shared";
+import { contentDir } from "./content-dir";
 
-const root = path.join(process.cwd(), "content", "certs");
+const root = path.join(contentDir(), "certs");
 const checkOnly = process.argv.includes("--check");
 
 type Loaded = {
@@ -182,7 +184,7 @@ async function seed(courses: Loaded[]) {
 async function main() {
   const { courses, errors } = load();
   if (errors.length) {
-    console.error(`✗ ${errors.length} error(es) en content/certs:\n  ` + errors.join("\n  "));
+    console.error(`✗ ${errors.length} error(es) en ${root}:\n  ` + errors.join("\n  "));
     process.exit(1);
   }
   for (const { course, questions } of courses) {
