@@ -1,0 +1,448 @@
+[
+  {
+    "id": "clf-051",
+    "domain": "cloud-concepts",
+    "topics": [
+      "well-architected"
+    ],
+    "difficulty": 1,
+    "stem": "Which Well-Architected pillar recommends maximizing resource utilization and using managed services to reduce environmental impact?",
+    "options": [
+      "Operational excellence",
+      "Performance efficiency",
+      "Sustainability",
+      "Reliability"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "The Sustainability pillar focuses on minimizing environmental impact: maximizing utilization, using managed services, and more efficient hardware.",
+    "notes": [
+      "Deals with operating and improving processes.",
+      "Uses resources efficiently for performance, not environmental impact.",
+      "Correct.",
+      "Deals with recovering from failures."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/sustainability-pillar/sustainability-pillar.html",
+      "https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html"
+    ],
+    "es": {
+      "stem": "¿Qué pilar del Well-Architected Framework recomienda maximizar la utilización de los recursos y usar servicios administrados para reducir el impacto ambiental?",
+      "options": [
+        "Excelencia operativa",
+        "Eficiencia del rendimiento",
+        "Sostenibilidad",
+        "Fiabilidad"
+      ],
+      "explanation": "El pilar de Sostenibilidad busca minimizar el impacto ambiental: maximizar la utilización, usar servicios administrados y hardware más eficiente.",
+      "notes": [
+        "Trata de operar y mejorar procesos.",
+        "Busca usar recursos eficientemente para el rendimiento, no el impacto ambiental.",
+        "Correcta.",
+        "Trata de la recuperación ante fallos."
+      ]
+    }
+  },
+  {
+    "id": "clf-052",
+    "domain": "cloud-concepts",
+    "topics": [
+      "well-architected"
+    ],
+    "difficulty": 1,
+    "stem": "An architecture must keep working even if any individual component fails. Which design principle applies?",
+    "options": [
+      "Tight coupling between components",
+      "Eliminate single points of failure",
+      "Manual provisioning",
+      "Vertical scaling only"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Designing without single points of failure (redundancy across AZs, load balancers, queues) is key to reliability.",
+    "notes": [
+      "Loose coupling is recommended.",
+      "Correct.",
+      "Increases errors and recovery time.",
+      "Vertical scaling has limits and adds no redundancy."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html"
+    ],
+    "es": {
+      "stem": "Una arquitectura debe seguir funcionando aunque falle cualquier componente individual. ¿Qué principio de diseño aplica?",
+      "options": [
+        "Acoplamiento fuerte entre componentes",
+        "Eliminar puntos únicos de falla",
+        "Aprovisionamiento manual",
+        "Escalado vertical únicamente"
+      ],
+      "explanation": "Diseñar sin puntos únicos de falla (redundancia en varias AZ, balanceadores, colas) es clave para la fiabilidad.",
+      "notes": [
+        "Lo recomendado es desacoplar.",
+        "Correcta.",
+        "Aumenta errores y tiempo de recuperación.",
+        "El escalado vertical tiene límites y no aporta redundancia."
+      ]
+    }
+  },
+  {
+    "id": "clf-053",
+    "domain": "cloud-concepts",
+    "topics": [
+      "cloud-benefits"
+    ],
+    "difficulty": 2,
+    "stem": "What practice does AWS recommend for cloud applications that must scale and fail in isolation?",
+    "options": [
+      "Store session state on each server's local disk",
+      "Hardcode IP addresses in the code",
+      "Run all components on the same server",
+      "Decouple components with services such as Amazon SQS"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Loose coupling (queues, events, load balancers) lets each component scale and fail independently.",
+    "notes": [
+      "Prevents horizontal scaling; use an external store.",
+      "Makes it hard to replace resources.",
+      "Creates a single point of failure.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html"
+    ],
+    "es": {
+      "stem": "¿Qué práctica recomienda AWS para diseñar aplicaciones en la nube que escalen y fallen de forma aislada?",
+      "options": [
+        "Guardar el estado de sesión en el disco local de cada servidor",
+        "Usar direcciones IP fijas en el código",
+        "Ejecutar todos los componentes en un mismo servidor",
+        "Desacoplar componentes con servicios como Amazon SQS"
+      ],
+      "explanation": "Un acoplamiento débil (colas, eventos, balanceadores) permite que cada componente escale y falle de forma independiente.",
+      "notes": [
+        "Impide escalar horizontalmente; mejor un almacén externo.",
+        "Dificulta reemplazar recursos.",
+        "Crea un punto único de falla.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-054",
+    "domain": "cloud-concepts",
+    "topics": [
+      "caf-migration"
+    ],
+    "difficulty": 2,
+    "stem": "A company decides to replace its on-premises CRM with a SaaS product. Which migration strategy is it applying?",
+    "options": [
+      "Rehost",
+      "Repurchase",
+      "Relocate",
+      "Retain"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Repurchase (\"drop and shop\") means moving to a different product, usually SaaS.",
+    "notes": [
+      "Moves the same app without changes.",
+      "Correct.",
+      "Moves infrastructure (such as VMware) without buying new hardware.",
+      "Leaves the app where it is for now."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
+    ],
+    "es": {
+      "stem": "Una empresa decide reemplazar su CRM instalado localmente por un producto SaaS. ¿Qué estrategia de migración está aplicando?",
+      "options": [
+        "Rehost",
+        "Repurchase (recomprar)",
+        "Relocate",
+        "Retain"
+      ],
+      "explanation": "Repurchase (\"drop and shop\") consiste en cambiar a un producto distinto, normalmente SaaS.",
+      "notes": [
+        "Rehost mueve la misma app sin cambios.",
+        "Correcta.",
+        "Relocate mueve infraestructura (p. ej. VMware) sin comprar hardware nuevo.",
+        "Retain es dejar la app donde está por ahora."
+      ]
+    }
+  },
+  {
+    "id": "clf2-055",
+    "domain": "cloud-concepts",
+    "topics": [
+      "caf-migration"
+    ],
+    "difficulty": 2,
+    "stem": "A new AWS customer must move 80 TB to Amazon S3, but its internet connection is slow. AWS Snowball Edge is no longer available to new customers. Which AWS option lets the company upload the data quickly by physically bringing its own storage devices to an AWS location with a high-speed connection to AWS?",
+    "options": [
+      "Amazon S3 Transfer Acceleration",
+      "A 50 Mbps AWS Direct Connect connection",
+      "AWS DataSync over the existing internet link",
+      "AWS Data Transfer Terminal"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "AWS Data Transfer Terminal provides secure physical locations where customers bring their own storage devices and upload data at high speed directly to AWS. Since November 7, 2025, Snowball Edge is in maintenance and not offered to new customers; AWS suggests Data Transfer Terminal, DataSync, or partner solutions.",
+    "notes": [
+      "Speeds up uploads but still depends on the slow link.",
+      "Too slow for 80 TB and takes time to provision.",
+      "Still uses the slow network link.",
+      "Correct."
+    ],
+    "sources": [
+      "https://aws.amazon.com/data-transfer-terminal/faqs/",
+      "https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html"
+    ],
+    "es": {
+      "stem": "Un cliente nuevo de AWS debe mover 80 TB a Amazon S3, pero su conexión a Internet es lenta. AWS Snowball Edge ya no está disponible para clientes nuevos. ¿Qué opción de AWS permite cargar los datos rápidamente llevando físicamente sus propios dispositivos de almacenamiento a una ubicación de AWS con conexión de alta velocidad?",
+      "options": [
+        "Amazon S3 Transfer Acceleration",
+        "Una conexión AWS Direct Connect de 50 Mbps",
+        "AWS DataSync sobre el enlace de Internet actual",
+        "AWS Data Transfer Terminal"
+      ],
+      "explanation": "AWS Data Transfer Terminal ofrece ubicaciones físicas seguras donde el cliente lleva sus propios dispositivos y carga datos a alta velocidad directamente a AWS. Desde el 7 de noviembre de 2025, Snowball Edge está en mantenimiento y no se ofrece a clientes nuevos; AWS sugiere Data Transfer Terminal, DataSync o soluciones de socios.",
+      "notes": [
+        "Acelera cargas, pero sigue dependiendo del enlace lento.",
+        "Demasiado lento para 80 TB y tarda en aprovisionarse.",
+        "Sigue usando el enlace de red lento.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-056",
+    "domain": "cloud-concepts",
+    "topics": [
+      "caf-migration"
+    ],
+    "difficulty": 1,
+    "stem": "Which service helps migrate databases to AWS with minimal downtime, even between different engines (for example, Oracle to Aurora PostgreSQL)?",
+    "options": [
+      "AWS Database Migration Service (AWS DMS)",
+      "AWS Backup",
+      "Amazon AppFlow",
+      "AWS Application Migration Service"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "AWS DMS continuously replicates data during the migration; together with schema conversion it supports heterogeneous migrations.",
+    "notes": [
+      "Correct.",
+      "Centralizes backups.",
+      "Integrates data between SaaS apps and AWS.",
+      "Migrates whole servers (rehost)."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html",
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio ayuda a migrar bases de datos a AWS con un tiempo de inactividad mínimo, incluso entre motores distintos (p. ej. Oracle a Aurora PostgreSQL)?",
+      "options": [
+        "AWS Database Migration Service (AWS DMS)",
+        "AWS Backup",
+        "Amazon AppFlow",
+        "AWS Application Migration Service"
+      ],
+      "explanation": "AWS DMS replica datos continuamente durante la migración; junto con la Schema Conversion Tool (SCT) permite migraciones heterogéneas.",
+      "notes": [
+        "Correcta.",
+        "Centraliza respaldos.",
+        "Integra datos entre apps SaaS y AWS.",
+        "Migra servidores completos (rehost)."
+      ]
+    }
+  },
+  {
+    "id": "clf-057",
+    "domain": "cloud-concepts",
+    "topics": [
+      "caf-migration"
+    ],
+    "difficulty": 3,
+    "stem": "Which AWS Cloud Adoption Framework business outcome is described as \"reduce business risk\"?",
+    "options": [
+      "Eliminating all IT staff",
+      "Improved reliability, performance, and security",
+      "Paying only for perpetual licenses",
+      "Never updating software again"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "The CAF lists business outcomes such as reduced business risk, improved ESG performance, increased revenue, and increased operational efficiency.",
+    "notes": [
+      "Not a CAF outcome.",
+      "Correct.",
+      "The cloud favors pay-as-you-go.",
+      "Updates still happen."
+    ],
+    "sources": [
+      "https://aws.amazon.com/cloud-adoption-framework/",
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/large-migration-guide/migration-strategies.html"
+    ],
+    "es": {
+      "stem": "¿Qué beneficio del AWS Cloud Adoption Framework se describe como \"reducir el riesgo de negocio\"?",
+      "options": [
+        "Eliminar por completo el personal de TI",
+        "Mejor fiabilidad, rendimiento y seguridad mejorada",
+        "Pagar sólo por licencias perpetuas",
+        "No volver a actualizar software"
+      ],
+      "explanation": "El CAF enumera como resultados de negocio: reducir el riesgo de negocio, mejorar el desempeño ESG, aumentar los ingresos y aumentar la eficiencia operativa.",
+      "notes": [
+        "No es un resultado del CAF.",
+        "Correcta.",
+        "La nube favorece el pago por uso.",
+        "Sigue habiendo actualizaciones."
+      ]
+    }
+  },
+  {
+    "id": "clf-058",
+    "domain": "cloud-concepts",
+    "topics": [
+      "cloud-benefits"
+    ],
+    "difficulty": 1,
+    "stem": "A company moves from managing physical servers to using AWS managed services. What benefit does its IT team gain?",
+    "options": [
+      "It no longer needs to think about security",
+      "It avoids paying for service usage",
+      "It gets physical access to AWS data centers",
+      "It can spend more time on projects that differentiate the business"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Offloading undifferentiated heavy lifting (hardware, patching, capacity) lets the team focus on customers and innovation.",
+    "notes": [
+      "Security in the cloud remains the customer's responsibility.",
+      "Usage is paid.",
+      "Customers do not get physical access.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html"
+    ],
+    "es": {
+      "stem": "Una empresa pasa de administrar servidores físicos a usar servicios administrados de AWS. ¿Qué beneficio obtiene su equipo de TI?",
+      "options": [
+        "Ya no necesita pensar en seguridad",
+        "Evita pagar por el uso de los servicios",
+        "Obtiene acceso físico a los centros de datos de AWS",
+        "Puede dedicar más tiempo a proyectos que diferencian al negocio"
+      ],
+      "explanation": "Delegar el \"trabajo pesado indiferenciado\" (hardware, parches, capacidad) permite enfocarse en los clientes y la innovación.",
+      "notes": [
+        "La seguridad en la nube sigue siendo responsabilidad del cliente.",
+        "Se paga por uso.",
+        "Los clientes no tienen acceso físico.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-059",
+    "domain": "cloud-concepts",
+    "topics": [
+      "global-infra"
+    ],
+    "difficulty": 2,
+    "stem": "A gaming company needs single-digit millisecond latency for users in Los Angeles, where there is no AWS Region. What should it use?",
+    "options": [
+      "AWS Local Zones",
+      "AWS Artifact",
+      "A Region on another continent",
+      "Amazon S3 Glacier"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Local Zones extend a Region by placing compute, storage, and databases close to large metropolitan areas.",
+    "notes": [
+      "Correct.",
+      "Compliance reports.",
+      "Would increase latency.",
+      "Archive storage."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/local-zones/latest/ug/what-is-aws-local-zones.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/global-infrastructure.html"
+    ],
+    "es": {
+      "stem": "Una empresa de videojuegos necesita latencia de un solo dígito de milisegundos para usuarios de Los Ángeles, donde no hay una región de AWS. ¿Qué debe usar?",
+      "options": [
+        "AWS Local Zones",
+        "AWS Artifact",
+        "Una región en otro continente",
+        "Amazon S3 Glacier"
+      ],
+      "explanation": "Las Local Zones extienden una región colocando cómputo, almacenamiento y bases de datos cerca de grandes centros urbanos.",
+      "notes": [
+        "Correcta.",
+        "Es para informes de cumplimiento.",
+        "Aumentaría la latencia.",
+        "Es almacenamiento de archivo."
+      ]
+    }
+  },
+  {
+    "id": "clf-060",
+    "domain": "cloud-concepts",
+    "topics": [
+      "cloud-benefits"
+    ],
+    "difficulty": 2,
+    "stem": "Which statement about elasticity and scalability is CORRECT?",
+    "options": [
+      "Elasticity only means buying bigger servers",
+      "Scalability is only possible in on-premises data centers",
+      "Scalability is the ability to grow to handle more load; elasticity is automatically adjusting up and down with demand",
+      "They are exactly the same"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Scalability: ability to handle more load (vertically or horizontally). Elasticity: dynamically adapting resources to demand, including scaling down.",
+    "notes": [
+      "That is vertical scaling.",
+      "The cloud makes scaling easier.",
+      "Correct.",
+      "Related but not the same."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html"
+    ],
+    "es": {
+      "stem": "¿Cuál de las siguientes afirmaciones sobre la elasticidad y la escalabilidad es CORRECTA?",
+      "options": [
+        "La elasticidad sólo significa comprar servidores más grandes",
+        "La escalabilidad sólo es posible en centros de datos locales",
+        "La escalabilidad es la capacidad de crecer para atender más carga; la elasticidad es ajustarse automáticamente hacia arriba y hacia abajo según la demanda",
+        "Son exactamente lo mismo"
+      ],
+      "explanation": "Escalabilidad: capacidad de manejar más carga (vertical u horizontal). Elasticidad: adaptar dinámicamente los recursos a la demanda, incluyendo reducirlos.",
+      "notes": [
+        "Eso es escalado vertical.",
+        "La nube facilita escalar.",
+        "Correcta.",
+        "Están relacionadas pero no son iguales."
+      ]
+    }
+  }
+]

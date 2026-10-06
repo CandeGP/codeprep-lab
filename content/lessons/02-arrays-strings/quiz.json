@@ -1,0 +1,54 @@
+[
+  {
+    "id": "q1",
+    "question": "¿Por qué acceder a arr[i] en un arreglo es O(1)?",
+    "options": [
+      "Porque el arreglo está ordenado",
+      "Porque la dirección se calcula directamente a partir del índice (memoria contigua)",
+      "Porque se usa una tabla hash internamente",
+      "Porque el procesador guarda todos los arreglos en caché"
+    ],
+    "answer": 1,
+    "explanation": "Con memoria contigua, la posición de arr[i] es inicio + i × tamaño, un cálculo constante."
+  },
+  {
+    "id": "q2",
+    "question": "¿Cuál es el costo promedio de buscar una clave en una tabla hash bien diseñada?",
+    "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+    "answer": 0,
+    "explanation": "En promedio es O(1). El peor caso (muchas colisiones) es O(n)."
+  },
+  {
+    "id": "q3",
+    "question": "Concatenar n strings pequeños con += dentro de un ciclo puede costar…",
+    "options": ["O(1)", "O(n)", "O(n²) en el total de caracteres", "O(log n)"],
+    "answer": 2,
+    "explanation": "Al ser inmutables, cada concatenación puede copiar todo lo acumulado; la suma de copias crece cuadráticamente."
+  },
+  {
+    "id": "q4",
+    "question": "Necesitas la longitud del substring contiguo más largo que cumpla cierta condición. ¿Qué patrón es el candidato natural?",
+    "options": ["Búsqueda binaria", "Ventana deslizante", "Ordenar y comparar", "Recursión con backtracking"],
+    "answer": 1,
+    "explanation": "Los problemas sobre bloques contiguos suelen resolverse en O(n) con una ventana que se expande y contrae."
+  },
+  {
+    "id": "q5",
+    "question": "¿Qué ocurre cuando una tabla hash supera su factor de carga?",
+    "options": [
+      "Lanza un error",
+      "Se redimensiona y reubica las claves; es O(n) ocasional, O(1) amortizado",
+      "Empieza a borrar las claves más viejas",
+      "Se convierte en un árbol binario"
+    ],
+    "answer": 1,
+    "explanation": "El redimensionamiento cuesta O(n) pero ocurre con poca frecuencia, igual que en los arreglos dinámicos."
+  },
+  {
+    "id": "q6",
+    "question": "Con prefijos acumulados pref, ¿cómo obtienes la suma de nums[a..b] (inclusive)?",
+    "options": ["pref[b] - pref[a]", "pref[b+1] - pref[a]", "pref[b] + pref[a]", "pref[b+1] - pref[a+1]"],
+    "answer": 1,
+    "explanation": "Si pref[i] es la suma de los primeros i elementos, la suma de a..b es pref[b+1] - pref[a]."
+  }
+]

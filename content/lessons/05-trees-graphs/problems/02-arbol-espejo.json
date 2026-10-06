@@ -1,0 +1,29 @@
+{
+  "id": "invertir-arbol",
+  "title": "Reflejar un árbol (espejo)",
+  "difficulty": "fácil",
+  "description": "Dada la raíz de un árbol binario, construye su **reflejo**: intercambia el hijo izquierdo y el derecho de **cada** nodo. Devuelve la raíz.\n\n```\n     4               4\n   /   \\           /   \\\n  2     7   ⟹    7     2\n / \\   / \\       / \\   / \\\n1   3 6   9     9   6 3   1\n```",
+  "functionName": "reflejar",
+  "argAdapters": ["tree"],
+  "returnAdapter": "tree",
+  "starter": {
+    "javascript": "function reflejar(raiz) {\n  // tu código aquí\n}\n",
+    "python": "def reflejar(raiz):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": [[4, 2, 7, 1, 3, 6, 9]], "expected": [4, 7, 2, 9, 6, 3, 1] },
+    { "args": [[2, 1, 3]], "expected": [2, 3, 1] },
+    { "args": [[]], "expected": [] },
+    { "args": [[1, 2]], "expected": [1, null, 2] },
+    { "args": [[1, null, 2, 3]], "expected": [1, 2, null, null, 3] }
+  ],
+  "hints": [
+    "Si ya supieras reflejar los dos subárboles, ¿qué te faltaría hacer en la raíz?",
+    "También puedes hacerlo con BFS: saca un nodo de la cola, intercambia sus hijos y encola los hijos."
+  ],
+  "solution": {
+    "explanation": "Recursión: reflejamos ambos subárboles y los colocamos intercambiados.\n\n**Tiempo:** O(n) · **Espacio:** O(h)",
+    "javascript": "function reflejar(raiz) {\n  if (!raiz) return null;\n  const izq = reflejar(raiz.left);\n  raiz.left = reflejar(raiz.right);\n  raiz.right = izq;\n  return raiz;\n}\n",
+    "python": "def reflejar(raiz):\n    if not raiz:\n        return None\n    raiz.left, raiz.right = reflejar(raiz.right), reflejar(raiz.left)\n    return raiz\n"
+  }
+}

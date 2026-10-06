@@ -1,0 +1,28 @@
+{
+  "id": "subsecuencia-comun",
+  "title": "Subsecuencia común más larga",
+  "difficulty": "media",
+  "description": "Dados dos strings `a` y `b`, devuelve la **longitud** de su subsecuencia común más larga. Una subsecuencia mantiene el orden relativo de los caracteres pero puede omitir algunos.\n\n**Ejemplos**\n\n```\n\"abcde\", \"ace\"  → 3   // \"ace\"\n\"abc\", \"abc\"    → 3\n\"abc\", \"def\"    → 0\n```",
+  "functionName": "lcs",
+  "starter": {
+    "javascript": "function lcs(a, b) {\n  // tu código aquí\n}\n",
+    "python": "def lcs(a, b):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": ["abcde", "ace"], "expected": 3 },
+    { "args": ["abc", "abc"], "expected": 3 },
+    { "args": ["abc", "def"], "expected": 0 },
+    { "args": ["", "abc"], "expected": 0 },
+    { "args": ["AGGTAB", "GXTXAYB"], "expected": 4 },
+    { "args": ["bsbininm", "jmjkbkjkv"], "expected": 1 }
+  ],
+  "hints": [
+    "Define dp[i][j] como la LCS de los primeros i caracteres de a y los primeros j de b.",
+    "Si los últimos caracteres coinciden, suma 1 a la diagonal; si no, toma el máximo entre quitar uno de a o uno de b."
+  ],
+  "solution": {
+    "explanation": "Tabla `(n+1) × (m+1)` con la fila y columna 0 en cero (string vacío). Cada celda se calcula en O(1) a partir de su vecina superior, izquierda o diagonal.\n\n**Tiempo:** O(n · m) · **Espacio:** O(n · m), reducible a O(m) guardando una sola fila",
+    "javascript": "function lcs(a, b) {\n  const n = a.length, m = b.length;\n  const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));\n  for (let i = 1; i <= n; i++) {\n    for (let j = 1; j <= m; j++) {\n      dp[i][j] = a[i - 1] === b[j - 1]\n        ? dp[i - 1][j - 1] + 1\n        : Math.max(dp[i - 1][j], dp[i][j - 1]);\n    }\n  }\n  return dp[n][m];\n}\n",
+    "python": "def lcs(a, b):\n    n, m = len(a), len(b)\n    dp = [[0] * (m + 1) for _ in range(n + 1)]\n    for i in range(1, n + 1):\n        for j in range(1, m + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    return dp[n][m]\n"
+  }
+}

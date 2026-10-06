@@ -1,0 +1,457 @@
+[
+  {
+    "id": "saa2-051",
+    "domain": "secure",
+    "topics": [
+      "organizations",
+      "iam"
+    ],
+    "difficulty": 2,
+    "stem": "A company learned that the root user of a compromised member account could remove the account from the AWS organization, which would free it from all SCPs. The company wants to prevent member accounts in its production and development OUs from leaving the organization, while still allowing controlled transfers through a dedicated transition OU. What should the solutions architect do?",
+    "options": [
+      "Attach an SCP that denies organizations:LeaveOrganization to the production and development OUs, and leave the transition OU without that SCP.",
+      "Enable AWS CloudTrail in every account and alert when LeaveOrganization is called.",
+      "Enable MFA for the root user of every member account.",
+      "Attach an IAM policy in each member account that denies organizations:LeaveOrganization to all IAM users."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "An SCP that denies organizations:LeaveOrganization prevents every principal in the affected accounts, including the member account's root user, from leaving the organization. Applying it only to specific OUs keeps a controlled path for intended transfers.",
+    "notes": [
+      "Correct: preventive control that also applies to the member account's root user.",
+      "Only detects the event after the account has left.",
+      "Good practice, but it does not stop an attacker who has the root credentials and MFA device.",
+      "IAM policies do not restrict the root user, and administrators can remove them."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/mt/essential-security-controls-to-prevent-unauthorized-account-removal-in-aws-organizations/"
+    ],
+    "es": {
+      "stem": "Una empresa descubrió que el usuario raíz de una cuenta miembro comprometida podría sacar la cuenta de la organización de AWS, liberándola de todas las SCP. La empresa quiere impedir que las cuentas de sus OU de producción y desarrollo abandonen la organización, pero permitir transferencias controladas mediante una OU de transición dedicada. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Adjuntar a las OU de producción y desarrollo una SCP que deniegue organizations:LeaveOrganization, y dejar la OU de transición sin esa SCP.",
+        "Habilitar AWS CloudTrail en cada cuenta y alertar cuando se llame a LeaveOrganization.",
+        "Habilitar MFA para el usuario raíz de cada cuenta miembro.",
+        "Adjuntar en cada cuenta miembro una política de IAM que deniegue organizations:LeaveOrganization a todos los usuarios de IAM."
+      ],
+      "explanation": "Una SCP que deniega organizations:LeaveOrganization impide que cualquier principal de las cuentas afectadas, incluido el usuario raíz de la cuenta miembro, abandone la organización. Aplicarla sólo a OU específicas deja un camino controlado para las transferencias previstas.",
+      "notes": [
+        "Correcta: control preventivo que aplica también al usuario raíz de la cuenta miembro.",
+        "Sólo detecta el evento cuando la cuenta ya salió.",
+        "Es buena práctica, pero no detiene a un atacante con las credenciales raíz y el dispositivo MFA.",
+        "Las políticas de IAM no restringen al usuario raíz y los administradores pueden quitarlas."
+      ]
+    }
+  },
+  {
+    "id": "saa2-052",
+    "domain": "secure",
+    "topics": [
+      "vpc",
+      "organizations"
+    ],
+    "difficulty": 3,
+    "stem": "A company wants application teams in separate AWS accounts to deploy resources into a centrally managed VPC. The network team must keep control of the VPC, route tables, NAT gateways, and network ACLs, while application teams manage only their own EC2 instances, RDS databases, and security groups. The company wants to avoid creating and peering a VPC for every account. What should the solutions architect recommend?",
+    "options": [
+      "Create a VPC in each application account and connect all of them to a transit gateway.",
+      "Give application teams IAM roles in the network account with full EC2 permissions.",
+      "Use VPC sharing: the network account shares specific subnets with the application accounts through AWS Resource Access Manager.",
+      "Create VPC peering connections between the network VPC and a VPC in each application account."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "With VPC sharing, the owner account shares subnets through AWS RAM. Participant accounts launch resources into the shared subnets and manage their own resources and security groups, but cannot modify the VPC, subnets, route tables, or NACLs owned by the network account.",
+    "notes": [
+      "Creates one VPC per account, which the company wants to avoid.",
+      "Gives application teams control over the network resources too.",
+      "Correct: central network control with decentralized application ownership.",
+      "Requires a VPC per account and many peering connections."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/networking-and-content-delivery/vpc-sharing-key-considerations-and-best-practices/"
+    ],
+    "es": {
+      "stem": "Una empresa quiere que equipos de aplicación en cuentas de AWS separadas desplieguen recursos en una VPC administrada de forma central. El equipo de red debe mantener el control de la VPC, las tablas de rutas, los NAT gateways y las network ACL, mientras que los equipos de aplicación sólo administran sus instancias EC2, bases de datos RDS y security groups. La empresa quiere evitar crear y conectar por peering una VPC por cuenta. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Crear una VPC en cada cuenta de aplicación y conectarlas todas a un transit gateway.",
+        "Dar a los equipos de aplicación roles de IAM en la cuenta de red con permisos completos de EC2.",
+        "Usar VPC sharing: la cuenta de red comparte subredes específicas con las cuentas de aplicación mediante AWS Resource Access Manager.",
+        "Crear conexiones de VPC peering entre la VPC de red y una VPC en cada cuenta de aplicación."
+      ],
+      "explanation": "Con VPC sharing, la cuenta propietaria comparte subredes mediante AWS RAM. Las cuentas participantes lanzan recursos en las subredes compartidas y administran sus propios recursos y security groups, pero no pueden modificar la VPC, las subredes, las tablas de rutas ni las NACL de la cuenta de red.",
+      "notes": [
+        "Crea una VPC por cuenta, lo que la empresa quiere evitar.",
+        "También da a los equipos de aplicación control sobre los recursos de red.",
+        "Correcta: control central de la red con propiedad descentralizada de las aplicaciones.",
+        "Requiere una VPC por cuenta y muchas conexiones de peering."
+      ]
+    }
+  },
+  {
+    "id": "saa2-053",
+    "domain": "secure",
+    "topics": [
+      "ebs-efs-fsx",
+      "kms-encryption"
+    ],
+    "difficulty": 2,
+    "stem": "A company created an Amazon EFS file system with the AWS CLI two years ago and later discovered that it is not encrypted at rest. The file system is used by containers in several Availability Zones. Compliance now requires encryption at rest. What should the solutions architect do?",
+    "options": [
+      "Modify the existing file system and enable encryption at rest.",
+      "Enable EBS encryption by default in the Region.",
+      "Create a new encrypted EFS file system, copy the data to it by using EFS replication, and switch the mount targets used by the applications.",
+      "Enable encryption in transit with TLS on the mount helper."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "The encryption setting of an EFS file system cannot be changed after creation. To encrypt existing data, replicate it to a new file system that has encryption at rest enabled and move the applications to the new file system.",
+    "notes": [
+      "EFS does not allow changing the encryption setting of an existing file system.",
+      "Applies only to EBS volumes, not to EFS.",
+      "Correct: encryption must be set when the file system is created.",
+      "Protects data in transit, not at rest."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/efs/latest/ug/encryption-at-rest.html"
+    ],
+    "es": {
+      "stem": "Una empresa creó hace dos años un sistema de archivos Amazon EFS con la AWS CLI y luego descubrió que no está cifrado en reposo. Lo usan contenedores en varias zonas de disponibilidad. Ahora el cumplimiento exige cifrado en reposo. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Modificar el sistema de archivos existente y habilitar el cifrado en reposo.",
+        "Habilitar EBS encryption by default en la región.",
+        "Crear un nuevo sistema de archivos EFS cifrado, copiar los datos con EFS replication y cambiar los mount targets que usan las aplicaciones.",
+        "Habilitar el cifrado en tránsito con TLS en el mount helper."
+      ],
+      "explanation": "La configuración de cifrado de un sistema de archivos EFS no se puede cambiar después de crearlo. Para cifrar los datos existentes hay que replicarlos a un nuevo sistema de archivos con cifrado en reposo y mover las aplicaciones al nuevo.",
+      "notes": [
+        "EFS no permite cambiar el cifrado de un sistema de archivos existente.",
+        "Sólo aplica a volúmenes EBS, no a EFS.",
+        "Correcta: el cifrado se define al crear el sistema de archivos.",
+        "Protege en tránsito, no en reposo."
+      ]
+    }
+  },
+  {
+    "id": "saa2-054",
+    "domain": "secure",
+    "topics": [
+      "s3",
+      "kms-encryption",
+      "migration-dr"
+    ],
+    "difficulty": 3,
+    "stem": "A company configured S3 replication from a bucket in its production account to a bucket in a separate backup account. Objects encrypted with SSE-S3 replicate successfully, but objects encrypted with SSE-KMS are not replicated. What should the solutions architect configure so that the SSE-KMS objects replicate and remain usable in the backup account? (Choose two.)",
+    "options": [
+      "Disable versioning on the destination bucket.",
+      "Enable S3 Transfer Acceleration on both buckets.",
+      "Select the AWS managed key aws/s3 of the source account as the destination key.",
+      "Grant the replication IAM role permission to decrypt with the source key and to encrypt with the destination key, and allow it in the destination key policy.",
+      "Enable \"Replicate objects encrypted with AWS KMS\" in the replication rule and choose a customer managed key owned by the backup account for the destination objects."
+    ],
+    "correct": [
+      3,
+      4
+    ],
+    "explanation": "Replication of SSE-KMS objects must be explicitly enabled in the rule, with a KMS key for the destination objects. For cross-account replication the destination should use a customer managed key owned by the destination account, because AWS managed keys cannot be shared. The replication role needs kms:Decrypt on the source key and kms:Encrypt on the destination key.",
+    "notes": [
+      "Replication requires versioning on both buckets.",
+      "Transfer Acceleration does not affect replication.",
+      "AWS managed keys cannot be shared with another account.",
+      "Correct: the replication role needs KMS permissions on both keys.",
+      "Correct: SSE-KMS replication must be enabled with a destination key."
+    ],
+    "sources": [
+      "https://repost.aws/knowledge-center/s3-troubleshoot-replication"
+    ],
+    "es": {
+      "stem": "Una empresa configuró replicación de S3 desde un bucket de su cuenta de producción hacia un bucket en una cuenta de respaldo separada. Los objetos cifrados con SSE-S3 se replican bien, pero los cifrados con SSE-KMS no se replican. ¿Qué debe configurar el arquitecto de soluciones para que los objetos SSE-KMS se repliquen y sigan siendo utilizables en la cuenta de respaldo? (Elige 2)",
+      "options": [
+        "Deshabilitar el versionado en el bucket de destino.",
+        "Habilitar S3 Transfer Acceleration en ambos buckets.",
+        "Seleccionar como clave de destino la clave administrada por AWS aws/s3 de la cuenta de origen.",
+        "Dar al rol de IAM de replicación permiso para descifrar con la clave de origen y cifrar con la de destino, y permitirlo en la política de la clave de destino.",
+        "Habilitar \"Replicate objects encrypted with AWS KMS\" en la regla de replicación y elegir para los objetos de destino una customer managed key que pertenezca a la cuenta de respaldo."
+      ],
+      "explanation": "La replicación de objetos SSE-KMS debe habilitarse explícitamente en la regla, con una clave de KMS para los objetos de destino. Entre cuentas, el destino debe usar una customer managed key de la cuenta de destino, porque las claves administradas por AWS no se pueden compartir. El rol de replicación necesita kms:Decrypt sobre la clave de origen y kms:Encrypt sobre la de destino.",
+      "notes": [
+        "La replicación requiere versionado en ambos buckets.",
+        "Transfer Acceleration no afecta la replicación.",
+        "Las claves administradas por AWS no se pueden compartir con otra cuenta.",
+        "Correcta: el rol de replicación necesita permisos de KMS sobre ambas claves.",
+        "Correcta: la replicación SSE-KMS debe habilitarse con una clave de destino."
+      ]
+    }
+  },
+  {
+    "id": "saa2-055",
+    "domain": "secure",
+    "topics": [
+      "security-services",
+      "migration-dr"
+    ],
+    "difficulty": 2,
+    "stem": "An application runs in us-east-1 with a warm standby in us-west-2. It reads database credentials from AWS Secrets Manager, and the secret is rotated automatically every 30 days. During a DR test, the standby application could not start because it called the Secrets Manager endpoint in us-east-1, which was intentionally blocked. What should the solutions architect do?",
+    "options": [
+      "Increase the SDK retry count so the standby keeps trying us-east-1.",
+      "Create a separate secret in us-west-2 and update it manually after every rotation.",
+      "Replicate the secret to us-west-2 and configure the standby application to read the replica in its own Region.",
+      "Store the credentials in the application's environment variables in both Regions."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Secrets Manager can replicate a secret to other Regions. When rotation is enabled on the primary secret, the new value propagates automatically to the replicas, so the standby application can read the current credentials locally during a Regional outage.",
+    "notes": [
+      "The primary Region is unavailable during the disaster.",
+      "Manual updates are error-prone and can leave stale credentials.",
+      "Correct: Regional replica kept in sync with rotation automatically.",
+      "Environment variables are not rotated and are less secure."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/secretsmanager/latest/userguide/replicate-secrets.html"
+    ],
+    "es": {
+      "stem": "Una aplicación se ejecuta en us-east-1 con un warm standby en us-west-2. Lee las credenciales de la base de datos desde AWS Secrets Manager y el secreto rota automáticamente cada 30 días. En una prueba de DR, la aplicación de standby no pudo arrancar porque llamó al endpoint de Secrets Manager en us-east-1, que se bloqueó a propósito. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Aumentar los reintentos del SDK para que el standby siga intentando us-east-1.",
+        "Crear un secreto separado en us-west-2 y actualizarlo a mano después de cada rotación.",
+        "Replicar el secreto a us-west-2 y configurar la aplicación de standby para leer la réplica en su propia región.",
+        "Guardar las credenciales en variables de entorno de la aplicación en ambas regiones."
+      ],
+      "explanation": "Secrets Manager puede replicar un secreto a otras regiones. Con la rotación habilitada en el secreto primario, el nuevo valor se propaga automáticamente a las réplicas, así que la aplicación de standby lee las credenciales vigentes localmente durante una caída regional.",
+      "notes": [
+        "La región primaria no está disponible durante el desastre.",
+        "Las actualizaciones manuales son propensas a errores y pueden dejar credenciales viejas.",
+        "Correcta: réplica regional sincronizada automáticamente con la rotación.",
+        "Las variables de entorno no rotan y son menos seguras."
+      ]
+    }
+  },
+  {
+    "id": "saa2-056",
+    "domain": "secure",
+    "topics": [
+      "organizations"
+    ],
+    "difficulty": 2,
+    "stem": "A company plans to grow from 10 to 200 AWS accounts over the next year. The platform team wants every new account to be created with the company's baseline: centralized CloudTrail and Config logging in a log archive account, single sign-on through IAM Identity Center, and preventive and detective guardrails. Teams should be able to request new accounts through a self-service process. What should the solutions architect recommend?",
+    "options": [
+      "Set up an AWS Control Tower landing zone and provision new accounts with Account Factory.",
+      "Use a single AWS account with one VPC per team instead of multiple accounts.",
+      "Write a script that calls organizations:CreateAccount and then configures each service with CLI commands.",
+      "Create each account manually from the AWS Organizations console and run a checklist."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "AWS Control Tower sets up a well-architected multi-account landing zone with centralized logging, IAM Identity Center, and preventive and detective controls. Account Factory, available as a self-service product in Service Catalog, provisions new accounts that inherit the baseline.",
+    "notes": [
+      "Correct: managed landing zone with self-service account vending.",
+      "Loses the isolation and governance benefits of a multi-account strategy.",
+      "Rebuilds what Control Tower already provides and must be maintained.",
+      "Does not scale to 200 accounts and baseline drift is likely."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/controltower/latest/userguide/methods-of-provisioning.html"
+    ],
+    "es": {
+      "stem": "Una empresa planea crecer de 10 a 200 cuentas de AWS durante el próximo año. El equipo de plataforma quiere que cada cuenta nueva se cree con la línea base de la empresa: registro centralizado de CloudTrail y Config en una cuenta de archivo de logs, inicio de sesión único con IAM Identity Center y barreras preventivas y detectivas. Los equipos deben poder solicitar cuentas nuevas por autoservicio. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Configurar una landing zone de AWS Control Tower y aprovisionar las cuentas nuevas con Account Factory.",
+        "Usar una sola cuenta de AWS con una VPC por equipo en lugar de varias cuentas.",
+        "Escribir un script que llame a organizations:CreateAccount y luego configure cada servicio con comandos de la CLI.",
+        "Crear cada cuenta a mano desde la consola de AWS Organizations y seguir una lista de verificación."
+      ],
+      "explanation": "AWS Control Tower configura una landing zone multicuenta con registro centralizado, IAM Identity Center y controles preventivos y detectivos. Account Factory, disponible como producto de autoservicio en Service Catalog, aprovisiona cuentas nuevas que heredan la línea base.",
+      "notes": [
+        "Correcta: landing zone administrada con creación de cuentas por autoservicio.",
+        "Pierde el aislamiento y el gobierno que da una estrategia multicuenta.",
+        "Reconstruye lo que Control Tower ya ofrece y hay que mantenerlo.",
+        "No escala a 200 cuentas y es probable que la línea base se desvíe."
+      ]
+    }
+  },
+  {
+    "id": "saa2-057",
+    "domain": "secure",
+    "topics": [
+      "iam",
+      "s3"
+    ],
+    "difficulty": 2,
+    "stem": "A mobile game signs in players with Amazon Cognito. Signed-in players must upload screenshots directly to Amazon S3 from the app, and guests who have not signed in must be able to read public leaderboard files. The developer configured a Cognito user pool, but the app still cannot call S3. What should the developer add?",
+    "options": [
+      "A Cognito identity pool that exchanges user pool tokens for temporary AWS credentials, with separate IAM roles for authenticated and unauthenticated identities.",
+      "An API key in API Gateway that the app uses to call S3.",
+      "IAM users for each player, created when the player signs up.",
+      "A second Cognito user pool for guest players."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "User pools handle authentication and issue tokens; identity pools handle authorization by granting temporary AWS credentials. An identity pool can map authenticated and unauthenticated (guest) identities to different IAM roles with least-privilege S3 permissions.",
+    "notes": [
+      "Correct: identity pools provide AWS credentials for signed-in users and guests.",
+      "API keys do not grant access to S3.",
+      "IAM users do not scale to millions of players and create long-term credentials.",
+      "User pools do not issue AWS credentials, regardless of how many exist."
+    ],
+    "sources": [
+      "https://repost.aws/knowledge-center/cognito-user-pools-identity-pools"
+    ],
+    "es": {
+      "stem": "Un juego móvil autentica a los jugadores con Amazon Cognito. Los jugadores con sesión iniciada deben subir capturas directamente a Amazon S3 desde la app, y los invitados sin sesión deben poder leer archivos públicos de marcadores. El desarrollador configuró un user pool de Cognito, pero la app sigue sin poder llamar a S3. ¿Qué debe agregar el desarrollador?",
+      "options": [
+        "Un identity pool de Cognito que intercambie los tokens del user pool por credenciales temporales de AWS, con roles de IAM distintos para identidades autenticadas y no autenticadas.",
+        "Una API key en API Gateway que la app use para llamar a S3.",
+        "Usuarios de IAM para cada jugador, creados al registrarse.",
+        "Un segundo user pool de Cognito para los jugadores invitados."
+      ],
+      "explanation": "Los user pools se encargan de la autenticación y emiten tokens; los identity pools se encargan de la autorización otorgando credenciales temporales de AWS. Un identity pool puede asignar identidades autenticadas y no autenticadas (invitados) a roles de IAM distintos con permisos mínimos sobre S3.",
+      "notes": [
+        "Correcta: los identity pools dan credenciales de AWS a usuarios con sesión y a invitados.",
+        "Las API keys no dan acceso a S3.",
+        "Los usuarios de IAM no escalan a millones de jugadores y crean credenciales de larga duración.",
+        "Los user pools no emiten credenciales de AWS, sin importar cuántos haya."
+      ]
+    }
+  },
+  {
+    "id": "saa2-058",
+    "domain": "secure",
+    "topics": [
+      "s3",
+      "migration-dr"
+    ],
+    "difficulty": 2,
+    "stem": "A company exchanges files with 50 external partners that can only use SFTP. The partners currently connect to an SFTP server on an EC2 instance that the company must patch and scale, and the files are then copied to Amazon S3 for processing. The company wants a fully managed service that stores files directly in S3 and lets the partners keep using SFTP. What should the solutions architect recommend?",
+    "options": [
+      "AWS DataSync scheduled tasks from the EC2 instance to S3.",
+      "S3 presigned URLs sent to each partner by email.",
+      "Amazon S3 File Gateway deployed on premises.",
+      "AWS Transfer Family with an SFTP endpoint that uses Amazon S3 as its storage."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "AWS Transfer Family provides fully managed SFTP, FTPS, and FTP endpoints that transfer files directly into and out of Amazon S3 or Amazon EFS, removing the need to operate SFTP servers. Partners keep their SFTP clients.",
+    "notes": [
+      "Keeps the self-managed EC2 SFTP server.",
+      "Changes the partners' protocol and workflow.",
+      "File Gateway provides NFS/SMB access for on-premises applications, not SFTP for external partners.",
+      "Correct: managed SFTP directly on top of S3."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/architecture/managed-file-transfer-using-aws-transfer-family-and-amazon-s3/"
+    ],
+    "es": {
+      "stem": "Una empresa intercambia archivos con 50 socios externos que sólo pueden usar SFTP. Hoy los socios se conectan a un servidor SFTP en una instancia EC2 que la empresa debe parchar y escalar, y luego los archivos se copian a Amazon S3 para procesarlos. La empresa quiere un servicio totalmente administrado que guarde los archivos directamente en S3 y que los socios sigan usando SFTP. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Tareas programadas de AWS DataSync desde la instancia EC2 hacia S3.",
+        "URL prefirmadas de S3 enviadas por correo a cada socio.",
+        "Amazon S3 File Gateway desplegado on-premises.",
+        "AWS Transfer Family con un endpoint SFTP que use Amazon S3 como almacenamiento."
+      ],
+      "explanation": "AWS Transfer Family ofrece endpoints SFTP, FTPS y FTP totalmente administrados que transfieren archivos directamente hacia y desde Amazon S3 o Amazon EFS, sin operar servidores SFTP. Los socios conservan sus clientes SFTP.",
+      "notes": [
+        "Mantiene el servidor SFTP autoadministrado en EC2.",
+        "Cambia el protocolo y el flujo de trabajo de los socios.",
+        "File Gateway da acceso NFS/SMB a aplicaciones on-premises, no SFTP para socios externos.",
+        "Correcta: SFTP administrado directamente sobre S3."
+      ]
+    }
+  },
+  {
+    "id": "saa2-059",
+    "domain": "secure",
+    "topics": [
+      "containers",
+      "security-services"
+    ],
+    "difficulty": 2,
+    "stem": "A development team pushes container images to Amazon ECR many times a day and deploys them to Amazon ECS. The security team wants every image, including existing images, to be continuously scanned for operating system and programming language package vulnerabilities, with results re-evaluated when new CVEs are published. What should the solutions architect enable?",
+    "options": [
+      "AWS Config rules that check the image tags.",
+      "Amazon GuardDuty ECS Runtime Monitoring.",
+      "ECR basic scanning on push only.",
+      "Amazon ECR enhanced scanning with Amazon Inspector, configured for continuous scanning."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "ECR enhanced scanning is powered by Amazon Inspector. It scans for operating system and language package vulnerabilities and, with continuous scanning, re-scans images when new vulnerabilities are published.",
+    "notes": [
+      "Tags do not indicate vulnerabilities.",
+      "Detects runtime threats, not image vulnerabilities.",
+      "Basic scanning scans at push time and focuses on operating system packages.",
+      "Correct: continuous OS and language package scanning."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning-enhanced.html"
+    ],
+    "es": {
+      "stem": "Un equipo de desarrollo sube imágenes de contenedor a Amazon ECR muchas veces al día y las despliega en Amazon ECS. El equipo de seguridad quiere que todas las imágenes, incluidas las existentes, se escaneen continuamente en busca de vulnerabilidades del sistema operativo y de paquetes de lenguajes de programación, y que los resultados se reevalúen al publicarse nuevos CVE. ¿Qué debe habilitar el arquitecto de soluciones?",
+      "options": [
+        "Reglas de AWS Config que revisen las etiquetas de las imágenes.",
+        "ECS Runtime Monitoring de Amazon GuardDuty.",
+        "El escaneo básico de ECR sólo al subir la imagen.",
+        "El escaneo mejorado de Amazon ECR con Amazon Inspector, configurado para escaneo continuo."
+      ],
+      "explanation": "El escaneo mejorado de ECR funciona con Amazon Inspector. Escanea vulnerabilidades del sistema operativo y de paquetes de lenguajes y, con escaneo continuo, vuelve a escanear las imágenes cuando se publican nuevas vulnerabilidades.",
+      "notes": [
+        "Las etiquetas no indican vulnerabilidades.",
+        "Detecta amenazas en tiempo de ejecución, no vulnerabilidades de imágenes.",
+        "El escaneo básico se hace al subir la imagen y se centra en paquetes del sistema operativo.",
+        "Correcta: escaneo continuo del SO y de paquetes de lenguajes."
+      ]
+    }
+  },
+  {
+    "id": "saa2-060",
+    "domain": "secure",
+    "topics": [
+      "lambda",
+      "iam"
+    ],
+    "difficulty": 2,
+    "stem": "A company exposes a Lambda function to internal automation scripts that run on EC2 instances in other AWS accounts of the same organization. The company wants the simplest HTTPS endpoint for the function without deploying API Gateway, and only authenticated AWS principals from the organization may invoke it. What should the solutions architect configure?",
+    "options": [
+      "A Lambda function URL with the AWS_IAM auth type and a resource-based policy that allows lambda:InvokeFunctionUrl and lambda:InvokeFunction for principals in the organization.",
+      "A public Application Load Balancer with the Lambda function as the target.",
+      "A Lambda function URL with auth type NONE and a secret query string parameter.",
+      "An Amazon SNS topic that the scripts publish to and that triggers the function."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Function URLs provide a dedicated HTTPS endpoint for a Lambda function. With the AWS_IAM auth type, callers must sign requests with SigV4, and the resource-based policy controls which principals (for example, those in the organization) can invoke the URL. Function URLs created since October 2025 require both lambda:InvokeFunctionUrl and lambda:InvokeFunction permissions.",
+    "notes": [
+      "Correct: simple HTTPS endpoint with IAM authentication.",
+      "An ALB does not authenticate AWS principals and adds components.",
+      "Anyone who learns the parameter could invoke the function.",
+      "Changes the integration to asynchronous messaging instead of an HTTPS endpoint."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/urls-auth.html"
+    ],
+    "es": {
+      "stem": "Una empresa expone una función Lambda a scripts de automatización internos que corren en instancias EC2 de otras cuentas de AWS de la misma organización. La empresa quiere el endpoint HTTPS más sencillo para la función sin desplegar API Gateway, y sólo principales de AWS autenticados de la organización pueden invocarla. ¿Qué debe configurar el arquitecto de soluciones?",
+      "options": [
+        "Una function URL de Lambda con auth type AWS_IAM y una política basada en recursos que permita lambda:InvokeFunctionUrl y lambda:InvokeFunction a los principales de la organización.",
+        "Un Application Load Balancer público con la función Lambda como destino.",
+        "Una function URL de Lambda con auth type NONE y un parámetro secreto en la query string.",
+        "Un tema de Amazon SNS en el que publiquen los scripts y que dispare la función."
+      ],
+      "explanation": "Las function URLs dan un endpoint HTTPS dedicado a una función Lambda. Con el auth type AWS_IAM, quien llama debe firmar las solicitudes con SigV4, y la política basada en recursos controla qué principales (por ejemplo, los de la organización) pueden invocar la URL. Las function URLs creadas desde octubre de 2025 requieren ambos permisos: lambda:InvokeFunctionUrl y lambda:InvokeFunction.",
+      "notes": [
+        "Correcta: endpoint HTTPS sencillo con autenticación de IAM.",
+        "Un ALB no autentica principales de AWS y agrega componentes.",
+        "Cualquiera que conozca el parámetro podría invocar la función.",
+        "Cambia la integración a mensajería asíncrona en vez de un endpoint HTTPS."
+      ]
+    }
+  }
+]

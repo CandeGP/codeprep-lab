@@ -1,0 +1,29 @@
+{
+  "id": "k-mas-frecuentes",
+  "title": "Los k elementos más frecuentes",
+  "difficulty": "media",
+  "description": "Dado un arreglo `nums` y un entero `k`, devuelve los `k` valores que **más veces aparecen**. Puedes devolverlos en **cualquier orden**. Se garantiza que la respuesta es única.\n\n**Reto:** mejor que O(n log n).\n\n**Ejemplos**\n\n```\n[1,1,1,2,2,3], k = 2  → [1, 2]\n[4], k = 1            → [4]\n```",
+  "functionName": "kMasFrecuentes",
+  "unordered": true,
+  "starter": {
+    "javascript": "function kMasFrecuentes(nums, k) {\n  // tu código aquí\n}\n",
+    "python": "def kMasFrecuentes(nums, k):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": [[1, 1, 1, 2, 2, 3], 2], "expected": [1, 2] },
+    { "args": [[4], 1], "expected": [4] },
+    { "args": [[5, 3, 5, 3, 5, 9, 9, 9, 9], 2], "expected": [9, 5] },
+    { "args": [[-1, -1, 2, 2, 2, 7], 1], "expected": [2] },
+    { "args": [[1, 2, 3, 1, 2, 1], 3], "expected": [1, 2, 3] }
+  ],
+  "hints": [
+    "Primero cuenta frecuencias con un mapa.",
+    "Una frecuencia está entre 1 y n: crea n+1 'cubetas' donde la cubeta f guarda los valores con frecuencia f.",
+    "Recorre las cubetas desde la más alta hasta juntar k valores."
+  ],
+  "solution": {
+    "explanation": "Contamos frecuencias y hacemos *bucket sort* por frecuencia: la cubeta `f` contiene los valores que aparecen `f` veces. Recorriendo de la frecuencia mayor a la menor obtenemos los k primeros.\n\n**Tiempo:** O(n) · **Espacio:** O(n). (Con un min-heap de tamaño k sería O(n log k).)",
+    "javascript": "function kMasFrecuentes(nums, k) {\n  const freq = new Map();\n  for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);\n  const cubetas = Array.from({ length: nums.length + 1 }, () => []);\n  for (const [x, f] of freq) cubetas[f].push(x);\n  const res = [];\n  for (let f = cubetas.length - 1; f > 0 && res.length < k; f--) {\n    for (const x of cubetas[f]) {\n      res.push(x);\n      if (res.length === k) break;\n    }\n  }\n  return res;\n}\n",
+    "python": "from collections import Counter\n\ndef kMasFrecuentes(nums, k):\n    freq = Counter(nums)\n    cubetas = [[] for _ in range(len(nums) + 1)]\n    for x, f in freq.items():\n        cubetas[f].append(x)\n    res = []\n    for f in range(len(cubetas) - 1, 0, -1):\n        for x in cubetas[f]:\n            res.append(x)\n            if len(res) == k:\n                return res\n    return res\n"
+  }
+}

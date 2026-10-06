@@ -1,0 +1,29 @@
+{
+  "id": "potencia-modular",
+  "title": "Potencia modular rápida",
+  "difficulty": "media",
+  "description": "Implementa `potenciaMod(a, n, m)` que devuelve `aⁿ mod m` para enteros `a >= 0`, `n >= 0` y `1 <= m <= 10⁹ + 7`, en **O(log n)**.\n\nEn JavaScript el producto de dos números cercanos a 10⁹ excede 2⁵³ y pierde precisión: usa `BigInt` en las multiplicaciones y devuelve un `Number`.\n\n**Ejemplos**\n\n```\npotenciaMod(2, 10, 1000)          → 24     // 1024 mod 1000\npotenciaMod(3, 0, 7)              → 1\npotenciaMod(2, 1000000, 1000000007) → 235042059\n```",
+  "functionName": "potenciaMod",
+  "starter": {
+    "javascript": "function potenciaMod(a, n, m) {\n  // tu código aquí\n}\n",
+    "python": "def potenciaMod(a, n, m):\n    # tu código aquí (sin usar pow de 3 argumentos)\n    pass\n"
+  },
+  "tests": [
+    { "args": [2, 10, 1000], "expected": 24 },
+    { "args": [3, 0, 7], "expected": 1 },
+    { "args": [5, 3, 1], "expected": 0 },
+    { "args": [7, 13, 13], "expected": 7 },
+    { "args": [2, 1000000, 1000000007], "expected": 235042059 },
+    { "args": [123456789, 987654321, 1000000007], "expected": 652541198 }
+  ],
+  "hints": [
+    "Si n es par, aⁿ = (a^(n/2))². Si es impar, aⁿ = a · aⁿ⁻¹.",
+    "Versión iterativa: recorre los bits de n; cuando el bit está encendido multiplica el resultado por la base actual, y eleva la base al cuadrado en cada paso.",
+    "Aplica mod después de cada multiplicación. Ojo: con m = 1 el resultado siempre es 0."
+  ],
+  "solution": {
+    "explanation": "Exponenciación binaria: por cada bit de `n` elevamos la base al cuadrado, y cuando el bit vale 1 la acumulamos en el resultado. Reducimos módulo `m` en cada paso para que los números no crezcan.\n\n**Tiempo:** O(log n) · **Espacio:** O(1)",
+    "javascript": "function potenciaMod(a, n, m) {\n  let r = 1n % BigInt(m);\n  let base = BigInt(a) % BigInt(m);\n  let e = BigInt(n);\n  const M = BigInt(m);\n  while (e > 0n) {\n    if (e & 1n) r = (r * base) % M;\n    base = (base * base) % M;\n    e >>= 1n;\n  }\n  return Number(r);\n}\n",
+    "python": "def potenciaMod(a, n, m):\n    r = 1 % m\n    base = a % m\n    while n:\n        if n & 1:\n            r = r * base % m\n        base = base * base % m\n        n >>= 1\n    return r\n"
+  }
+}

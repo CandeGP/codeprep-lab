@@ -1,0 +1,61 @@
+[
+  {
+    "id": "q1",
+    "question": "¿Cuál es la complejidad de un ciclo que recorre un arreglo A y, después (no anidado), otro ciclo que recorre un arreglo B?",
+    "options": ["O(A · B)", "O(A + B)", "O(n²)", "O(max(A, B)²)"],
+    "answer": 1,
+    "explanation": "Los pasos consecutivos se suman. Como A y B son entradas independientes, se escribe O(A + B)."
+  },
+  {
+    "id": "q2",
+    "question": "Simplifica O(3n² + 10n + 500).",
+    "options": ["O(3n²)", "O(n² + n)", "O(n²)", "O(n)"],
+    "answer": 2,
+    "explanation": "Se eliminan constantes y términos no dominantes: queda O(n²)."
+  },
+  {
+    "id": "q3",
+    "question": "Un algoritmo que en cada paso descarta la mitad de los datos restantes tiene complejidad…",
+    "options": ["O(n)", "O(n log n)", "O(log n)", "O(√n)"],
+    "answer": 2,
+    "explanation": "Dividir el problema a la mitad repetidamente toma log₂ n pasos."
+  },
+  {
+    "id": "q4",
+    "question": "¿Cuánto espacio usa una función recursiva no memoizada que baja n niveles de profundidad (sin estructuras auxiliares)?",
+    "options": ["O(1)", "O(log n)", "O(n)", "O(2ⁿ)"],
+    "answer": 2,
+    "explanation": "Cada llamada activa ocupa un marco en la pila; con profundidad n se usan O(n) marcos."
+  },
+  {
+    "id": "q5",
+    "question": "¿Por qué agregar al final de un arreglo dinámico se considera O(1) si a veces hay que copiar todo?",
+    "options": [
+      "Porque la copia la hace el sistema operativo gratis",
+      "Porque el costo de las copias, repartido entre todas las inserciones, es constante (amortizado)",
+      "Porque los arreglos dinámicos nunca se copian",
+      "Porque Big O ignora el peor caso"
+    ],
+    "answer": 1,
+    "explanation": "Al duplicar la capacidad, las copias totales suman ~2n para n inserciones: O(1) amortizado por inserción."
+  },
+  {
+    "id": "q6",
+    "question": "Fibonacci recursivo ingenuo (fib(n-1) + fib(n-2)) tiene complejidad temporal aproximada de…",
+    "options": ["O(n)", "O(n²)", "O(2ⁿ)", "O(log n)"],
+    "answer": 2,
+    "explanation": "Cada llamada genera dos llamadas más; el árbol de recursión crece como 2ⁿ."
+  },
+  {
+    "id": "q7",
+    "question": "¿Cuál de estas afirmaciones es correcta sobre la base del logaritmo en Big O?",
+    "options": [
+      "O(log₂ n) es más rápido que O(log₁₀ n)",
+      "La base no importa, sólo difieren por una constante",
+      "Siempre hay que usar log₁₀",
+      "log n sólo aparece en árboles"
+    ],
+    "answer": 1,
+    "explanation": "logₐ n = log_b n / log_b a; el factor 1/log_b a es constante y se elimina."
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "id": "producto-excepto-si-mismo",
+  "title": "Producto de todos excepto sí mismo",
+  "difficulty": "media",
+  "description": "Dado un arreglo `nums`, devuelve un arreglo `res` donde `res[i]` es el producto de **todos los elementos excepto** `nums[i]`.\n\nRestricciones: **no uses división** y resuélvelo en O(n).\n\n**Ejemplo**\n\n```\n[1, 2, 3, 4]  →  [24, 12, 8, 6]\n```",
+  "functionName": "productoExcepto",
+  "starter": {
+    "javascript": "function productoExcepto(nums) {\n  // tu código aquí\n}\n",
+    "python": "def productoExcepto(nums):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": [[1, 2, 3, 4]], "expected": [24, 12, 8, 6] },
+    { "args": [[2, 3]], "expected": [3, 2] },
+    { "args": [[-1, 1, 0, -3, 3]], "expected": [0, 0, 9, 0, 0] },
+    { "args": [[5, 0, 0]], "expected": [0, 0, 0] },
+    { "args": [[1, 1, 1, 1]], "expected": [1, 1, 1, 1] }
+  ],
+  "hints": [
+    "res[i] = (producto de todo lo que está a la izquierda de i) × (producto de todo lo que está a la derecha de i).",
+    "Calcula los productos por la izquierda en una pasada y multiplica por los de la derecha en una segunda pasada hacia atrás."
+  ],
+  "solution": {
+    "explanation": "Primera pasada: `res[i]` = producto de los elementos a la izquierda. Segunda pasada de derecha a izquierda con un acumulador `der`: multiplicamos `res[i]` por el producto de los elementos a la derecha.\n\nCuidado: en JavaScript `0 * -3` da `-0`; lo normalizamos con `|| 0` para que coincida con `0`.\n\n**Tiempo:** O(n) · **Espacio:** O(1) extra (sin contar la salida)",
+    "javascript": "function productoExcepto(nums) {\n  const n = nums.length;\n  const res = new Array(n).fill(1);\n  for (let i = 1; i < n; i++) res[i] = res[i - 1] * nums[i - 1];\n  let der = 1;\n  for (let i = n - 1; i >= 0; i--) {\n    res[i] = res[i] * der || 0;\n    der *= nums[i];\n  }\n  return res;\n}\n",
+    "python": "def productoExcepto(nums):\n    n = len(nums)\n    res = [1] * n\n    for i in range(1, n):\n        res[i] = res[i - 1] * nums[i - 1]\n    der = 1\n    for i in range(n - 1, -1, -1):\n        res[i] *= der\n        der *= nums[i]\n    return res\n"
+  }
+}

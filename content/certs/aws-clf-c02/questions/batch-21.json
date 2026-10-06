@@ -1,0 +1,454 @@
+[
+  {
+    "id": "clf-201",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 2,
+    "stem": "Which service can store configuration parameters and simple secrets (such as encrypted strings) hierarchically and at no cost in its standard tier?",
+    "options": [
+      "AWS Systems Manager Parameter Store",
+      "AWS Artifact",
+      "Amazon Inspector",
+      "Amazon S3 Glacier"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Parameter Store holds configuration and secrets (SecureString encrypted with KMS). Secrets Manager adds native automatic rotation.",
+    "notes": [
+      "Correct.",
+      "Compliance.",
+      "Vulnerabilities.",
+      "Archive storage."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio puede almacenar parámetros de configuración y secretos simples (como cadenas cifradas) de forma jerárquica y gratuita en su nivel estándar?",
+      "options": [
+        "AWS Systems Manager Parameter Store",
+        "AWS Artifact",
+        "Amazon Inspector",
+        "Amazon S3 Glacier"
+      ],
+      "explanation": "Parameter Store guarda configuración y secretos (SecureString cifrado con KMS). Secrets Manager añade rotación automática nativa.",
+      "notes": [
+        "Correcta.",
+        "Cumplimiento.",
+        "Vulnerabilidades.",
+        "Archivo."
+      ]
+    }
+  },
+  {
+    "id": "clf-202",
+    "domain": "security",
+    "topics": [
+      "compliance"
+    ],
+    "difficulty": 3,
+    "stem": "What is AWS GovCloud (US)?",
+    "options": [
+      "A CloudFront edge location",
+      "A free support plan",
+      "Isolated Regions designed for US government workloads with strict regulatory requirements",
+      "A discount for nonprofit organizations"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "AWS GovCloud (US) consists of isolated Regions operated by US personnel to meet requirements such as ITAR and FedRAMP High.",
+    "notes": [
+      "Not an edge location.",
+      "Not a support plan.",
+      "Correct.",
+      "Not a discount program."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/whatis.html",
+      "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html"
+    ],
+    "es": {
+      "stem": "¿Qué describe la \"nube de AWS para gobiernos\" (AWS GovCloud (US))?",
+      "options": [
+        "Una edge location de CloudFront",
+        "Un plan de soporte gratuito",
+        "Regiones aisladas diseñadas para cargas gubernamentales de EE. UU. con requisitos regulatorios estrictos",
+        "Un descuento para organizaciones sin fines de lucro"
+      ],
+      "explanation": "AWS GovCloud (US) son regiones aisladas operadas por personal estadounidense para cumplir requisitos como ITAR y FedRAMP High.",
+      "notes": [
+        "No es una edge location.",
+        "No es un plan de soporte.",
+        "Correcta.",
+        "No es un programa de descuentos."
+      ]
+    }
+  },
+  {
+    "id": "clf-203",
+    "domain": "security",
+    "topics": [
+      "security-services",
+      "iam"
+    ],
+    "difficulty": 3,
+    "stem": "A company wants to ensure that only users who signed in with MFA can terminate EC2 instances. How can it do this?",
+    "options": [
+      "With a cost allocation tag",
+      "With a security group",
+      "With an AWS WAF rule",
+      "With an aws:MultiFactorAuthPresent condition in an IAM policy"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "IAM policies support conditions; aws:MultiFactorAuthPresent lets you require MFA for sensitive actions.",
+    "notes": [
+      "Does not control permissions.",
+      "Filters traffic, not API actions.",
+      "Filters web traffic.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_configure-api-require.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere asegurarse de que sólo usuarios con MFA puedan terminar instancias EC2. ¿Cómo lo logra?",
+      "options": [
+        "Con una etiqueta de costos",
+        "Con un security group",
+        "Con una regla de AWS WAF",
+        "Con una condición aws:MultiFactorAuthPresent en una política de IAM"
+      ],
+      "explanation": "Las políticas de IAM admiten condiciones; aws:MultiFactorAuthPresent permite exigir MFA para acciones sensibles.",
+      "notes": [
+        "No controla permisos.",
+        "Filtra tráfico, no acciones de API.",
+        "Filtra tráfico web.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-204",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 1,
+    "stem": "Which service helps protect accounts against unauthorized use of resources by analyzing anomalous behavior such as cryptocurrency mining on EC2?",
+    "options": [
+      "AWS Artifact",
+      "AWS Budgets",
+      "Amazon GuardDuty",
+      "Amazon Macie"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "GuardDuty detects compromised instances, cryptocurrency mining, and communication with malicious IP addresses.",
+    "notes": [
+      "Compliance reports.",
+      "Only alerts on spending; does not detect the cause.",
+      "Correct.",
+      "Focuses on sensitive data in S3."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio ayuda a proteger las cuentas contra el uso no autorizado de recursos analizando comportamientos anómalos como minería de criptomonedas en EC2?",
+      "options": [
+        "AWS Artifact",
+        "AWS Budgets",
+        "Amazon GuardDuty",
+        "Amazon Macie"
+      ],
+      "explanation": "GuardDuty detecta instancias comprometidas, minería de criptomonedas y comunicaciones con IP maliciosas.",
+      "notes": [
+        "Informes de cumplimiento.",
+        "Sólo alerta de gasto, no detecta la causa.",
+        "Correcta.",
+        "Se enfoca en datos sensibles en S3."
+      ]
+    }
+  },
+  {
+    "id": "clf-205",
+    "domain": "technology",
+    "topics": [
+      "ec2"
+    ],
+    "difficulty": 2,
+    "stem": "Which feature defines a launch configuration (AMI, instance type, network) that Auto Scaling uses as a template to launch groups of EC2 instances?",
+    "options": [
+      "A public AMI",
+      "An Elastic IP",
+      "A placement group",
+      "A launch template"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "A launch template defines launch parameters and is the recommended way to configure Auto Scaling groups.",
+    "notes": [
+      "Only defines the image.",
+      "A static IP.",
+      "Controls the physical placement of instances.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-templates.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ],
+    "es": {
+      "stem": "¿Qué funcionalidad permite lanzar grupos de instancias EC2 con una configuración definida (AMI, tipo, red) que Auto Scaling usa como plantilla?",
+      "options": [
+        "AMI pública",
+        "Elastic IP",
+        "Placement group",
+        "Launch template"
+      ],
+      "explanation": "Una launch template define los parámetros de lanzamiento y es la forma recomendada de configurar Auto Scaling groups.",
+      "notes": [
+        "Sólo define la imagen.",
+        "Es una IP estática.",
+        "Controla la ubicación física de instancias.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-206",
+    "domain": "technology",
+    "topics": [
+      "s3",
+      "storage"
+    ],
+    "difficulty": 1,
+    "stem": "What type of storage is Amazon S3?",
+    "options": [
+      "Block storage",
+      "Object storage",
+      "A shared POSIX file system",
+      "A relational database"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "S3 stores objects (data + metadata + key) in buckets; EBS is block storage and EFS is file storage.",
+    "notes": [
+      "That is EBS.",
+      "Correct.",
+      "That is EFS.",
+      "That is RDS."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+    ],
+    "es": {
+      "stem": "¿Qué tipo de almacenamiento es Amazon S3?",
+      "options": [
+        "Almacenamiento de bloque",
+        "Almacenamiento de objetos",
+        "Sistema de archivos POSIX compartido",
+        "Base de datos relacional"
+      ],
+      "explanation": "S3 almacena objetos (datos + metadatos + clave) en buckets; EBS es de bloque y EFS es de archivos.",
+      "notes": [
+        "Eso es EBS.",
+        "Correcta.",
+        "Eso es EFS.",
+        "Eso es RDS."
+      ]
+    }
+  },
+  {
+    "id": "clf-207",
+    "domain": "technology",
+    "topics": [
+      "app-integration"
+    ],
+    "difficulty": 1,
+    "stem": "A company needs to send transactional and marketing email to its customers at scale. Which service should it use?",
+    "options": [
+      "Amazon SQS",
+      "Amazon Simple Email Service (SES)",
+      "Amazon WorkMail",
+      "AWS Direct Connect"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Amazon SES is a scalable email sending service for applications.",
+    "notes": [
+      "A message queue.",
+      "Correct.",
+      "Corporate email for employees (being retired).",
+      "Connectivity."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/ses/latest/dg/Welcome.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/application-integration.html"
+    ],
+    "es": {
+      "stem": "Una empresa necesita enviar correos transaccionales y de marketing a sus clientes a gran escala. ¿Qué servicio debe usar?",
+      "options": [
+        "Amazon SQS",
+        "Amazon Simple Email Service (SES)",
+        "Amazon WorkMail",
+        "AWS Direct Connect"
+      ],
+      "explanation": "Amazon SES es un servicio de envío de correo electrónico escalable para aplicaciones.",
+      "notes": [
+        "Es una cola de mensajes.",
+        "Correcta.",
+        "Es correo corporativo para empleados (en retiro).",
+        "Es conectividad."
+      ]
+    }
+  },
+  {
+    "id": "clf-208",
+    "domain": "technology",
+    "topics": [
+      "dev-tools"
+    ],
+    "difficulty": 1,
+    "stem": "Which service lets you quickly build and host full-stack web and mobile applications with built-in authentication, APIs, and hosting?",
+    "options": [
+      "AWS Outposts",
+      "AWS Batch",
+      "Amazon EMR",
+      "AWS Amplify"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Amplify provides tools and hosting to build full-stack web and mobile apps on AWS.",
+    "notes": [
+      "On-premises hardware.",
+      "Batch jobs.",
+      "Big data.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.amplify.aws/",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/developer-tools.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio permite desarrollar y alojar rápidamente aplicaciones web y móviles full-stack con autenticación, APIs y hosting integrados?",
+      "options": [
+        "AWS Outposts",
+        "AWS Batch",
+        "Amazon EMR",
+        "AWS Amplify"
+      ],
+      "explanation": "Amplify ofrece herramientas y hosting para crear apps web y móviles full-stack sobre AWS.",
+      "notes": [
+        "Hardware on-premises.",
+        "Trabajos por lotes.",
+        "Big data.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-209",
+    "domain": "technology",
+    "topics": [
+      "analytics-ml"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to run managed Apache Spark and Hadoop to process large volumes of data. Which service should it use?",
+    "options": [
+      "Amazon Lightsail",
+      "Amazon EMR",
+      "AWS AppSync",
+      "Amazon Aurora"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Amazon EMR is the managed big data platform for Spark, Hadoop, Hive, Presto, and more.",
+    "notes": [
+      "Simple servers.",
+      "Correct.",
+      "GraphQL APIs.",
+      "A relational database."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/analytics.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere ejecutar Apache Spark y Hadoop administrados para procesar grandes volúmenes de datos. ¿Qué servicio debe usar?",
+      "options": [
+        "Amazon Lightsail",
+        "Amazon EMR",
+        "AWS AppSync",
+        "Amazon Aurora"
+      ],
+      "explanation": "Amazon EMR es la plataforma de big data administrada para Spark, Hadoop, Hive, Presto, etc.",
+      "notes": [
+        "Servidores simples.",
+        "Correcta.",
+        "APIs GraphQL.",
+        "Base relacional."
+      ]
+    }
+  },
+  {
+    "id": "clf-210",
+    "domain": "technology",
+    "topics": [
+      "monitoring"
+    ],
+    "difficulty": 1,
+    "stem": "Which service builds an inventory of AWS resources and shows how they were configured at a point in time in the past?",
+    "options": [
+      "AWS Health Dashboard",
+      "Amazon Athena",
+      "AWS CloudShell",
+      "AWS Config"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "AWS Config keeps an inventory and configuration history of resources.",
+    "notes": [
+      "Service health events.",
+      "Queries data in S3.",
+      "A browser-based terminal.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html",
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio crea un inventario de los recursos de AWS y muestra cómo estaban configurados en un momento dado del pasado?",
+      "options": [
+        "AWS Health Dashboard",
+        "Amazon Athena",
+        "AWS CloudShell",
+        "AWS Config"
+      ],
+      "explanation": "AWS Config mantiene un inventario y el historial de configuración de los recursos.",
+      "notes": [
+        "Eventos de salud de servicios.",
+        "Consulta datos en S3.",
+        "Es una terminal en el navegador.",
+        "Correcta."
+      ]
+    }
+  }
+]

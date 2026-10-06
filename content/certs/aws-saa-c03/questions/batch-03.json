@@ -1,0 +1,453 @@
+[
+  {
+    "id": "saa2-021",
+    "domain": "secure",
+    "topics": [
+      "kms-encryption",
+      "s3",
+      "cost-tools"
+    ],
+    "difficulty": 2,
+    "stem": "A company must encrypt all objects in a data lake bucket with a customer managed KMS key so that key usage is auditable. After enabling SSE-KMS, the monthly AWS KMS bill increased sharply and some high-throughput ingestion jobs started receiving KMS throttling errors. The company wants to keep SSE-KMS with the same key and does not want to change application code. What should a solutions architect do?",
+    "options": [
+      "Enable S3 Bucket Keys for SSE-KMS on the bucket.",
+      "Switch the bucket's default encryption to SSE-S3.",
+      "Request a KMS quota increase and keep the current configuration.",
+      "Change the ingestion jobs to encrypt objects client-side before uploading them."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "An S3 Bucket Key is a bucket-level data key that S3 uses to generate object keys, which reduces requests from S3 to AWS KMS by up to 99%. That lowers KMS request costs and throttling, and it is enabled on the bucket without client changes.",
+    "notes": [
+      "Correct: fewer KMS calls, same key, no code changes.",
+      "Loses the auditable customer managed key the company requires.",
+      "May reduce throttling but does not address the cost increase.",
+      "Requires code changes and still calls KMS for every data key."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html"
+    ],
+    "es": {
+      "stem": "Una empresa debe cifrar todos los objetos de un bucket de data lake con una customer managed key de KMS para poder auditar el uso de la clave. Tras habilitar SSE-KMS, la factura mensual de AWS KMS subió mucho y algunos jobs de ingesta de alto rendimiento empezaron a recibir errores de throttling de KMS. La empresa quiere mantener SSE-KMS con la misma clave y no quiere cambiar el código de las aplicaciones. ¿Qué debe hacer un arquitecto de soluciones?",
+      "options": [
+        "Habilitar S3 Bucket Keys para SSE-KMS en el bucket.",
+        "Cambiar el cifrado predeterminado del bucket a SSE-S3.",
+        "Solicitar un aumento de cuota de KMS y mantener la configuración actual.",
+        "Cambiar los jobs de ingesta para cifrar los objetos del lado del cliente antes de subirlos."
+      ],
+      "explanation": "Un S3 Bucket Key es una clave de datos a nivel de bucket que S3 usa para generar las claves de los objetos, lo que reduce hasta 99% las solicitudes de S3 a AWS KMS. Así bajan el costo de solicitudes y el throttling, y se habilita en el bucket sin cambios en los clientes.",
+      "notes": [
+        "Correcta: menos llamadas a KMS, misma clave y sin cambios de código.",
+        "Pierde la customer managed key auditable que la empresa exige.",
+        "Podría reducir el throttling, pero no resuelve el aumento de costo.",
+        "Requiere cambios de código y sigue llamando a KMS por cada data key."
+      ]
+    }
+  },
+  {
+    "id": "saa2-022",
+    "domain": "secure",
+    "topics": [
+      "kms-encryption",
+      "rds-aurora"
+    ],
+    "difficulty": 2,
+    "stem": "An Amazon RDS for PostgreSQL DB instance was created without encryption. A new compliance requirement states that the database and its backups must be encrypted at rest with a customer managed KMS key. A short maintenance window is acceptable. What should the solutions architect do?",
+    "options": [
+      "Take a snapshot, copy it with encryption enabled using the customer managed key, restore a new DB instance from the encrypted copy, and redirect the application to it.",
+      "Create an encrypted read replica of the unencrypted instance and promote it.",
+      "Modify the existing DB instance and enable encryption at rest.",
+      "Enable SSL/TLS for client connections and enforce it with the rds.force_ssl parameter."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "An RDS DB instance can only be encrypted when it is created. For RDS for PostgreSQL, you can encrypt a copy of an unencrypted snapshot and restore a new, encrypted DB instance from it; automated backups and snapshots of the new instance are then encrypted too.",
+    "notes": [
+      "Correct: the supported path to encrypt an existing unencrypted database.",
+      "An encrypted read replica cannot be created from an unencrypted DB instance.",
+      "Encryption cannot be enabled on an existing DB instance.",
+      "Encrypts data in transit, not at rest."
+    ],
+    "sources": [
+      "https://repost.aws/knowledge-center/encrypt-rds-snapshots"
+    ],
+    "es": {
+      "stem": "Una instancia de Amazon RDS for PostgreSQL se creó sin cifrado. Un nuevo requisito de cumplimiento indica que la base de datos y sus respaldos deben estar cifrados en reposo con una customer managed key de KMS. Se acepta una ventana de mantenimiento corta. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Tomar un snapshot, copiarlo con cifrado habilitado usando la customer managed key, restaurar una nueva instancia desde la copia cifrada y redirigir la aplicación a ella.",
+        "Crear una réplica de lectura cifrada de la instancia sin cifrar y promoverla.",
+        "Modificar la instancia existente y habilitar el cifrado en reposo.",
+        "Habilitar SSL/TLS en las conexiones de los clientes y exigirlo con el parámetro rds.force_ssl."
+      ],
+      "explanation": "Una instancia de RDS sólo se puede cifrar al crearla. En RDS for PostgreSQL se puede cifrar una copia de un snapshot sin cifrar y restaurar desde ella una nueva instancia cifrada; los respaldos automáticos y snapshots de la nueva instancia quedan cifrados también.",
+      "notes": [
+        "Correcta: es el camino soportado para cifrar una base existente sin cifrar.",
+        "No se puede crear una réplica cifrada desde una instancia sin cifrar.",
+        "No se puede habilitar el cifrado en una instancia existente.",
+        "Cifra los datos en tránsito, no en reposo."
+      ]
+    }
+  },
+  {
+    "id": "saa2-023",
+    "domain": "secure",
+    "topics": [
+      "migration-dr",
+      "security-services"
+    ],
+    "difficulty": 3,
+    "stem": "After a ransomware incident at a competitor, a company wants to make sure that its AWS Backup recovery points for production databases cannot be deleted before their 35-day retention ends, even by an administrator whose credentials are compromised or by the account root user. What should a solutions architect configure?",
+    "options": [
+      "Copy the recovery points to an S3 bucket with versioning enabled.",
+      "Store the recovery points in a backup vault protected with AWS Backup Vault Lock in compliance mode.",
+      "Store the recovery points in a backup vault protected with AWS Backup Vault Lock in governance mode.",
+      "Attach an IAM policy that denies backup:DeleteRecoveryPoint to all administrators."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "A vault lock in compliance mode cannot be altered or deleted by any user or by AWS once its grace period ends, making recovery points immutable until their retention period completes. Governance mode can still be managed by users with sufficient IAM permissions.",
+    "notes": [
+      "AWS Backup recovery points are not stored as ordinary S3 objects this way, and versioning alone does not prevent deletion.",
+      "Correct: immutable backups that no user can delete early.",
+      "Users with the right IAM permissions can remove a governance-mode lock.",
+      "A compromised administrator could change the IAM policy."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html"
+    ],
+    "es": {
+      "stem": "Después de un incidente de ransomware en un competidor, una empresa quiere asegurarse de que sus puntos de recuperación de AWS Backup de bases de datos de producción no puedan borrarse antes de que termine su retención de 35 días, ni siquiera por un administrador con credenciales comprometidas o por el usuario raíz de la cuenta. ¿Qué debe configurar un arquitecto de soluciones?",
+      "options": [
+        "Copiar los puntos de recuperación a un bucket de S3 con versionado habilitado.",
+        "Guardar los puntos de recuperación en un backup vault protegido con AWS Backup Vault Lock en modo compliance.",
+        "Guardar los puntos de recuperación en un backup vault protegido con AWS Backup Vault Lock en modo governance.",
+        "Adjuntar una política de IAM que deniegue backup:DeleteRecoveryPoint a todos los administradores."
+      ],
+      "explanation": "Un vault lock en modo compliance no puede ser alterado ni eliminado por ningún usuario ni por AWS una vez que termina su periodo de gracia, por lo que los puntos de recuperación son inmutables hasta completar su retención. El modo governance puede ser administrado por usuarios con permisos de IAM suficientes.",
+      "notes": [
+        "Los puntos de recuperación de AWS Backup no se guardan así como objetos de S3, y el versionado por sí solo no impide borrarlos.",
+        "Correcta: respaldos inmutables que nadie puede borrar antes de tiempo.",
+        "Usuarios con los permisos de IAM adecuados pueden quitar un bloqueo en modo governance.",
+        "Un administrador comprometido podría cambiar la política de IAM."
+      ]
+    }
+  },
+  {
+    "id": "saa2-024",
+    "domain": "secure",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 3,
+    "stem": "A company uses a third-party SaaS monitoring vendor that assumes an IAM role in the company's account to read CloudWatch metrics. The vendor serves thousands of customers from the same AWS account. The company's security team is concerned that another vendor customer could trick the vendor into using the company's role ARN. What should the solutions architect add to the role's trust policy?",
+    "options": [
+      "A condition that requires the vendor to use the company's aws:PrincipalOrgID.",
+      "A condition that requires aws:SourceIp to match the company's office network.",
+      "A condition that requires MFA for the vendor's principal.",
+      "A condition that requires sts:ExternalId to match a unique value that the vendor assigns to the company."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "This is the confused deputy problem. Requiring an external ID that is unique per customer in the trust policy ensures that the vendor can assume the role only when it is acting on behalf of that specific customer.",
+    "notes": [
+      "The vendor is not a member of the company's organization.",
+      "The vendor's requests come from the vendor's network, not the company's office.",
+      "Automated vendor systems cannot satisfy an MFA requirement, and MFA does not tie the request to a customer.",
+      "Correct: the standard mitigation for the confused deputy problem."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_common-scenarios_third-party.html"
+    ],
+    "es": {
+      "stem": "Una empresa usa un proveedor SaaS de monitoreo que asume un rol de IAM en la cuenta de la empresa para leer métricas de CloudWatch. El proveedor atiende a miles de clientes desde la misma cuenta de AWS. Al equipo de seguridad le preocupa que otro cliente del proveedor pueda engañarlo para que use el ARN del rol de la empresa. ¿Qué debe agregar el arquitecto de soluciones a la trust policy del rol?",
+      "options": [
+        "Una condición que exija que el proveedor use el aws:PrincipalOrgID de la empresa.",
+        "Una condición que exija que aws:SourceIp coincida con la red de las oficinas de la empresa.",
+        "Una condición que exija MFA al principal del proveedor.",
+        "Una condición que exija que sts:ExternalId coincida con un valor único que el proveedor asigna a la empresa."
+      ],
+      "explanation": "Es el problema del \"confused deputy\". Exigir en la trust policy un external ID único por cliente asegura que el proveedor sólo pueda asumir el rol cuando actúa en nombre de ese cliente específico.",
+      "notes": [
+        "El proveedor no es miembro de la organización de la empresa.",
+        "Las solicitudes del proveedor salen de su red, no de las oficinas de la empresa.",
+        "Los sistemas automatizados del proveedor no pueden cumplir MFA, y MFA no liga la solicitud a un cliente.",
+        "Correcta: es la mitigación estándar del problema del confused deputy."
+      ]
+    }
+  },
+  {
+    "id": "saa2-025",
+    "domain": "secure",
+    "topics": [
+      "kms-encryption",
+      "ebs-efs-fsx",
+      "ec2"
+    ],
+    "difficulty": 1,
+    "stem": "A company's security policy requires every new EBS volume and every snapshot copy in us-east-1 to be encrypted with a specific customer managed KMS key. Engineers launch instances from many AMIs and tools, and some have forgotten to select encryption. Which solution enforces the requirement for new resources with the LEAST effort?",
+    "options": [
+      "Enable EBS encryption by default in us-east-1 and set the customer managed key as the default EBS encryption key.",
+      "Publish an internal guideline and review launch templates monthly.",
+      "Create an AWS Lambda function that runs hourly and encrypts any unencrypted volumes it finds.",
+      "Use only instance types that have NVMe instance store volumes."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "EBS encryption by default is a Region-level setting that forces encryption of new EBS volumes and snapshot copies, using the AWS managed key or a chosen customer managed key. It has no effect on existing volumes, which must be migrated separately.",
+    "notes": [
+      "Correct: enforced automatically for every new volume and snapshot copy in the Region.",
+      "Relies on people remembering; not enforced.",
+      "Reactive, complex, and volumes cannot be encrypted in place.",
+      "Instance store is ephemeral and unrelated to EBS encryption."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/encryption-by-default.html"
+    ],
+    "es": {
+      "stem": "La política de seguridad de una empresa exige que todo volumen EBS nuevo y toda copia de snapshot en us-east-1 se cifren con una customer managed key de KMS específica. Los ingenieros lanzan instancias desde muchas AMI y herramientas, y algunos han olvidado seleccionar el cifrado. ¿Qué solución hace cumplir el requisito para los recursos nuevos con el MENOR esfuerzo?",
+      "options": [
+        "Habilitar EBS encryption by default en us-east-1 y configurar la customer managed key como clave de cifrado predeterminada de EBS.",
+        "Publicar una guía interna y revisar mensualmente las launch templates.",
+        "Crear una función AWS Lambda que se ejecute cada hora y cifre los volúmenes sin cifrar que encuentre.",
+        "Usar sólo tipos de instancia con volúmenes de instance store NVMe."
+      ],
+      "explanation": "EBS encryption by default es una configuración a nivel de región que obliga a cifrar los volúmenes EBS nuevos y las copias de snapshots, con la clave administrada por AWS o una customer managed key elegida. No afecta a los volúmenes existentes, que deben migrarse por separado.",
+      "notes": [
+        "Correcta: se aplica automáticamente a cada volumen y copia de snapshot nuevos de la región.",
+        "Depende de que la gente lo recuerde; no se hace cumplir.",
+        "Es reactivo, complejo y los volúmenes no se pueden cifrar en sitio.",
+        "El instance store es efímero y no tiene relación con el cifrado de EBS."
+      ]
+    }
+  },
+  {
+    "id": "saa2-026",
+    "domain": "secure",
+    "topics": [
+      "organizations",
+      "monitoring"
+    ],
+    "difficulty": 2,
+    "stem": "A company has 60 accounts in AWS Organizations. The security team needs a record of all management events from every account and every enabled Region delivered to a central S3 bucket in a log archive account. New accounts must be covered automatically, and administrators in member accounts must not be able to stop or delete the logging. What should a solutions architect do?",
+    "options": [
+      "Enable AWS Config in every account and use an aggregator in the log archive account.",
+      "Rely on the CloudTrail event history in each account and export it monthly.",
+      "Create a multi-Region organization trail from the management account (or a CloudTrail delegated administrator) that delivers logs to the central bucket.",
+      "Create a trail in each account with AWS CloudFormation StackSets and deliver the logs to each account's own bucket."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "An organization trail logs events for the management account and all member accounts, and new accounts are included automatically. A copy of the trail appears in member accounts, but member accounts cannot modify or delete it.",
+    "notes": [
+      "AWS Config records resource configuration changes, not all API management events.",
+      "Event history covers only 90 days per account and is not centralized.",
+      "Correct: central, automatic, and not modifiable by member accounts.",
+      "Member account administrators could stop those trails, and logs are not centralized."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html"
+    ],
+    "es": {
+      "stem": "Una empresa tiene 60 cuentas en AWS Organizations. El equipo de seguridad necesita un registro de todos los eventos de administración de cada cuenta y cada región habilitada, entregado a un bucket de S3 central en una cuenta de archivo de logs. Las cuentas nuevas deben quedar cubiertas automáticamente y los administradores de las cuentas miembro no deben poder detener ni borrar el registro. ¿Qué debe hacer un arquitecto de soluciones?",
+      "options": [
+        "Habilitar AWS Config en todas las cuentas y usar un agregador en la cuenta de archivo de logs.",
+        "Usar el historial de eventos de CloudTrail de cada cuenta y exportarlo cada mes.",
+        "Crear un organization trail multirregión desde la cuenta de administración (o un administrador delegado de CloudTrail) que entregue los logs al bucket central.",
+        "Crear un trail en cada cuenta con AWS CloudFormation StackSets y entregar los logs al bucket propio de cada cuenta."
+      ],
+      "explanation": "Un organization trail registra los eventos de la cuenta de administración y de todas las cuentas miembro, e incluye automáticamente las cuentas nuevas. En las cuentas miembro aparece una copia del trail, pero no pueden modificarla ni borrarla.",
+      "notes": [
+        "AWS Config registra cambios de configuración de recursos, no todos los eventos de administración de la API.",
+        "El historial de eventos sólo cubre 90 días por cuenta y no está centralizado.",
+        "Correcta: central, automático y no modificable por las cuentas miembro.",
+        "Los administradores de las cuentas miembro podrían detener esos trails, y los logs no quedan centralizados."
+      ]
+    }
+  },
+  {
+    "id": "saa2-027",
+    "domain": "secure",
+    "topics": [
+      "dynamodb",
+      "kms-encryption"
+    ],
+    "difficulty": 2,
+    "stem": "A company stores payment tokens in an Amazon DynamoDB table. Auditors require that the company control the encryption key's key policy, be able to disable the key to make the data inaccessible, and see every use of the key in AWS CloudTrail. The change must not require application modifications or downtime. What should the solutions architect do?",
+    "options": [
+      "Implement client-side encryption in the application before writing items.",
+      "Enable point-in-time recovery on the table.",
+      "Update the table to use a customer managed KMS key for encryption at rest.",
+      "Keep the default AWS owned key and enable DynamoDB Streams."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "DynamoDB always encrypts data at rest. With a customer managed key, the company controls the key policy, can disable or schedule deletion of the key, and CloudTrail records key usage. Switching the table's key is seamless and requires no code changes or downtime; indexes and streams use the same key.",
+    "notes": [
+      "Requires application changes, which are not allowed.",
+      "PITR is for recovery, not key control.",
+      "Correct: full control and auditability without code changes.",
+      "AWS owned keys are not visible in the account and cannot be controlled or audited."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/database/bring-your-own-encryption-keys-to-amazon-dynamodb/"
+    ],
+    "es": {
+      "stem": "Una empresa guarda tokens de pago en una tabla de Amazon DynamoDB. Los auditores exigen que la empresa controle la política de la clave de cifrado, pueda deshabilitar la clave para dejar los datos inaccesibles y vea cada uso de la clave en AWS CloudTrail. El cambio no debe requerir modificar la aplicación ni tiempo de inactividad. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Implementar cifrado del lado del cliente en la aplicación antes de escribir los ítems.",
+        "Habilitar point-in-time recovery en la tabla.",
+        "Actualizar la tabla para usar una customer managed key de KMS en el cifrado en reposo.",
+        "Mantener la clave predeterminada propiedad de AWS y habilitar DynamoDB Streams."
+      ],
+      "explanation": "DynamoDB siempre cifra en reposo. Con una customer managed key, la empresa controla la política de la clave, puede deshabilitarla o programar su eliminación, y CloudTrail registra su uso. Cambiar la clave de la tabla es transparente, sin cambios de código ni tiempo de inactividad; los índices y streams usan la misma clave.",
+      "notes": [
+        "Requiere cambios en la aplicación, que no están permitidos.",
+        "PITR sirve para recuperación, no para controlar la clave.",
+        "Correcta: control total y auditoría sin cambios de código.",
+        "Las claves propiedad de AWS no son visibles en la cuenta y no se pueden controlar ni auditar."
+      ]
+    }
+  },
+  {
+    "id": "saa2-028",
+    "domain": "secure",
+    "topics": [
+      "s3",
+      "iam"
+    ],
+    "difficulty": 3,
+    "stem": "A mobile photo app lets millions of users upload images directly to a single S3 bucket by using temporary credentials from an Amazon Cognito identity pool. Each user must be able to list, read, and write only the objects under their own prefix, and the solution must not require a policy per user. What should the solutions architect configure?",
+    "options": [
+      "A bucket policy that lists the Cognito identity ID of every user in the Principal element.",
+      "An S3 access point for each user with its own access point policy.",
+      "An IAM policy on the identity pool's authenticated role that uses the ${cognito-identity.amazonaws.com:sub} policy variable in the resource ARN and the s3:prefix condition.",
+      "A separate S3 bucket for each user, created when the user signs up."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "IAM policy variables are replaced at evaluation time with values from the request context. Using the Cognito identity ID variable in the object ARN and in the s3:prefix condition gives every user access to only their own prefix with a single policy attached to the authenticated role.",
+    "notes": [
+      "Policies have size limits and would need constant updates.",
+      "Does not scale to millions of users and requires one resource per user.",
+      "Correct: one policy scales to millions of users.",
+      "Does not scale; S3 bucket quotas and management overhead make it impractical."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/mobile/understanding-amazon-cognito-authentication-part-3-roles-and-policies/"
+    ],
+    "es": {
+      "stem": "Una app móvil de fotos permite que millones de usuarios suban imágenes directamente a un único bucket de S3 usando credenciales temporales de un identity pool de Amazon Cognito. Cada usuario sólo debe poder listar, leer y escribir los objetos bajo su propio prefijo, y la solución no debe requerir una política por usuario. ¿Qué debe configurar el arquitecto de soluciones?",
+      "options": [
+        "Una política de bucket que liste el identity ID de Cognito de cada usuario en el elemento Principal.",
+        "Un S3 access point por usuario con su propia política.",
+        "Una política de IAM en el rol autenticado del identity pool que use la variable ${cognito-identity.amazonaws.com:sub} en el ARN del recurso y en la condición s3:prefix.",
+        "Un bucket de S3 separado por usuario, creado cuando el usuario se registra."
+      ],
+      "explanation": "Las variables de políticas de IAM se reemplazan al evaluar con valores del contexto de la solicitud. Usar la variable del identity ID de Cognito en el ARN de los objetos y en la condición s3:prefix da a cada usuario acceso sólo a su prefijo con una única política adjunta al rol autenticado.",
+      "notes": [
+        "Las políticas tienen límite de tamaño y requerirían actualizaciones constantes.",
+        "No escala a millones de usuarios y requiere un recurso por usuario.",
+        "Correcta: una sola política escala a millones de usuarios.",
+        "No escala; las cuotas de buckets y la gestión lo hacen impráctico."
+      ]
+    }
+  },
+  {
+    "id": "saa2-029",
+    "domain": "secure",
+    "topics": [
+      "kms-encryption",
+      "rds-aurora"
+    ],
+    "difficulty": 3,
+    "stem": "A company has an unencrypted Amazon Aurora MySQL DB cluster and must encrypt it at rest with a customer managed KMS key. A database administrator tried to copy a cluster snapshot with encryption enabled, but the option was not available. What is the correct procedure?",
+    "options": [
+      "Create an encrypted Aurora Replica in the existing cluster and fail over to it.",
+      "Modify the existing cluster and enable encryption during the next maintenance window.",
+      "Export the snapshot to Amazon S3 with SSE-KMS and import it back as the same cluster.",
+      "Restore the unencrypted cluster snapshot to a new DB cluster with encryption enabled and the customer managed key selected, then move the application to the new cluster."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "For Aurora, encryption is not available when copying an unencrypted cluster snapshot. Instead, you restore the unencrypted snapshot and choose Enable encryption with a KMS key during the restore, which creates a new encrypted cluster.",
+    "notes": [
+      "All instances in an Aurora cluster share the same storage volume and encryption setting.",
+      "Encryption cannot be enabled on an existing cluster.",
+      "Snapshot export to S3 is for analytics and does not create an encrypted cluster.",
+      "Correct: encryption is added when restoring the snapshot."
+    ],
+    "sources": [
+      "https://repost.aws/knowledge-center/encrypt-rds-snapshots"
+    ],
+    "es": {
+      "stem": "Una empresa tiene un clúster de Amazon Aurora MySQL sin cifrar y debe cifrarlo en reposo con una customer managed key de KMS. Un administrador intentó copiar un snapshot del clúster con cifrado habilitado, pero la opción no estaba disponible. ¿Cuál es el procedimiento correcto?",
+      "options": [
+        "Crear una Aurora Replica cifrada en el clúster existente y hacer failover a ella.",
+        "Modificar el clúster existente y habilitar el cifrado en la próxima ventana de mantenimiento.",
+        "Exportar el snapshot a Amazon S3 con SSE-KMS e importarlo de nuevo como el mismo clúster.",
+        "Restaurar el snapshot sin cifrar en un nuevo clúster con cifrado habilitado y la customer managed key seleccionada, y luego mover la aplicación al nuevo clúster."
+      ],
+      "explanation": "En Aurora, el cifrado no está disponible al copiar un snapshot de clúster sin cifrar. En su lugar, se restaura el snapshot sin cifrar eligiendo Enable encryption con una clave de KMS durante la restauración, lo que crea un clúster nuevo cifrado.",
+      "notes": [
+        "Todas las instancias de un clúster de Aurora comparten el mismo volumen de almacenamiento y la misma configuración de cifrado.",
+        "No se puede habilitar el cifrado en un clúster existente.",
+        "Exportar snapshots a S3 es para analítica y no crea un clúster cifrado.",
+        "Correcta: el cifrado se agrega al restaurar el snapshot."
+      ]
+    }
+  },
+  {
+    "id": "saa2-030",
+    "domain": "secure",
+    "topics": [
+      "vpc",
+      "security-services"
+    ],
+    "difficulty": 2,
+    "stem": "A three-tier application has a public ALB, application instances in private subnets, and an Amazon RDS for MySQL database in isolated subnets. A penetration test showed that the database accepts connections from any instance in the VPC. The company wants the database to accept connections only from the application tier, even as application instances scale in and out and their IP addresses change. What should the solutions architect do?",
+    "options": [
+      "Configure the database security group to allow the MySQL port from the CIDR blocks of the application subnets.",
+      "Move the database to a separate VPC and connect it with VPC peering.",
+      "Configure the database security group to allow the MySQL port only from the application tier's security group as the source.",
+      "Add network ACL rules to the database subnets that deny traffic from the public subnets."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Security groups can reference another security group as a source. Only network interfaces associated with the application security group can connect, regardless of their IP addresses, which follows least privilege as instances scale.",
+    "notes": [
+      "Any other resource launched in those subnets would also be allowed.",
+      "Adds complexity and does not restrict which instances can connect.",
+      "Correct: identity-based at the network layer and independent of IP addresses.",
+      "Still allows other instances in the private subnets to connect."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html"
+    ],
+    "es": {
+      "stem": "Una aplicación de tres capas tiene un ALB público, instancias de aplicación en subredes privadas y una base de datos Amazon RDS for MySQL en subredes aisladas. Una prueba de penetración mostró que la base acepta conexiones desde cualquier instancia de la VPC. La empresa quiere que la base sólo acepte conexiones de la capa de aplicación, aunque las instancias escalen y cambien sus direcciones IP. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Configurar el security group de la base para permitir el puerto de MySQL desde los bloques CIDR de las subredes de aplicación.",
+        "Mover la base de datos a otra VPC y conectarla con VPC peering.",
+        "Configurar el security group de la base para permitir el puerto de MySQL sólo desde el security group de la capa de aplicación como origen.",
+        "Agregar reglas de network ACL en las subredes de la base que denieguen el tráfico desde las subredes públicas."
+      ],
+      "explanation": "Los security groups pueden referenciar otro security group como origen. Sólo las interfaces de red asociadas al security group de aplicación pueden conectarse, sin importar su IP, lo que respeta el mínimo privilegio mientras las instancias escalan.",
+      "notes": [
+        "También se permitiría cualquier otro recurso lanzado en esas subredes.",
+        "Agrega complejidad y no restringe qué instancias pueden conectarse.",
+        "Correcta: control por identidad en la capa de red e independiente de las IP.",
+        "Sigue permitiendo que otras instancias de las subredes privadas se conecten."
+      ]
+    }
+  }
+]

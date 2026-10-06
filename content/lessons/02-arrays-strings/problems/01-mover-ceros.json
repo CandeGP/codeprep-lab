@@ -1,0 +1,28 @@
+{
+  "id": "mover-ceros",
+  "title": "Mover ceros al final",
+  "difficulty": "fácil",
+  "description": "Dado un arreglo `nums`, mueve todos los `0` al final **manteniendo el orden relativo** de los demás elementos. Hazlo **in-place** (sin crear otro arreglo) y devuelve el mismo arreglo.\n\n**Ejemplo**\n\n```\n[0, 3, 0, 1, 12]  →  [3, 1, 12, 0, 0]\n```",
+  "functionName": "moverCeros",
+  "starter": {
+    "javascript": "function moverCeros(nums) {\n  // modifica nums y devuélvelo\n  return nums;\n}\n",
+    "python": "def moverCeros(nums):\n    # modifica nums y devuélvelo\n    return nums\n"
+  },
+  "tests": [
+    { "args": [[0, 3, 0, 1, 12]], "expected": [3, 1, 12, 0, 0] },
+    { "args": [[0]], "expected": [0] },
+    { "args": [[1, 2, 3]], "expected": [1, 2, 3] },
+    { "args": [[0, 0, 0, 5]], "expected": [5, 0, 0, 0] },
+    { "args": [[]], "expected": [] },
+    { "args": [[4, 0, -2, 0, 0, 7, 0]], "expected": [4, -2, 7, 0, 0, 0, 0] }
+  ],
+  "hints": [
+    "Usa dos punteros: uno recorre el arreglo y otro marca dónde escribir el siguiente valor distinto de cero.",
+    "Después de colocar todos los no-cero al frente, rellena el resto con ceros (o intercambia sobre la marcha)."
+  ],
+  "solution": {
+    "explanation": "El puntero `escribir` indica la siguiente posición libre para un valor distinto de cero. Al intercambiar, los ceros se van corriendo hacia atrás sin perder el orden de los demás.\n\n**Tiempo:** O(n) · **Espacio:** O(1)",
+    "javascript": "function moverCeros(nums) {\n  let escribir = 0;\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      [nums[escribir], nums[i]] = [nums[i], nums[escribir]];\n      escribir++;\n    }\n  }\n  return nums;\n}\n",
+    "python": "def moverCeros(nums):\n    escribir = 0\n    for i in range(len(nums)):\n        if nums[i] != 0:\n            nums[escribir], nums[i] = nums[i], nums[escribir]\n            escribir += 1\n    return nums\n"
+  }
+}

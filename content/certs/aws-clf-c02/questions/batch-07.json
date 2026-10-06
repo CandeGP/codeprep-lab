@@ -1,0 +1,451 @@
+[
+  {
+    "id": "clf-061",
+    "domain": "security",
+    "topics": [
+      "shared-responsibility"
+    ],
+    "difficulty": 1,
+    "stem": "In AWS Lambda, what is the CUSTOMER's responsibility under the shared responsibility model?",
+    "options": [
+      "Maintaining the physical servers",
+      "Patching the operating system of the runtime environment",
+      "The function code and the IAM permissions it uses",
+      "Scaling the underlying infrastructure"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "In serverless services AWS manages the OS, runtime, and infrastructure; the customer is responsible for code, data, configuration, and IAM.",
+    "notes": [
+      "Done by AWS.",
+      "Done by AWS.",
+      "Correct.",
+      "Done by AWS."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "https://aws.amazon.com/compliance/shared-responsibility-model/"
+    ],
+    "es": {
+      "stem": "En AWS Lambda, ¿cuál es responsabilidad del CLIENTE según el modelo de responsabilidad compartida?",
+      "options": [
+        "Mantener los servidores físicos",
+        "Aplicar parches al sistema operativo del entorno de ejecución",
+        "El código de la función y los permisos de IAM que usa",
+        "Escalar la infraestructura subyacente"
+      ],
+      "explanation": "En servicios serverless AWS administra el SO, el runtime y la infraestructura; el cliente es responsable de su código, datos, configuración e IAM.",
+      "notes": [
+        "Lo hace AWS.",
+        "Lo hace AWS.",
+        "Correcta.",
+        "Lo hace AWS."
+      ]
+    }
+  },
+  {
+    "id": "clf-062",
+    "domain": "security",
+    "topics": [
+      "shared-responsibility"
+    ],
+    "difficulty": 2,
+    "stem": "Which control is SHARED between AWS and the customer?",
+    "options": [
+      "Disk destruction at end of life",
+      "Client-side encryption of customer data",
+      "Patch management and configuration management",
+      "Physical security of data centers"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Shared controls include patch management, configuration management, and awareness and training: AWS applies them to its infrastructure and the customer to its guest OS, apps, and staff.",
+    "notes": [
+      "AWS only.",
+      "Customer only.",
+      "Correct.",
+      "AWS only."
+    ],
+    "sources": [
+      "https://aws.amazon.com/compliance/shared-responsibility-model/"
+    ],
+    "es": {
+      "stem": "¿Qué control es COMPARTIDO entre AWS y el cliente?",
+      "options": [
+        "Destrucción de discos al fin de su vida útil",
+        "Cifrado de los datos del cliente del lado cliente",
+        "Gestión de parches y de configuración",
+        "Seguridad física de los centros de datos"
+      ],
+      "explanation": "Los controles compartidos incluyen gestión de parches, gestión de configuración y conocimiento/capacitación: AWS los aplica a la infraestructura y el cliente a sus SO invitados, apps y personal.",
+      "notes": [
+        "Sólo de AWS.",
+        "Sólo del cliente.",
+        "Correcta.",
+        "Sólo de AWS."
+      ]
+    }
+  },
+  {
+    "id": "clf-063",
+    "domain": "security",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 1,
+    "stem": "What is the recommended way to manage permissions for a group of 20 developers who need the same access?",
+    "options": [
+      "Give everyone administrator permissions",
+      "Create an IAM group, attach a policy to it, and add the users",
+      "Attach the same policy to each user individually",
+      "Share one IAM user among everyone"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "IAM groups simplify management: permissions are assigned to the group and users inherit them. For organizations with many accounts, IAM Identity Center is even better.",
+    "notes": [
+      "Violates least privilege.",
+      "Correct.",
+      "Works but is hard to maintain.",
+      "Loses traceability; bad practice."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "es": {
+      "stem": "¿Cuál es la forma recomendada de administrar permisos para un grupo de 20 desarrolladores que necesitan los mismos accesos?",
+      "options": [
+        "Dar a todos permisos de administrador",
+        "Crear un grupo de IAM, adjuntarle una política y agregar a los usuarios",
+        "Adjuntar la misma política individualmente a cada usuario",
+        "Compartir un único usuario IAM entre todos"
+      ],
+      "explanation": "Los grupos de IAM simplifican la gestión: los permisos se asignan al grupo y los usuarios los heredan. (Para organizaciones con muchas cuentas, IAM Identity Center es aún mejor.)",
+      "notes": [
+        "Viola el mínimo privilegio.",
+        "Correcta.",
+        "Funciona, pero es difícil de mantener.",
+        "Se pierde trazabilidad; mala práctica."
+      ]
+    }
+  },
+  {
+    "id": "clf-064",
+    "domain": "security",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 2,
+    "stem": "A company wants its employees to sign in to several AWS accounts with their corporate directory credentials (single sign-on). Which service should it use?",
+    "options": [
+      "AWS Secrets Manager",
+      "AWS IAM Identity Center",
+      "Amazon Cognito user pools for employees",
+      "AWS Certificate Manager"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "IAM Identity Center centralizes workforce access to multiple accounts and applications and integrates with external identity providers.",
+    "notes": [
+      "Stores secrets.",
+      "Correct.",
+      "Cognito is for users of YOUR applications (customers).",
+      "Manages TLS certificates."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere que sus empleados inicien sesión en varias cuentas de AWS usando las credenciales de su directorio corporativo (single sign-on). ¿Qué servicio debe usar?",
+      "options": [
+        "AWS Secrets Manager",
+        "AWS IAM Identity Center",
+        "Amazon Cognito user pools para empleados",
+        "AWS Certificate Manager"
+      ],
+      "explanation": "IAM Identity Center (sucesor de AWS SSO) centraliza el acceso de la fuerza laboral a varias cuentas y aplicaciones, integrándose con proveedores de identidad externos.",
+      "notes": [
+        "Guarda secretos.",
+        "Correcta.",
+        "Cognito es para usuarios de TUS aplicaciones (clientes).",
+        "Gestiona certificados TLS."
+      ]
+    }
+  },
+  {
+    "id": "clf-065",
+    "domain": "security",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 1,
+    "stem": "Which IAM element is a JSON document that defines permissions (Effect, Action, Resource)?",
+    "options": [
+      "An access key",
+      "A policy",
+      "A group",
+      "A role"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "IAM policies are JSON documents with statements that allow or deny actions on resources; they are attached to identities or resources.",
+    "notes": [
+      "A programmatic credential.",
+      "Correct.",
+      "A group collects users.",
+      "A role is an identity that is assumed."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "es": {
+      "stem": "¿Qué elemento de IAM es un documento JSON que define permisos (Effect, Action, Resource)?",
+      "options": [
+        "Un access key",
+        "Una política",
+        "Un grupo",
+        "Un rol"
+      ],
+      "explanation": "Las políticas IAM son documentos JSON con declaraciones que permiten o deniegan acciones sobre recursos; se adjuntan a identidades o recursos.",
+      "notes": [
+        "Es una credencial programática.",
+        "Correcta.",
+        "Un grupo agrupa usuarios.",
+        "Un rol es una identidad que se asume."
+      ]
+    }
+  },
+  {
+    "id": "clf-066",
+    "domain": "security",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to require IAM users to use passwords of at least 14 characters that are rotated every 90 days. What should it configure?",
+    "options": [
+      "A security group",
+      "An account password policy in IAM",
+      "AWS Shield Advanced",
+      "An AWS WAF rule"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "The IAM password policy defines minimum length, complexity, expiration, and reuse for passwords.",
+    "notes": [
+      "Filters network traffic.",
+      "Correct.",
+      "Protects against DDoS.",
+      "WAF filters web traffic."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere exigir que los usuarios de IAM usen contraseñas de al menos 14 caracteres que se roten cada 90 días. ¿Qué debe configurar?",
+      "options": [
+        "Un security group",
+        "Una política de contraseñas de la cuenta en IAM",
+        "AWS Shield Advanced",
+        "Una regla de AWS WAF"
+      ],
+      "explanation": "La política de contraseñas de IAM define longitud mínima, complejidad, expiración y reutilización de contraseñas.",
+      "notes": [
+        "Filtra tráfico de red.",
+        "Correcta.",
+        "Protege contra DDoS.",
+        "WAF filtra tráfico web."
+      ]
+    }
+  },
+  {
+    "id": "clf-067",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 1,
+    "stem": "Which service manages the creation and control of cryptographic keys used to encrypt data in many AWS services?",
+    "options": [
+      "Amazon Macie",
+      "AWS Key Management Service (AWS KMS)",
+      "AWS Certificate Manager",
+      "AWS Secrets Manager"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "AWS KMS creates and controls encryption keys, integrates with most services (S3, EBS, RDS, and more), and logs key usage in CloudTrail.",
+    "notes": [
+      "Discovers sensitive data.",
+      "Correct.",
+      "Manages SSL/TLS certificates.",
+      "Stores and rotates secrets such as database passwords."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio administra la creación y el control de claves criptográficas usadas para cifrar datos en muchos servicios de AWS?",
+      "options": [
+        "Amazon Macie",
+        "AWS Key Management Service (AWS KMS)",
+        "AWS Certificate Manager",
+        "AWS Secrets Manager"
+      ],
+      "explanation": "AWS KMS crea y controla claves de cifrado, se integra con la mayoría de los servicios (S3, EBS, RDS…) y registra su uso en CloudTrail.",
+      "notes": [
+        "Descubre datos sensibles.",
+        "Correcta.",
+        "Gestiona certificados SSL/TLS.",
+        "Guarda y rota secretos como contraseñas de BD."
+      ]
+    }
+  },
+  {
+    "id": "clf-068",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 1,
+    "stem": "An application stores its database password in a configuration file. Which service can store it securely and rotate it automatically?",
+    "options": [
+      "AWS Config",
+      "AWS Artifact",
+      "Amazon S3 with public access",
+      "AWS Secrets Manager"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Secrets Manager stores encrypted secrets, controls access with IAM, and can rotate them automatically (for example, for RDS).",
+    "notes": [
+      "Evaluates configurations.",
+      "Compliance reports.",
+      "Insecure.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "Una aplicación guarda la contraseña de su base de datos en un archivo de configuración. ¿Qué servicio permite almacenarla de forma segura y rotarla automáticamente?",
+      "options": [
+        "AWS Config",
+        "AWS Artifact",
+        "Amazon S3 con acceso público",
+        "AWS Secrets Manager"
+      ],
+      "explanation": "Secrets Manager almacena secretos cifrados, controla el acceso con IAM y puede rotarlos automáticamente (p. ej. para RDS).",
+      "notes": [
+        "Evalúa configuraciones.",
+        "Es para informes de cumplimiento.",
+        "Inseguro.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-069",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 1,
+    "stem": "Which service provides DDoS protection at no additional cost for all AWS customers?",
+    "options": [
+      "AWS WAF",
+      "AWS Shield Advanced",
+      "AWS Shield Standard",
+      "Amazon GuardDuty"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Shield Standard is automatically enabled at no cost and protects against the most common layer 3 and 4 DDoS attacks.",
+    "notes": [
+      "Charged per rule and request.",
+      "Paid; adds advanced protection, a response team, and cost protection.",
+      "Correct.",
+      "Paid; threat detection."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/waf/latest/developerguide/shield-chapter.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio ofrece protección contra ataques DDoS sin costo adicional para todos los clientes de AWS?",
+      "options": [
+        "AWS WAF",
+        "AWS Shield Advanced",
+        "AWS Shield Standard",
+        "Amazon GuardDuty"
+      ],
+      "explanation": "Shield Standard se activa automáticamente sin costo y protege contra los ataques DDoS más comunes de capa 3 y 4.",
+      "notes": [
+        "Tiene costo por reglas y solicitudes.",
+        "Tiene costo; añade protección avanzada, equipo de respuesta y protección de costos.",
+        "Correcta.",
+        "Tiene costo; es detección de amenazas."
+      ]
+    }
+  },
+  {
+    "id": "clf-070",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 2,
+    "stem": "Which service provides a central view of security findings from GuardDuty, Inspector, Macie, and others, plus automated best practice checks?",
+    "options": [
+      "AWS Health Dashboard",
+      "Amazon Detective",
+      "AWS Security Hub",
+      "AWS Artifact"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Security Hub (its posture management capability is now named Security Hub CSPM) aggregates, organizes, and prioritizes findings and runs automated checks against standards such as CIS and AWS Foundational Security Best Practices.",
+    "notes": [
+      "Shows service health events.",
+      "Investigates root causes; does not centralize findings.",
+      "Correct.",
+      "AWS compliance reports."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio ofrece una vista centralizada de alertas de seguridad (hallazgos) de GuardDuty, Inspector, Macie y otros, además de comprobaciones de buenas prácticas?",
+      "options": [
+        "AWS Health Dashboard",
+        "Amazon Detective",
+        "AWS Security Hub",
+        "AWS Artifact"
+      ],
+      "explanation": "Security Hub agrega, organiza y prioriza hallazgos de varios servicios y ejecuta comprobaciones automáticas contra estándares como CIS o AWS Foundational Security Best Practices.",
+      "notes": [
+        "Muestra eventos de salud de los servicios.",
+        "Detective investiga la causa raíz, no centraliza hallazgos.",
+        "Correcta.",
+        "Es para informes de cumplimiento de AWS."
+      ]
+    }
+  }
+]

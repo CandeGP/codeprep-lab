@@ -1,0 +1,54 @@
+[
+  {
+    "id": "q1",
+    "question": "¿Cuánto vale 0b1100 ^ 0b1010?",
+    "options": ["0b1000", "0b1110", "0b0110", "0b0010"],
+    "answer": 2,
+    "explanation": "XOR pone 1 donde los bits difieren: 1100 ^ 1010 = 0110."
+  },
+  {
+    "id": "q2",
+    "question": "¿Qué hace la expresión n & (n - 1)?",
+    "options": [
+      "Duplica n",
+      "Apaga el bit 1 menos significativo de n",
+      "Enciende el bit más significativo",
+      "Invierte todos los bits"
+    ],
+    "answer": 1,
+    "explanation": "Restar 1 afecta justo al último 1 y los ceros a su derecha; el AND los limpia."
+  },
+  {
+    "id": "q3",
+    "question": "¿Qué condición verifica que un entero positivo n es potencia de 2?",
+    "options": ["n % 2 === 0", "(n & (n - 1)) === 0", "(n | 1) === n", "(n ^ n) === 0"],
+    "answer": 1,
+    "explanation": "Las potencias de 2 tienen un único bit encendido; al apagarlo queda 0."
+  },
+  {
+    "id": "q4",
+    "question": "¿Cómo se obtiene -x en complemento a dos?",
+    "options": ["Poniendo el primer bit en 1", "Invirtiendo los bits y sumando 1", "Desplazando a la izquierda", "Haciendo x XOR 1"],
+    "answer": 1,
+    "explanation": "-x = ~x + 1."
+  },
+  {
+    "id": "q5",
+    "question": "¿Qué expresión pone en 0 el bit i de n?",
+    "options": ["n | (1 << i)", "n ^ (1 << i)", "n & ~(1 << i)", "n >> i"],
+    "answer": 2,
+    "explanation": "La máscara ~(1 << i) tiene todos los bits en 1 excepto el i; el AND apaga sólo ese."
+  },
+  {
+    "id": "q6",
+    "question": "En una lista donde todos aparecen dos veces excepto uno, ¿por qué el XOR de todos da el número solitario?",
+    "options": [
+      "Porque XOR ordena los números",
+      "Porque a ^ a = 0, a ^ 0 = a, y XOR es conmutativo y asociativo",
+      "Porque XOR suma los números",
+      "Sólo funciona si los números son positivos"
+    ],
+    "answer": 1,
+    "explanation": "Las parejas se anulan sin importar el orden, y sólo sobrevive el que no tiene pareja."
+  }
+]

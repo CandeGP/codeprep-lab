@@ -1,0 +1,49 @@
+[
+  {
+    "id": "q1",
+    "question": "¿Qué estructura usa la disciplina LIFO?",
+    "options": ["Cola", "Pila", "Heap", "Tabla hash"],
+    "answer": 1,
+    "explanation": "Last In, First Out: el último elemento insertado es el primero en salir."
+  },
+  {
+    "id": "q2",
+    "question": "En JavaScript, ¿por qué no conviene usar arr.shift() para una cola grande?",
+    "options": [
+      "Porque no existe",
+      "Porque es O(n): desplaza todos los elementos",
+      "Porque devuelve el último elemento",
+      "Porque modifica el prototipo de Array"
+    ],
+    "answer": 1,
+    "explanation": "shift reindexa todo el arreglo. Usa un índice de frente, una deque o una lista enlazada."
+  },
+  {
+    "id": "q3",
+    "question": "¿Qué recorrido de grafos se implementa naturalmente con una cola?",
+    "options": ["DFS", "BFS", "Inorden", "Backtracking"],
+    "answer": 1,
+    "explanation": "BFS procesa los nodos en orden de distancia, justo lo que da una cola FIFO."
+  },
+  {
+    "id": "q4",
+    "question": "Una pila monótona recorre n elementos con un while dentro de un for. ¿Cuál es su complejidad total?",
+    "options": ["O(n²)", "O(n log n)", "O(n)", "O(log n)"],
+    "answer": 2,
+    "explanation": "Cada elemento se inserta y se saca de la pila a lo más una vez: 2n operaciones."
+  },
+  {
+    "id": "q5",
+    "question": "Implementas una cola con dos pilas. ¿Cuál es el costo amortizado de dequeue?",
+    "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+    "answer": 0,
+    "explanation": "Cada elemento se transfiere de una pila a la otra una sola vez en toda su vida."
+  },
+  {
+    "id": "q6",
+    "question": "Necesitas extraer repetidamente el elemento de menor prioridad. ¿Qué estructura es la adecuada?",
+    "options": ["Pila", "Cola simple", "Heap (cola de prioridad)", "Lista doblemente enlazada"],
+    "answer": 2,
+    "explanation": "Un min-heap da el mínimo en O(1) y lo extrae en O(log n)."
+  }
+]

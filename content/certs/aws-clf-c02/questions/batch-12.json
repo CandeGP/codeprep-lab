@@ -1,0 +1,451 @@
+[
+  {
+    "id": "clf-111",
+    "domain": "technology",
+    "topics": [
+      "vpc"
+    ],
+    "difficulty": 1,
+    "stem": "A company needs a private, dedicated network connection between its data center and AWS with consistent bandwidth that does not traverse the internet. Which service should it use?",
+    "options": [
+      "AWS Direct Connect",
+      "VPC peering",
+      "AWS Site-to-Site VPN",
+      "Amazon CloudFront"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Direct Connect provides a dedicated physical connection to AWS, with more predictable latency and bandwidth than the internet.",
+    "notes": [
+      "Correct.",
+      "Connects VPCs to each other.",
+      "A VPN encrypts traffic but travels over the internet.",
+      "A CDN."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html",
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    ],
+    "es": {
+      "stem": "Una empresa necesita una conexión de red privada y dedicada entre su centro de datos y AWS, con ancho de banda consistente que no pase por Internet. ¿Qué servicio debe usar?",
+      "options": [
+        "AWS Direct Connect",
+        "VPC peering",
+        "AWS Site-to-Site VPN",
+        "Amazon CloudFront"
+      ],
+      "explanation": "Direct Connect ofrece una conexión física dedicada a AWS, con latencia y ancho de banda más predecibles que Internet.",
+      "notes": [
+        "Correcta.",
+        "Conecta VPC entre sí.",
+        "La VPN cifra el tráfico pero viaja por Internet.",
+        "Es una CDN."
+      ]
+    }
+  },
+  {
+    "id": "clf-112",
+    "domain": "technology",
+    "topics": [
+      "vpc"
+    ],
+    "difficulty": 1,
+    "stem": "A company needs to quickly connect its office to a VPC through an encrypted tunnel over the internet. What should it use?",
+    "options": [
+      "An internet gateway without encryption",
+      "AWS Site-to-Site VPN",
+      "Amazon Route 53",
+      "AWS Direct Connect"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Site-to-Site VPN creates encrypted IPsec tunnels between the on-premises network and the VPC and can be set up in minutes.",
+    "notes": [
+      "Does not encrypt or connect private networks.",
+      "Correct.",
+      "DNS.",
+      "The physical connection takes weeks to install."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html",
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    ],
+    "es": {
+      "stem": "Una empresa necesita conectar rápidamente su oficina a una VPC mediante un túnel cifrado sobre Internet. ¿Qué debe usar?",
+      "options": [
+        "Internet gateway sin cifrado",
+        "AWS Site-to-Site VPN",
+        "Amazon Route 53",
+        "AWS Direct Connect"
+      ],
+      "explanation": "Site-to-Site VPN crea túneles IPsec cifrados entre la red local y la VPC y se configura en minutos.",
+      "notes": [
+        "No cifra ni conecta redes privadas.",
+        "Correcta.",
+        "Es DNS.",
+        "Requiere semanas para instalar la conexión física."
+      ]
+    }
+  },
+  {
+    "id": "clf-113",
+    "domain": "technology",
+    "topics": [
+      "vpc"
+    ],
+    "difficulty": 2,
+    "stem": "A company has dozens of VPCs and on-premises networks and wants to interconnect them through a central hub instead of many peering connections. Which service should it use?",
+    "options": [
+      "AWS Transit Gateway",
+      "NAT gateway",
+      "Amazon API Gateway",
+      "Full-mesh VPC peering"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Transit Gateway acts as a central router (hub and spoke) that connects VPCs and on-premises networks.",
+    "notes": [
+      "Correct.",
+      "Provides internet egress.",
+      "For APIs.",
+      "Becomes unmanageable at scale and is not transitive."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html",
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    ],
+    "es": {
+      "stem": "Una empresa tiene decenas de VPC y redes locales y quiere interconectarlas mediante un hub central en lugar de muchos peerings. ¿Qué servicio debe usar?",
+      "options": [
+        "AWS Transit Gateway",
+        "NAT gateway",
+        "Amazon API Gateway",
+        "VPC peering en malla"
+      ],
+      "explanation": "Transit Gateway actúa como un router central (hub-and-spoke) que conecta VPC y redes on-premises.",
+      "notes": [
+        "Correcta.",
+        "Da salida a Internet.",
+        "Es para APIs.",
+        "Se vuelve inmanejable a gran escala y no es transitivo."
+      ]
+    }
+  },
+  {
+    "id": "clf-114",
+    "domain": "technology",
+    "topics": [
+      "vpc"
+    ],
+    "difficulty": 1,
+    "stem": "Which feature captures information about the IP traffic going to and from network interfaces in a VPC for troubleshooting and security?",
+    "options": [
+      "Amazon Inspector",
+      "AWS X-Ray",
+      "AWS CloudTrail",
+      "VPC Flow Logs"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "VPC Flow Logs records traffic metadata (source/destination IP, ports, accepted/rejected) and publishes it to CloudWatch Logs, S3, or Firehose.",
+    "notes": [
+      "Scans for vulnerabilities.",
+      "Traces requests in distributed applications.",
+      "Records API calls.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    ],
+    "es": {
+      "stem": "¿Qué funcionalidad captura información sobre el tráfico IP que entra y sale de las interfaces de red de una VPC para diagnóstico y seguridad?",
+      "options": [
+        "Amazon Inspector",
+        "AWS X-Ray",
+        "AWS CloudTrail",
+        "VPC Flow Logs"
+      ],
+      "explanation": "VPC Flow Logs registra metadatos del tráfico (IP origen/destino, puertos, aceptado/rechazado) y los envía a CloudWatch Logs, S3 o Firehose.",
+      "notes": [
+        "Busca vulnerabilidades.",
+        "Traza solicitudes de aplicaciones distribuidas.",
+        "Registra llamadas a la API.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-115",
+    "domain": "technology",
+    "topics": [
+      "edge-dns"
+    ],
+    "difficulty": 1,
+    "stem": "Which AWS service is a highly available DNS that can also route traffic based on latency, geolocation, or health checks?",
+    "options": [
+      "Amazon Route 53",
+      "Amazon CloudFront",
+      "Elastic Load Balancing",
+      "AWS Global Accelerator"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Route 53 is the AWS DNS service: domain registration, DNS resolution, routing policies, and health checks.",
+    "notes": [
+      "Correct.",
+      "A CDN.",
+      "Distributes traffic within a Region.",
+      "Improves performance by routing over the AWS network with anycast IPs; it is not DNS."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html",
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio de AWS es un DNS altamente disponible que además puede enrutar el tráfico según latencia, geolocalización o health checks?",
+      "options": [
+        "Amazon Route 53",
+        "Amazon CloudFront",
+        "Elastic Load Balancing",
+        "AWS Global Accelerator"
+      ],
+      "explanation": "Route 53 es el servicio DNS de AWS: registro de dominios, resolución DNS, políticas de enrutamiento y comprobaciones de estado.",
+      "notes": [
+        "Correcta.",
+        "Es una CDN.",
+        "Distribuye tráfico dentro de una región.",
+        "Mejora el rendimiento enrutando por la red de AWS con IP anycast, no es DNS."
+      ]
+    }
+  },
+  {
+    "id": "clf-116",
+    "domain": "technology",
+    "topics": [
+      "edge-dns"
+    ],
+    "difficulty": 3,
+    "stem": "A global application that uses TCP/UDP (not HTTP) needs better availability and performance by using the AWS backbone network and two static anycast IP addresses. Which service should it use?",
+    "options": [
+      "Amazon CloudFront",
+      "Amazon Route 53 Resolver",
+      "AWS Global Accelerator",
+      "AWS Direct Connect"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Global Accelerator directs users to the nearest edge location and then over the AWS network to the optimal endpoint, using static IP addresses.",
+    "notes": [
+      "CloudFront is oriented to cached HTTP(S) content.",
+      "Resolves DNS in VPCs.",
+      "Correct.",
+      "For hybrid connectivity."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html",
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ],
+    "es": {
+      "stem": "Una aplicación global que usa TCP/UDP (no HTTP) necesita mejorar su disponibilidad y rendimiento usando la red troncal de AWS y dos direcciones IP estáticas anycast. ¿Qué servicio debe usar?",
+      "options": [
+        "Amazon CloudFront",
+        "Amazon Route 53 Resolver",
+        "AWS Global Accelerator",
+        "AWS Direct Connect"
+      ],
+      "explanation": "Global Accelerator dirige a los usuarios al edge más cercano y luego por la red de AWS hacia el endpoint óptimo, con IP estáticas.",
+      "notes": [
+        "CloudFront está orientado a contenido HTTP(S) con caché.",
+        "Resuelve DNS en VPC.",
+        "Correcta.",
+        "Es para conectividad híbrida."
+      ]
+    }
+  },
+  {
+    "id": "clf-117",
+    "domain": "technology",
+    "topics": [
+      "elb-asg"
+    ],
+    "difficulty": 2,
+    "stem": "Which type of Elastic Load Balancer operates at layer 7 and can route HTTP requests based on the URL path or host header?",
+    "options": [
+      "Network Load Balancer",
+      "Application Load Balancer",
+      "Classic Load Balancer with TCP",
+      "Gateway Load Balancer"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "The ALB understands HTTP/HTTPS and supports content-based routing (path, host, headers).",
+    "notes": [
+      "Operates at layer 4 (TCP/UDP) with ultra-low latency.",
+      "Correct.",
+      "The previous generation.",
+      "For third-party virtual security appliances."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html",
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html"
+    ],
+    "es": {
+      "stem": "¿Qué tipo de Elastic Load Balancer opera en la capa 7 y puede enrutar solicitudes HTTP según la ruta de la URL o el encabezado de host?",
+      "options": [
+        "Network Load Balancer",
+        "Application Load Balancer",
+        "Classic Load Balancer con TCP",
+        "Gateway Load Balancer"
+      ],
+      "explanation": "El ALB entiende HTTP/HTTPS y soporta enrutamiento basado en contenido (path, host, headers).",
+      "notes": [
+        "Opera en capa 4 (TCP/UDP) con ultra baja latencia.",
+        "Correcta.",
+        "Es la generación anterior.",
+        "Sirve para dispositivos virtuales de seguridad de terceros."
+      ]
+    }
+  },
+  {
+    "id": "clf-118",
+    "domain": "technology",
+    "topics": [
+      "elb-asg"
+    ],
+    "difficulty": 1,
+    "stem": "What is the main function of Elastic Load Balancing?",
+    "options": [
+      "Register domains",
+      "Encrypt EBS volumes",
+      "Automatically distribute incoming traffic across multiple targets, such as EC2 instances, in one or more AZs",
+      "Create snapshots"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "ELB spreads the load, performs health checks, and sends traffic only to healthy targets.",
+    "notes": [
+      "Route 53 does this.",
+      "KMS/EBS do this.",
+      "Correct.",
+      "EBS/AWS Backup do this."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html"
+    ],
+    "es": {
+      "stem": "¿Cuál es la función principal de Elastic Load Balancing?",
+      "options": [
+        "Registrar dominios",
+        "Cifrar volúmenes EBS",
+        "Distribuir automáticamente el tráfico entrante entre varios destinos, como instancias EC2, en una o más AZ",
+        "Crear snapshots"
+      ],
+      "explanation": "ELB reparte la carga, realiza health checks y envía tráfico sólo a destinos saludables.",
+      "notes": [
+        "Lo hace Route 53.",
+        "Lo hace KMS/EBS.",
+        "Correcta.",
+        "Lo hace EBS/AWS Backup."
+      ]
+    }
+  },
+  {
+    "id": "clf-119",
+    "domain": "technology",
+    "topics": [
+      "monitoring"
+    ],
+    "difficulty": 2,
+    "stem": "Which service shows personalized information about AWS events that affect the resources in YOUR account, such as scheduled maintenance?",
+    "options": [
+      "AWS Artifact",
+      "Amazon CloudWatch Logs Insights",
+      "AWS Health Dashboard (your account view)",
+      "AWS Trusted Advisor"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "AWS Health Dashboard reports the general status of services and, in the account view, events that specifically affect your resources.",
+    "notes": [
+      "Compliance reports.",
+      "Queries logs.",
+      "Correct.",
+      "Provides best practice recommendations."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/health/latest/ug/what-is-aws-health.html",
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio muestra información personalizada sobre eventos de AWS que afectan a los recursos de TU cuenta, como mantenimientos programados?",
+      "options": [
+        "AWS Artifact",
+        "Amazon CloudWatch Logs Insights",
+        "AWS Health Dashboard (vista de tu cuenta)",
+        "AWS Trusted Advisor"
+      ],
+      "explanation": "AWS Health Dashboard informa del estado general de los servicios y, en la vista de la cuenta, de eventos que afectan específicamente a tus recursos.",
+      "notes": [
+        "Informes de cumplimiento.",
+        "Consulta logs.",
+        "Correcta.",
+        "Da recomendaciones de buenas prácticas."
+      ]
+    }
+  },
+  {
+    "id": "clf-120",
+    "domain": "technology",
+    "topics": [
+      "monitoring"
+    ],
+    "difficulty": 2,
+    "stem": "Which service lets you run commands, apply patches, and centrally manage fleets of EC2 instances and on-premises servers without opening SSH ports?",
+    "options": [
+      "Amazon Inspector",
+      "AWS Systems Manager",
+      "AWS CloudFormation",
+      "AWS Elastic Beanstalk"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Systems Manager provides Run Command, Patch Manager, Session Manager (access without SSH), Parameter Store, and more.",
+    "notes": [
+      "Scans for vulnerabilities.",
+      "Correct.",
+      "Provisions infrastructure as code.",
+      "Deploys applications."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html",
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio permite ejecutar comandos, aplicar parches y administrar de forma centralizada flotas de instancias EC2 y servidores locales sin abrir puertos SSH?",
+      "options": [
+        "Amazon Inspector",
+        "AWS Systems Manager",
+        "AWS CloudFormation",
+        "AWS Elastic Beanstalk"
+      ],
+      "explanation": "Systems Manager ofrece Run Command, Patch Manager, Session Manager (acceso sin SSH), Parameter Store y más.",
+      "notes": [
+        "Escanea vulnerabilidades.",
+        "Correcta.",
+        "Aprovisiona infraestructura como código.",
+        "Despliega aplicaciones."
+      ]
+    }
+  }
+]

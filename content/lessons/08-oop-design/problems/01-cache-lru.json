@@ -1,0 +1,39 @@
+{
+  "id": "simular-cache-lru",
+  "title": "Caché LRU",
+  "difficulty": "media",
+  "description": "Implementa una caché con capacidad fija que, al llenarse, descarta la clave **usada hace más tiempo** (Least Recently Used). Tanto `get` como `put` cuentan como uso.\n\nPara que el corrector pueda probarla, escribe la función `simularLRU(capacidad, operaciones)` que recibe una lista de operaciones y devuelve una lista de resultados:\n\n- `[\"put\", clave, valor]` → inserta o actualiza; su resultado es `null`.\n- `[\"get\", clave]` → devuelve el valor, o `-1` si no existe.\n\nDentro puedes (y deberías) definir tu propia clase `LRUCache` con `get` y `put` en **O(1)**.\n\n**Ejemplo**\n\n```\ncapacidad = 2\n[[\"put\",1,1],[\"put\",2,2],[\"get\",1],[\"put\",3,3],[\"get\",2],[\"get\",3]]\n→ [null, null, 1, null, -1, 3]\n// al insertar 3 se descarta la 2 (la 1 se usó más recientemente)\n```",
+  "functionName": "simularLRU",
+  "starter": {
+    "javascript": "class LRUCache {\n  constructor(capacidad) {\n    // tu código aquí\n  }\n  get(clave) {\n    // tu código aquí\n  }\n  put(clave, valor) {\n    // tu código aquí\n  }\n}\n\nfunction simularLRU(capacidad, operaciones) {\n  const cache = new LRUCache(capacidad);\n  return operaciones.map(([op, k, v]) => (op === \"get\" ? cache.get(k) : (cache.put(k, v), null)));\n}\n",
+    "python": "class LRUCache:\n    def __init__(self, capacidad):\n        # tu código aquí\n        pass\n\n    def get(self, clave):\n        # tu código aquí\n        pass\n\n    def put(self, clave, valor):\n        # tu código aquí\n        pass\n\n\ndef simularLRU(capacidad, operaciones):\n    cache = LRUCache(capacidad)\n    res = []\n    for op in operaciones:\n        if op[0] == \"get\":\n            res.append(cache.get(op[1]))\n        else:\n            cache.put(op[1], op[2])\n            res.append(None)\n    return res\n"
+  },
+  "tests": [
+    {
+      "args": [2, [["put", 1, 1], ["put", 2, 2], ["get", 1], ["put", 3, 3], ["get", 2], ["get", 3]]],
+      "expected": [null, null, 1, null, -1, 3]
+    },
+    {
+      "args": [1, [["put", 5, 50], ["get", 5], ["put", 6, 60], ["get", 5], ["get", 6]]],
+      "expected": [null, 50, null, -1, 60]
+    },
+    {
+      "args": [2, [["put", 1, 1], ["put", 2, 2], ["put", 1, 10], ["put", 3, 3], ["get", 1], ["get", 2], ["get", 3]]],
+      "expected": [null, null, null, null, 10, -1, 3]
+    },
+    {
+      "args": [3, [["get", 1], ["put", 1, 1], ["put", 2, 2], ["put", 3, 3], ["get", 1], ["put", 4, 4], ["get", 2], ["get", 3], ["get", 4]]],
+      "expected": [-1, null, null, null, 1, null, -1, 3, 4]
+    }
+  ],
+  "hints": [
+    "Necesitas encontrar una clave en O(1) (mapa) y saber cuál es la menos reciente en O(1) (orden).",
+    "En JS, un Map recuerda el orden de inserción: borrar y volver a insertar una clave la manda al final. La primera clave de map.keys() es la menos reciente.",
+    "En Python, collections.OrderedDict tiene move_to_end() y popitem(last=False)."
+  ],
+  "solution": {
+    "explanation": "Usamos un mapa que conserva orden de inserción. En cada uso, borramos y reinsertamos la clave para que quede al final (más reciente). Si al insertar superamos la capacidad, eliminamos la primera clave (la menos reciente).\n\nEn una entrevista donde no puedas usar esas estructuras, la versión clásica es un mapa `clave → nodo` más una lista doblemente enlazada con nodos centinela en ambos extremos.\n\n**Tiempo:** O(1) por operación · **Espacio:** O(capacidad)",
+    "javascript": "class LRUCache {\n  constructor(capacidad) {\n    this.cap = capacidad;\n    this.map = new Map();\n  }\n  get(clave) {\n    if (!this.map.has(clave)) return -1;\n    const v = this.map.get(clave);\n    this.map.delete(clave);\n    this.map.set(clave, v);\n    return v;\n  }\n  put(clave, valor) {\n    this.map.delete(clave);\n    this.map.set(clave, valor);\n    if (this.map.size > this.cap) this.map.delete(this.map.keys().next().value);\n  }\n}\n\nfunction simularLRU(capacidad, operaciones) {\n  const cache = new LRUCache(capacidad);\n  return operaciones.map(([op, k, v]) => (op === \"get\" ? cache.get(k) : (cache.put(k, v), null)));\n}\n",
+    "python": "from collections import OrderedDict\n\nclass LRUCache:\n    def __init__(self, capacidad):\n        self.cap = capacidad\n        self.d = OrderedDict()\n\n    def get(self, clave):\n        if clave not in self.d:\n            return -1\n        self.d.move_to_end(clave)\n        return self.d[clave]\n\n    def put(self, clave, valor):\n        self.d[clave] = valor\n        self.d.move_to_end(clave)\n        if len(self.d) > self.cap:\n            self.d.popitem(last=False)\n\n\ndef simularLRU(capacidad, operaciones):\n    cache = LRUCache(capacidad)\n    res = []\n    for op in operaciones:\n        if op[0] == \"get\":\n            res.append(cache.get(op[1]))\n        else:\n            cache.put(op[1], op[2])\n            res.append(None)\n    return res\n"
+  }
+}

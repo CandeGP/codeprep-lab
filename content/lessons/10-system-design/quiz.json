@@ -1,0 +1,81 @@
+[
+  {
+    "id": "q1",
+    "question": "¿Qué condición facilita escalar horizontalmente los servidores de aplicación?",
+    "options": [
+      "Que guarden la sesión del usuario en memoria local",
+      "Que sean sin estado (el estado vive en servicios compartidos)",
+      "Que usen una sola base de datos",
+      "Que tengan más CPU"
+    ],
+    "answer": 1,
+    "explanation": "Si no guardan estado, cualquier servidor puede atender cualquier petición y se pueden agregar o quitar libremente."
+  },
+  {
+    "id": "q2",
+    "question": "En el patrón cache-aside, ¿qué ocurre cuando el dato no está en caché?",
+    "options": [
+      "Se devuelve un error",
+      "La aplicación lo lee de la base de datos y lo guarda en caché",
+      "La caché consulta sola la base de datos",
+      "Se espera a que otro proceso lo cargue"
+    ],
+    "answer": 1,
+    "explanation": "La aplicación maneja el 'miss': lee de la fuente y rellena la caché."
+  },
+  {
+    "id": "q3",
+    "question": "¿Para qué sirve una cola de mensajes entre dos servicios?",
+    "options": [
+      "Para reemplazar la base de datos",
+      "Para desacoplarlos, absorber picos y procesar trabajo de forma asíncrona",
+      "Para cifrar el tráfico",
+      "Para balancear la carga de CPU"
+    ],
+    "answer": 1,
+    "explanation": "El productor no depende de la velocidad del consumidor, y los mensajes pueden reintentarse."
+  },
+  {
+    "id": "q4",
+    "question": "Particionas usuarios por la primera letra del nombre. ¿Cuál es el riesgo principal?",
+    "options": [
+      "Ninguno",
+      "Distribución desbalanceada (hot spots): algunas letras son mucho más comunes",
+      "No se puede hacer joins",
+      "Los índices dejan de funcionar"
+    ],
+    "answer": 1,
+    "explanation": "Una buena clave de partición distribuye uniformemente la carga; un hash suele funcionar mejor."
+  },
+  {
+    "id": "q5",
+    "question": "Según CAP, ante una partición de red un sistema distribuido debe elegir entre…",
+    "options": [
+      "Latencia y throughput",
+      "Consistencia y disponibilidad",
+      "SQL y NoSQL",
+      "Caché y base de datos"
+    ],
+    "answer": 1,
+    "explanation": "Con la red partida no puedes garantizar a la vez que todos vean el mismo dato y que todos obtengan respuesta."
+  },
+  {
+    "id": "q6",
+    "question": "Con 1,000 millones de lecturas al día, ¿cuántas lecturas por segundo son aproximadamente?",
+    "options": ["~1,000", "~12,000", "~100,000", "~1,000,000"],
+    "answer": 1,
+    "explanation": "Un día tiene ~86,400 s ≈ 10⁵; 10⁹ / 10⁵ ≈ 10⁴ (unas 11,500/s)."
+  },
+  {
+    "id": "q7",
+    "question": "¿Qué costo tiene agregar un índice a una tabla?",
+    "options": [
+      "Ninguno",
+      "Escrituras más lentas y más espacio en disco",
+      "Lecturas más lentas",
+      "Pérdida de consistencia"
+    ],
+    "answer": 1,
+    "explanation": "Cada escritura debe actualizar también el índice."
+  }
+]

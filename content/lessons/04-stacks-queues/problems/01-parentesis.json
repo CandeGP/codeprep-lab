@@ -1,0 +1,29 @@
+{
+  "id": "parentesis-balanceados",
+  "title": "Símbolos balanceados",
+  "difficulty": "fácil",
+  "description": "Dado un string `s` que contiene sólo los caracteres `()[]{}`, devuelve `true` si está **balanceado**: cada símbolo de apertura se cierra con el mismo tipo y en el orden correcto.\n\n**Ejemplos**\n\n```\n\"([]{})\"  → true\n\"([)]\"    → false\n\"((\"      → false\n\"\"        → true\n```",
+  "functionName": "estaBalanceado",
+  "starter": {
+    "javascript": "function estaBalanceado(s) {\n  // tu código aquí\n}\n",
+    "python": "def estaBalanceado(s):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": ["([]{})"], "expected": true },
+    { "args": ["([)]"], "expected": false },
+    { "args": ["(("], "expected": false },
+    { "args": [""], "expected": true },
+    { "args": ["}"], "expected": false },
+    { "args": ["{[()()]}[]"], "expected": true },
+    { "args": ["(]"], "expected": false }
+  ],
+  "hints": [
+    "El último símbolo abierto debe ser el primero en cerrarse. ¿Qué estructura modela eso?",
+    "Al ver un cierre, compáralo con el tope de la pila. Al final, la pila debe quedar vacía."
+  ],
+  "solution": {
+    "explanation": "Apilamos cada apertura. Ante un cierre, el tope debe ser su pareja; si la pila está vacía o no coincide, no está balanceado. Al terminar, cualquier apertura sobrante también lo invalida.\n\n**Tiempo:** O(n) · **Espacio:** O(n)",
+    "javascript": "function estaBalanceado(s) {\n  const pareja = { ')': '(', ']': '[', '}': '{' };\n  const pila = [];\n  for (const c of s) {\n    if (c in pareja) {\n      if (pila.pop() !== pareja[c]) return false;\n    } else {\n      pila.push(c);\n    }\n  }\n  return pila.length === 0;\n}\n",
+    "python": "def estaBalanceado(s):\n    pareja = {')': '(', ']': '[', '}': '{'}\n    pila = []\n    for c in s:\n        if c in pareja:\n            if not pila or pila.pop() != pareja[c]:\n                return False\n        else:\n            pila.append(c)\n    return not pila\n"
+  }
+}

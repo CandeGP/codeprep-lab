@@ -1,0 +1,461 @@
+[
+  {
+    "id": "saa2-001",
+    "domain": "secure",
+    "topics": [
+      "organizations",
+      "iam"
+    ],
+    "difficulty": 2,
+    "stem": "A company uses AWS Organizations with separate OUs for each business unit. A new data residency policy requires that workloads in the Finance OU run only in eu-central-1. Account administrators in the Finance OU have full administrator permissions and must still be able to use IAM and other global services. What should a solutions architect do to enforce this requirement with the LEAST operational overhead?",
+    "options": [
+      "Attach an SCP to the Finance OU that denies all actions when aws:RequestedRegion is not eu-central-1, excluding the actions of approved global services with NotAction.",
+      "Attach an IAM policy to every role and user in the Finance accounts that denies actions outside eu-central-1.",
+      "Configure an AWS Config rule in each Finance account that detects resources created outside eu-central-1 and deletes them with an automatic remediation.",
+      "Create an Amazon EventBridge rule on CloudTrail events that sends an alert when a resource is created outside eu-central-1."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "An SCP applied to the OU sets the maximum permissions for every principal in those accounts, including administrators, so it is preventive and centrally managed. Using NotAction (or an exemption list) for global services such as IAM and Organizations keeps those services working because their requests are not tied to eu-central-1.",
+    "notes": [
+      "Correct: preventive, applies to administrators, and is managed once at the OU level.",
+      "Administrators could modify or detach these IAM policies, and managing them in every account adds overhead.",
+      "Detective and reactive: resources are created first and removed later, which does not prevent the violation.",
+      "Only alerts; nothing is prevented."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/controltower/latest/controlreference/primary-region-deny-policy.html",
+      "https://aws.amazon.com/blogs/mt/identity-guide-preventive-controls-with-aws-identity-scps/"
+    ],
+    "es": {
+      "stem": "Una empresa usa AWS Organizations con una OU separada para cada unidad de negocio. Una nueva política de residencia de datos exige que las cargas de trabajo de la OU de Finanzas se ejecuten sólo en eu-central-1. Los administradores de las cuentas de Finanzas tienen permisos completos de administrador y deben poder seguir usando IAM y otros servicios globales. ¿Qué debe hacer un arquitecto de soluciones para aplicar este requisito con el MENOR esfuerzo operativo?",
+      "options": [
+        "Adjuntar a la OU de Finanzas una SCP que deniegue todas las acciones cuando aws:RequestedRegion no sea eu-central-1, excluyendo con NotAction las acciones de los servicios globales aprobados.",
+        "Adjuntar a cada rol y usuario de las cuentas de Finanzas una política de IAM que deniegue acciones fuera de eu-central-1.",
+        "Configurar en cada cuenta de Finanzas una regla de AWS Config que detecte recursos creados fuera de eu-central-1 y los elimine con remediación automática.",
+        "Crear una regla de Amazon EventBridge sobre eventos de CloudTrail que envíe una alerta cuando se cree un recurso fuera de eu-central-1."
+      ],
+      "explanation": "Una SCP aplicada a la OU fija el máximo de permisos de todos los principales de esas cuentas, incluidos los administradores; es preventiva y se gestiona en un solo lugar. Con NotAction (o una lista de excepciones) para servicios globales como IAM y Organizations, esos servicios siguen funcionando porque sus solicitudes no están ligadas a eu-central-1.",
+      "notes": [
+        "Correcta: es preventiva, aplica a los administradores y se gestiona una sola vez a nivel de OU.",
+        "Los administradores podrían modificar o quitar esas políticas, y mantenerlas en cada cuenta añade esfuerzo.",
+        "Es detectiva y reactiva: los recursos se crean primero y se eliminan después; no previene la violación.",
+        "Sólo alerta; no previene nada."
+      ]
+    }
+  },
+  {
+    "id": "saa2-002",
+    "domain": "secure",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 3,
+    "stem": "A company wants to let application teams create IAM roles for their own Lambda functions without waiting for the central security team. The security team must guarantee that no role created by the application teams can ever have more permissions than a predefined set of DynamoDB and S3 actions, even if a developer attaches AdministratorAccess to the role. Which solution meets these requirements?",
+    "options": [
+      "Require developers to tag every role with the team name and use tag-based conditions in the Lambda function policies.",
+      "Create an IAM group for developers with a policy that allows iam:* and review the created roles weekly with IAM Access Analyzer.",
+      "Grant developers iam:CreateRole only when the request includes a specific managed policy as the permissions boundary, and require that boundary on every role they create.",
+      "Attach an SCP to the account that denies iam:CreateRole for all principals."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "A permissions boundary is a managed policy that sets the maximum permissions an IAM principal can have; the effective permissions are the intersection of the boundary and the identity policy. By only allowing iam:CreateRole with the iam:PermissionsBoundary condition, the security team delegates role creation safely: even AdministratorAccess cannot exceed the boundary.",
+    "notes": [
+      "Tags do not limit what an attached administrator policy allows.",
+      "Reviewing after the fact does not prevent privilege escalation.",
+      "Correct: delegation with a hard ceiling on permissions.",
+      "Blocks the delegation entirely; developers could not create their roles."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/security/delegate-permission-management-to-developers-using-iam-permissions-boundaries/"
+    ],
+    "es": {
+      "stem": "Una empresa quiere que los equipos de aplicaciones creen roles de IAM para sus propias funciones Lambda sin esperar al equipo central de seguridad. El equipo de seguridad debe garantizar que ningún rol creado por los equipos de aplicaciones tenga nunca más permisos que un conjunto predefinido de acciones de DynamoDB y S3, aunque un desarrollador adjunte AdministratorAccess al rol. ¿Qué solución cumple estos requisitos?",
+      "options": [
+        "Exigir que los desarrolladores etiqueten cada rol con el nombre del equipo y usar condiciones por etiquetas en las políticas de las funciones Lambda.",
+        "Crear un grupo de IAM para los desarrolladores con una política que permita iam:* y revisar semanalmente los roles creados con IAM Access Analyzer.",
+        "Conceder a los desarrolladores iam:CreateRole sólo cuando la solicitud incluya una política administrada específica como permissions boundary, y exigir ese límite en cada rol que creen.",
+        "Adjuntar a la cuenta una SCP que deniegue iam:CreateRole para todos los principales."
+      ],
+      "explanation": "Un permissions boundary es una política administrada que fija el máximo de permisos que puede tener un principal; los permisos efectivos son la intersección del límite y la política de identidad. Permitiendo iam:CreateRole sólo con la condición iam:PermissionsBoundary, el equipo de seguridad delega la creación de roles de forma segura: ni AdministratorAccess puede superar el límite.",
+      "notes": [
+        "Las etiquetas no limitan lo que permite una política de administrador adjunta.",
+        "Revisar después no evita la escalada de privilegios.",
+        "Correcta: delegación con un techo estricto de permisos.",
+        "Bloquea por completo la delegación; los desarrolladores no podrían crear sus roles."
+      ]
+    }
+  },
+  {
+    "id": "saa2-003",
+    "domain": "secure",
+    "topics": [
+      "iam",
+      "ec2"
+    ],
+    "difficulty": 3,
+    "stem": "A company has dozens of project teams. Each team must be able to start and stop only the EC2 instances that belong to its project. Instances are frequently created and terminated by Auto Scaling, and new projects are added every month. The company wants a solution that does not require policy updates when instances or projects change. What should a solutions architect recommend?",
+    "options": [
+      "Tag instances and IAM roles with a project tag, and use a single policy that allows ec2:StartInstances and ec2:StopInstances when ec2:ResourceTag/project matches ${aws:PrincipalTag/project}.",
+      "Create one IAM group per project with a policy that allows ec2:StopInstances on all instances in the account.",
+      "Create one IAM policy per team that lists the ARNs of the team's instances and update it with a Lambda function when Auto Scaling launches instances.",
+      "Place each project in its own VPC and use security groups to control who can stop instances."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Attribute-based access control (ABAC) compares tags on the principal with tags on the resource. One policy covers every team and every new instance or project, because access is decided by matching tag values instead of by listing resources.",
+    "notes": [
+      "Correct: one policy scales to new instances and projects without changes.",
+      "Lets any team stop any instance.",
+      "Works but constantly changes policies and adds a fragile automation.",
+      "Security groups control network traffic, not EC2 API actions."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html",
+      "https://aws.amazon.com/blogs/security/attribute-based-access-control-ad-fs-simplify-iam-permissions-management/"
+    ],
+    "es": {
+      "stem": "Una empresa tiene decenas de equipos de proyecto. Cada equipo debe poder iniciar y detener sólo las instancias EC2 de su proyecto. Auto Scaling crea y termina instancias con frecuencia y cada mes se agregan proyectos nuevos. La empresa quiere una solución que no requiera actualizar políticas cuando cambian las instancias o los proyectos. ¿Qué debe recomendar un arquitecto de soluciones?",
+      "options": [
+        "Etiquetar instancias y roles de IAM con una etiqueta project y usar una sola política que permita ec2:StartInstances y ec2:StopInstances cuando ec2:ResourceTag/project coincida con ${aws:PrincipalTag/project}.",
+        "Crear un grupo de IAM por proyecto con una política que permita ec2:StopInstances sobre todas las instancias de la cuenta.",
+        "Crear una política de IAM por equipo que liste los ARN de sus instancias y actualizarla con una función Lambda cuando Auto Scaling lance instancias.",
+        "Colocar cada proyecto en su propia VPC y usar security groups para controlar quién puede detener instancias."
+      ],
+      "explanation": "El control de acceso basado en atributos (ABAC) compara las etiquetas del principal con las del recurso. Una sola política cubre todos los equipos y todas las instancias o proyectos nuevos, porque el acceso se decide por coincidencia de etiquetas y no listando recursos.",
+      "notes": [
+        "Correcta: una sola política escala a nuevas instancias y proyectos sin cambios.",
+        "Permite a cualquier equipo detener cualquier instancia.",
+        "Funciona, pero cambia políticas constantemente y agrega una automatización frágil.",
+        "Los security groups controlan tráfico de red, no acciones de la API de EC2."
+      ]
+    }
+  },
+  {
+    "id": "saa2-004",
+    "domain": "secure",
+    "topics": [
+      "kms-encryption",
+      "iam"
+    ],
+    "difficulty": 3,
+    "stem": "A data analytics account (Account B) must read objects that are encrypted with SSE-KMS in an S3 bucket in a production account (Account A). The bucket policy already grants Account B s3:GetObject, but requests from Account B fail with AccessDenied. The KMS key is a customer managed key in Account A. Which combination of changes will resolve the issue? (Choose two.)",
+    "options": [
+      "Change the bucket's default encryption to SSE-S3 so that Account B does not need KMS permissions.",
+      "Enable S3 Transfer Acceleration on the bucket.",
+      "Create a new KMS key in Account B and grant Account A permission to use it.",
+      "In Account B, attach an IAM policy to the analytics role that allows kms:Decrypt on the ARN of the key in Account A.",
+      "Add a statement to the KMS key policy in Account A that allows Account B to use kms:Decrypt on the key."
+    ],
+    "correct": [
+      3,
+      4
+    ],
+    "explanation": "Cross-account use of a customer managed key requires permission in both places: the key policy in the owning account must allow the external account, and the external account must delegate that permission to its principals with an IAM policy. The bucket policy alone is not enough because S3 must call KMS to decrypt each object.",
+    "notes": [
+      "Changes only new objects and weakens the required encryption control.",
+      "Affects transfer speed, not authorization.",
+      "Existing objects are encrypted with Account A's key; a new key does not help.",
+      "Correct: IAM administrators in Account B must delegate the permission to the role.",
+      "Correct: the key policy is the primary control and must allow the external account."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html"
+    ],
+    "es": {
+      "stem": "Una cuenta de analítica (Cuenta B) debe leer objetos cifrados con SSE-KMS en un bucket de S3 de una cuenta de producción (Cuenta A). La política del bucket ya concede s3:GetObject a la Cuenta B, pero las solicitudes de la Cuenta B fallan con AccessDenied. La clave de KMS es una customer managed key de la Cuenta A. ¿Qué combinación de cambios resolverá el problema? (Elige 2)",
+      "options": [
+        "Cambiar el cifrado predeterminado del bucket a SSE-S3 para que la Cuenta B no necesite permisos de KMS.",
+        "Habilitar S3 Transfer Acceleration en el bucket.",
+        "Crear una nueva clave KMS en la Cuenta B y dar permiso a la Cuenta A para usarla.",
+        "En la Cuenta B, adjuntar al rol de analítica una política de IAM que permita kms:Decrypt sobre el ARN de la clave de la Cuenta A.",
+        "Agregar a la política de la clave KMS en la Cuenta A una declaración que permita a la Cuenta B usar kms:Decrypt sobre la clave."
+      ],
+      "explanation": "El uso entre cuentas de una customer managed key requiere permiso en ambos lados: la política de la clave en la cuenta propietaria debe permitir a la cuenta externa, y la cuenta externa debe delegar ese permiso a sus principales con una política de IAM. La política del bucket no basta porque S3 debe llamar a KMS para descifrar cada objeto.",
+      "notes": [
+        "Sólo afecta objetos nuevos y debilita el control de cifrado exigido.",
+        "Afecta la velocidad de transferencia, no la autorización.",
+        "Los objetos existentes están cifrados con la clave de la Cuenta A; una clave nueva no ayuda.",
+        "Correcta: los administradores de IAM de la Cuenta B deben delegar el permiso al rol.",
+        "Correcta: la política de la clave es el control principal y debe permitir a la cuenta externa."
+      ]
+    }
+  },
+  {
+    "id": "saa2-005",
+    "domain": "secure",
+    "topics": [
+      "s3",
+      "organizations"
+    ],
+    "difficulty": 2,
+    "stem": "A company stores shared reference data in an S3 bucket. Every account in the company's AWS organization must be able to read the data, and the list of accounts changes weekly. The security team also wants protection against someone accidentally granting access to an external account. Which bucket policy approach meets these requirements with the LEAST ongoing maintenance?",
+    "options": [
+      "Make the bucket public and rely on obscure object key names.",
+      "List the root ARN of every account in the Principal element and update the policy each week.",
+      "Create an IAM user in the bucket's account for each member account and share its access keys.",
+      "Allow s3:GetObject for all principals with a condition on aws:PrincipalOrgID equal to the organization ID, and add a Deny statement for principals whose aws:PrincipalOrgID does not match."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "aws:PrincipalOrgID automatically includes every current and future account in the organization, so the policy does not change when accounts are added or removed. Using it in a Deny statement (together with disabling ACLs and Block Public Access) also blocks access granted by mistake to external principals.",
+    "notes": [
+      "Exposes the data to the internet.",
+      "Works but requires weekly edits and is error-prone.",
+      "Long-term shared credentials are insecure and hard to manage.",
+      "Correct: no maintenance as accounts change, plus a guardrail against external access."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html"
+    ],
+    "es": {
+      "stem": "Una empresa guarda datos de referencia compartidos en un bucket de S3. Todas las cuentas de su organización de AWS deben poder leerlos, y la lista de cuentas cambia cada semana. El equipo de seguridad también quiere protección contra que alguien conceda acceso por error a una cuenta externa. ¿Qué enfoque de política de bucket cumple esto con el MENOR mantenimiento continuo?",
+      "options": [
+        "Hacer público el bucket y confiar en nombres de objetos difíciles de adivinar.",
+        "Listar el ARN raíz de cada cuenta en el elemento Principal y actualizar la política cada semana.",
+        "Crear un usuario de IAM en la cuenta del bucket por cada cuenta miembro y compartir sus access keys.",
+        "Permitir s3:GetObject a todos los principales con una condición aws:PrincipalOrgID igual al ID de la organización, y agregar una declaración Deny para los principales cuyo aws:PrincipalOrgID no coincida."
+      ],
+      "explanation": "aws:PrincipalOrgID incluye automáticamente todas las cuentas actuales y futuras de la organización, así que la política no cambia cuando se agregan o quitan cuentas. Usarla en una declaración Deny (junto con deshabilitar ACL y Block Public Access) también bloquea accesos concedidos por error a principales externos.",
+      "notes": [
+        "Expone los datos a Internet.",
+        "Funciona, pero requiere editar cada semana y es propenso a errores.",
+        "Las credenciales compartidas de larga duración son inseguras y difíciles de gestionar.",
+        "Correcta: sin mantenimiento al cambiar las cuentas y con una barrera contra accesos externos."
+      ]
+    }
+  },
+  {
+    "id": "saa2-006",
+    "domain": "secure",
+    "topics": [
+      "iam",
+      "organizations"
+    ],
+    "difficulty": 2,
+    "stem": "A company has 40 AWS accounts in AWS Organizations and uses Microsoft Entra ID as its corporate identity provider. Employees must sign in once with their corporate credentials and receive different permissions in each account based on their group membership. When an employee leaves, access must be removed everywhere immediately. Which solution meets these requirements with the LEAST operational effort?",
+    "options": [
+      "Use Amazon Cognito user pools federated with Entra ID and grant each user pool group access to the accounts.",
+      "Enable IAM Identity Center, connect Entra ID as an external identity provider with automatic provisioning (SCIM), and assign permission sets to groups for each account.",
+      "Create IAM users in every account and synchronize their passwords from Entra ID with a scheduled script.",
+      "Configure a separate SAML identity provider and IAM roles in each of the 40 accounts, and maintain the role mappings manually."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "IAM Identity Center centralizes workforce access to all accounts in the organization. Federating it with Entra ID and provisioning users and groups with SCIM means that disabling the user in Entra ID removes access everywhere, and permission sets automatically create the corresponding roles in each assigned account.",
+    "notes": [
+      "Cognito is designed for customer identities in applications, not workforce access to AWS accounts.",
+      "Correct: single sign-on, central assignment by group, and automatic deprovisioning.",
+      "Creates long-lived credentials in 40 accounts and a fragile sync process.",
+      "Works but requires much more manual configuration and maintenance."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html"
+    ],
+    "es": {
+      "stem": "Una empresa tiene 40 cuentas de AWS en AWS Organizations y usa Microsoft Entra ID como proveedor de identidad corporativo. Los empleados deben iniciar sesión una sola vez con sus credenciales corporativas y recibir permisos distintos en cada cuenta según su grupo. Cuando un empleado se va, su acceso debe eliminarse en todas partes de inmediato. ¿Qué solución cumple esto con el MENOR esfuerzo operativo?",
+      "options": [
+        "Usar user pools de Amazon Cognito federados con Entra ID y dar a cada grupo del user pool acceso a las cuentas.",
+        "Habilitar IAM Identity Center, conectar Entra ID como proveedor de identidad externo con aprovisionamiento automático (SCIM) y asignar permission sets a los grupos en cada cuenta.",
+        "Crear usuarios de IAM en cada cuenta y sincronizar sus contraseñas desde Entra ID con un script programado.",
+        "Configurar un proveedor de identidad SAML y roles de IAM por separado en cada una de las 40 cuentas y mantener manualmente los mapeos de roles."
+      ],
+      "explanation": "IAM Identity Center centraliza el acceso de los empleados a todas las cuentas de la organización. Al federarlo con Entra ID y aprovisionar usuarios y grupos con SCIM, deshabilitar al usuario en Entra ID elimina su acceso en todas partes, y los permission sets crean automáticamente los roles correspondientes en cada cuenta asignada.",
+      "notes": [
+        "Cognito está pensado para identidades de clientes en aplicaciones, no para el acceso de empleados a cuentas de AWS.",
+        "Correcta: inicio de sesión único, asignación central por grupos y desaprovisionamiento automático.",
+        "Crea credenciales de larga duración en 40 cuentas y un proceso de sincronización frágil.",
+        "Funciona, pero requiere mucha más configuración y mantenimiento manual."
+      ]
+    }
+  },
+  {
+    "id": "saa2-007",
+    "domain": "secure",
+    "topics": [
+      "kms-encryption",
+      "migration-dr"
+    ],
+    "difficulty": 3,
+    "stem": "A company encrypts application data client-side with a customer managed KMS key in us-east-1 and replicates the encrypted data to eu-west-1 for disaster recovery. During a DR test, the application in eu-west-1 could not decrypt the data because the key is only available in us-east-1. The company wants to decrypt in eu-west-1 without calling us-east-1 and without re-encrypting the data. What should the solutions architect do?",
+    "options": [
+      "Store a copy of the plaintext data key in AWS Secrets Manager in eu-west-1.",
+      "Use an AWS KMS multi-Region primary key and create a replica key in eu-west-1, and encrypt the data with the multi-Region key.",
+      "Create a new single-Region key in eu-west-1 with the same alias as the key in us-east-1.",
+      "Export the key material from the us-east-1 key and import it into a new key in eu-west-1."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Multi-Region keys share the same key ID and key material across Regions, so ciphertext produced with the primary key in one Region can be decrypted with its replica in another Region locally. Keys created as single-Region keys cannot be converted, so data should be encrypted with the multi-Region key going forward.",
+    "notes": [
+      "Storing plaintext data keys defeats the purpose of envelope encryption.",
+      "Correct: related keys with the same material in both Regions.",
+      "Aliases are just names; a different key cannot decrypt the ciphertext.",
+      "AWS KMS does not let you export key material from KMS-generated keys."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html"
+    ],
+    "es": {
+      "stem": "Una empresa cifra los datos de su aplicación del lado del cliente con una customer managed key de KMS en us-east-1 y replica los datos cifrados a eu-west-1 para recuperación ante desastres. En una prueba de DR, la aplicación en eu-west-1 no pudo descifrar los datos porque la clave sólo existe en us-east-1. La empresa quiere descifrar en eu-west-1 sin llamar a us-east-1 y sin volver a cifrar los datos. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Guardar una copia de la data key en texto plano en AWS Secrets Manager en eu-west-1.",
+        "Usar una clave primaria multi-Region de AWS KMS, crear una réplica en eu-west-1 y cifrar los datos con la clave multi-Region.",
+        "Crear una nueva clave de una sola región en eu-west-1 con el mismo alias que la clave de us-east-1.",
+        "Exportar el material de la clave de us-east-1 e importarlo en una nueva clave en eu-west-1."
+      ],
+      "explanation": "Las claves multi-Region comparten el mismo ID y material de clave entre regiones, así que el texto cifrado con la clave primaria en una región se puede descifrar localmente con su réplica en otra región. Las claves de una sola región no se pueden convertir, por lo que los datos deben cifrarse con la clave multi-Region en adelante.",
+      "notes": [
+        "Guardar data keys en texto plano anula el propósito del cifrado de sobre.",
+        "Correcta: claves relacionadas con el mismo material en ambas regiones.",
+        "Los alias son sólo nombres; otra clave no puede descifrar el texto cifrado.",
+        "AWS KMS no permite exportar el material de claves generadas por KMS."
+      ]
+    }
+  },
+  {
+    "id": "saa2-008",
+    "domain": "secure",
+    "topics": [
+      "security-services",
+      "rds-aurora"
+    ],
+    "difficulty": 2,
+    "stem": "An application running on Amazon ECS connects to an Amazon Aurora PostgreSQL database. The security team requires that the database password be rotated automatically every 30 days, that rotation does not require an application redeployment, and that access to the password be auditable. Which solution meets these requirements?",
+    "options": [
+      "Store the password in an encrypted S3 object and rotate it with a monthly manual procedure.",
+      "Store the password as a SecureString parameter in Systems Manager Parameter Store and rely on Parameter Store to rotate it automatically.",
+      "Store the credentials in AWS Secrets Manager with managed rotation enabled, and have the application retrieve the secret at runtime using its task role.",
+      "Store the password as an environment variable in the ECS task definition and update the task definition every 30 days."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Secrets Manager supports automatic rotation for Amazon RDS and Aurora credentials, stores the secret encrypted with KMS, controls access through IAM, and logs access in CloudTrail. The application reads the current value at runtime, so rotations do not require redeployment.",
+    "notes": [
+      "Manual rotation adds operational effort and risk.",
+      "Parameter Store does not provide built-in automatic rotation for database credentials.",
+      "Correct: automatic rotation, no redeploys, and auditable access.",
+      "Changing the task definition forces a redeployment every rotation."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html"
+    ],
+    "es": {
+      "stem": "Una aplicación que se ejecuta en Amazon ECS se conecta a una base de datos Amazon Aurora PostgreSQL. El equipo de seguridad exige que la contraseña de la base de datos rote automáticamente cada 30 días, que la rotación no requiera volver a desplegar la aplicación y que el acceso a la contraseña se pueda auditar. ¿Qué solución cumple estos requisitos?",
+      "options": [
+        "Guardar la contraseña en un objeto de S3 cifrado y rotarla con un procedimiento manual mensual.",
+        "Guardar la contraseña como parámetro SecureString en Systems Manager Parameter Store y confiar en que Parameter Store la rote automáticamente.",
+        "Guardar las credenciales en AWS Secrets Manager con rotación administrada habilitada y que la aplicación obtenga el secreto en tiempo de ejecución usando su task role.",
+        "Guardar la contraseña como variable de entorno en la definición de tarea de ECS y actualizar la definición cada 30 días."
+      ],
+      "explanation": "Secrets Manager admite rotación automática de credenciales de Amazon RDS y Aurora, guarda el secreto cifrado con KMS, controla el acceso con IAM y registra los accesos en CloudTrail. La aplicación lee el valor vigente en tiempo de ejecución, por lo que las rotaciones no requieren redesplegar.",
+      "notes": [
+        "La rotación manual añade esfuerzo y riesgo.",
+        "Parameter Store no ofrece rotación automática integrada de credenciales de bases de datos.",
+        "Correcta: rotación automática, sin redespliegues y con acceso auditable.",
+        "Cambiar la definición de tarea obliga a redesplegar en cada rotación."
+      ]
+    }
+  },
+  {
+    "id": "saa2-009",
+    "domain": "secure",
+    "topics": [
+      "vpc",
+      "s3"
+    ],
+    "difficulty": 3,
+    "stem": "Workloads in private subnets access Amazon S3 through a gateway VPC endpoint. A security review found that a compromised instance could copy data to a bucket owned by an attacker, because the endpoint allows access to any bucket. The company wants to allow access only to buckets owned by its own AWS organization. What is the MOST effective control?",
+    "options": [
+      "Enable S3 Block Public Access on all buckets in the company's accounts.",
+      "Attach a VPC endpoint policy that allows S3 actions only when aws:ResourceOrgID matches the company's organization ID.",
+      "Add an outbound rule to the instances' security groups that allows HTTPS only to the S3 prefix list.",
+      "Add a bucket policy on the company's buckets that denies requests not coming from the VPC endpoint."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "VPC endpoint policies control which requests can pass through the endpoint. A condition on aws:ResourceOrgID restricts the endpoint to resources owned by accounts in the company's organization, preventing data exfiltration to external buckets through that endpoint.",
+    "notes": [
+      "Protects the company's own buckets from public access, not exfiltration to other buckets.",
+      "Correct: blocks requests to buckets outside the organization at the endpoint.",
+      "The S3 prefix list covers all buckets in the Region, including the attacker's.",
+      "Restricts access to the company's buckets but does nothing about writes to an attacker's bucket."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html",
+      "https://aws.amazon.com/blogs/security/establishing-a-data-perimeter-on-aws-allow-only-trusted-resources-from-my-organization/"
+    ],
+    "es": {
+      "stem": "Cargas de trabajo en subredes privadas acceden a Amazon S3 a través de un gateway VPC endpoint. Una revisión de seguridad encontró que una instancia comprometida podría copiar datos a un bucket de un atacante, porque el endpoint permite acceso a cualquier bucket. La empresa quiere permitir acceso sólo a buckets de su propia organización de AWS. ¿Cuál es el control MÁS efectivo?",
+      "options": [
+        "Habilitar S3 Block Public Access en todos los buckets de las cuentas de la empresa.",
+        "Adjuntar una política del VPC endpoint que permita acciones de S3 sólo cuando aws:ResourceOrgID coincida con el ID de la organización de la empresa.",
+        "Agregar a los security groups de las instancias una regla de salida que permita HTTPS sólo hacia la prefix list de S3.",
+        "Agregar a los buckets de la empresa una política que deniegue solicitudes que no vengan del VPC endpoint."
+      ],
+      "explanation": "Las políticas de VPC endpoint controlan qué solicitudes pueden pasar por el endpoint. Una condición sobre aws:ResourceOrgID restringe el endpoint a recursos de cuentas de la organización de la empresa, evitando la exfiltración de datos a buckets externos por ese endpoint.",
+      "notes": [
+        "Protege los buckets propios del acceso público, no la exfiltración hacia otros buckets.",
+        "Correcta: bloquea en el endpoint las solicitudes a buckets fuera de la organización.",
+        "La prefix list de S3 cubre todos los buckets de la región, incluido el del atacante.",
+        "Restringe el acceso a los buckets de la empresa, pero no evita escribir en el bucket de un atacante."
+      ]
+    }
+  },
+  {
+    "id": "saa2-010",
+    "domain": "secure",
+    "topics": [
+      "s3",
+      "migration-dr"
+    ],
+    "difficulty": 2,
+    "stem": "A financial services company must retain trade records in Amazon S3 for 7 years in WORM (write once, read many) format to meet a regulatory requirement. No user, including the root user of the account, may delete or overwrite a record or shorten its retention period during those 7 years. Which configuration meets these requirements?",
+    "options": [
+      "Enable S3 Object Lock on the bucket and apply a default retention of 7 years in compliance mode.",
+      "Use an S3 Lifecycle rule to transition objects to S3 Glacier Deep Archive after 1 day.",
+      "Enable S3 Versioning with MFA Delete and restrict s3:DeleteObject with an IAM policy.",
+      "Enable S3 Object Lock and apply a default retention of 7 years in governance mode."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "In compliance mode, a protected object version cannot be overwritten or deleted by any user, including the root user, and its retention period cannot be shortened. Governance mode allows users with special permissions (s3:BypassGovernanceRetention) to change or remove the retention.",
+    "notes": [
+      "Correct: strict WORM that not even the root user can bypass.",
+      "Reduces cost but provides no immutability guarantee.",
+      "Administrators can change IAM policies and the root user can disable MFA Delete.",
+      "Users with the bypass permission can delete objects or change retention."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"
+    ],
+    "es": {
+      "stem": "Una empresa de servicios financieros debe conservar registros de operaciones en Amazon S3 durante 7 años en formato WORM (escribir una vez, leer muchas) para cumplir una regulación. Ningún usuario, incluido el usuario raíz de la cuenta, puede borrar ni sobrescribir un registro ni acortar su periodo de retención durante esos 7 años. ¿Qué configuración cumple estos requisitos?",
+      "options": [
+        "Habilitar S3 Object Lock en el bucket y aplicar una retención predeterminada de 7 años en modo compliance.",
+        "Usar una regla de S3 Lifecycle para mover los objetos a S3 Glacier Deep Archive después de 1 día.",
+        "Habilitar S3 Versioning con MFA Delete y restringir s3:DeleteObject con una política de IAM.",
+        "Habilitar S3 Object Lock y aplicar una retención predeterminada de 7 años en modo governance."
+      ],
+      "explanation": "En modo compliance, ninguna versión protegida puede sobrescribirse ni borrarse por ningún usuario, incluido el raíz, y su retención no se puede acortar. El modo governance permite a usuarios con permisos especiales (s3:BypassGovernanceRetention) cambiar o quitar la retención.",
+      "notes": [
+        "Correcta: WORM estricto que ni el usuario raíz puede saltarse.",
+        "Reduce costos, pero no ofrece ninguna garantía de inmutabilidad.",
+        "Los administradores pueden cambiar las políticas de IAM y el usuario raíz puede deshabilitar MFA Delete.",
+        "Los usuarios con el permiso de bypass pueden borrar objetos o cambiar la retención."
+      ]
+    }
+  }
+]

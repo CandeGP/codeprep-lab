@@ -1,0 +1,28 @@
+{
+  "id": "contenedor-mas-agua",
+  "title": "El contenedor con más agua",
+  "difficulty": "media",
+  "description": "Recibes `alturas`, donde `alturas[i]` es la altura de una pared vertical en la posición `i`. Elige **dos paredes** que, junto con el suelo, formen un contenedor. La cantidad de agua es `(j - i) × min(alturas[i], alturas[j])`. Devuelve la **máxima** cantidad posible.\n\nLa fuerza bruta es O(n²). Aplica el método de la lección para llegar a O(n).\n\n**Ejemplo**\n\n```\n[1, 8, 6, 2, 5, 4, 8, 3, 7]  → 49   // paredes 1 y 8: 7 × min(8, 7)\n```",
+  "functionName": "maxAgua",
+  "starter": {
+    "javascript": "function maxAgua(alturas) {\n  // tu código aquí\n}\n",
+    "python": "def maxAgua(alturas):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": [[1, 8, 6, 2, 5, 4, 8, 3, 7]], "expected": 49 },
+    { "args": [[1, 1]], "expected": 1 },
+    { "args": [[4, 3, 2, 1, 4]], "expected": 16 },
+    { "args": [[1, 2, 1]], "expected": 2 },
+    { "args": [[2, 3, 10, 5, 7, 8, 9]], "expected": 36 }
+  ],
+  "hints": [
+    "Empieza con las paredes de los extremos: tienes el ancho máximo.",
+    "Si mueves la pared MÁS ALTA hacia adentro, el ancho baja y la altura mínima no puede subir. ¿Qué pared conviene mover entonces?",
+    "Mueve siempre la pared más baja."
+  ],
+  "solution": {
+    "explanation": "Dos punteros en los extremos. El agua está limitada por la pared más baja; mover la más alta nunca mejora el resultado (el ancho baja y el mínimo no sube). Por eso descartamos siempre la más baja.\n\n**Tiempo:** O(n) · **Espacio:** O(1)",
+    "javascript": "function maxAgua(alturas) {\n  let i = 0, j = alturas.length - 1, mejor = 0;\n  while (i < j) {\n    mejor = Math.max(mejor, (j - i) * Math.min(alturas[i], alturas[j]));\n    if (alturas[i] < alturas[j]) i++; else j--;\n  }\n  return mejor;\n}\n",
+    "python": "def maxAgua(alturas):\n    i, j, mejor = 0, len(alturas) - 1, 0\n    while i < j:\n        mejor = max(mejor, (j - i) * min(alturas[i], alturas[j]))\n        if alturas[i] < alturas[j]:\n            i += 1\n        else:\n            j -= 1\n    return mejor\n"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "primera-ultima-posicion",
+  "title": "Primera y última posición",
+  "difficulty": "media",
+  "description": "Dado un arreglo `nums` **ordenado de forma ascendente** (con posibles repetidos) y un `objetivo`, devuelve `[primero, ultimo]`: los índices de su primera y última aparición. Si no aparece, devuelve `[-1, -1]`.\n\nDebe ser **O(log n)**.\n\n**Ejemplos**\n\n```\n[5, 7, 7, 8, 8, 10], 8  → [3, 4]\n[5, 7, 7, 8, 8, 10], 6  → [-1, -1]\n```",
+  "functionName": "buscarRango",
+  "starter": {
+    "javascript": "function buscarRango(nums, objetivo) {\n  // tu código aquí\n}\n",
+    "python": "def buscarRango(nums, objetivo):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": [[5, 7, 7, 8, 8, 10], 8], "expected": [3, 4] },
+    { "args": [[5, 7, 7, 8, 8, 10], 6], "expected": [-1, -1] },
+    { "args": [[], 0], "expected": [-1, -1] },
+    { "args": [[2, 2, 2, 2], 2], "expected": [0, 3] },
+    { "args": [[1], 1], "expected": [0, 0] },
+    { "args": [[1, 3, 5], 5], "expected": [2, 2] }
+  ],
+  "hints": [
+    "Haz dos búsquedas binarias: una que encuentre el primer índice con nums[i] >= objetivo y otra con nums[i] > objetivo.",
+    "El último índice es (primer índice con valor > objetivo) - 1."
+  ],
+  "solution": {
+    "explanation": "Una función `limiteInferior(x)` devuelve el primer índice con valor `>= x`. Entonces `primero = limiteInferior(objetivo)` y `ultimo = limiteInferior(objetivo + 1) - 1` (para enteros). Si `primero` está fuera de rango o no coincide, no existe.\n\n**Tiempo:** O(log n) · **Espacio:** O(1)",
+    "javascript": "function buscarRango(nums, objetivo) {\n  const limiteInferior = (x) => {\n    let lo = 0, hi = nums.length;\n    while (lo < hi) {\n      const mid = (lo + hi) >> 1;\n      if (nums[mid] < x) lo = mid + 1; else hi = mid;\n    }\n    return lo;\n  };\n  const primero = limiteInferior(objetivo);\n  if (primero === nums.length || nums[primero] !== objetivo) return [-1, -1];\n  return [primero, limiteInferior(objetivo + 1) - 1];\n}\n",
+    "python": "from bisect import bisect_left, bisect_right\n\ndef buscarRango(nums, objetivo):\n    i = bisect_left(nums, objetivo)\n    if i == len(nums) or nums[i] != objetivo:\n        return [-1, -1]\n    return [i, bisect_right(nums, objetivo) - 1]\n"
+  }
+}

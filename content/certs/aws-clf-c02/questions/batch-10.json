@@ -1,0 +1,454 @@
+[
+  {
+    "id": "clf-091",
+    "domain": "technology",
+    "topics": [
+      "ec2"
+    ],
+    "difficulty": 1,
+    "stem": "Which resource defines the template with the operating system and preinstalled software used to launch an EC2 instance?",
+    "options": [
+      "Elastic IP",
+      "Instance type",
+      "Amazon Machine Image (AMI)",
+      "Security group"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "An AMI contains the information needed to launch an instance: OS, applications, and volume configuration.",
+    "notes": [
+      "A static public IP address.",
+      "Defines CPU, memory, and networking.",
+      "Correct.",
+      "Filters traffic."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ],
+    "es": {
+      "stem": "¿Qué recurso define la plantilla con el sistema operativo y el software preinstalado desde la que se lanza una instancia EC2?",
+      "options": [
+        "Elastic IP",
+        "Tipo de instancia",
+        "Amazon Machine Image (AMI)",
+        "Security group"
+      ],
+      "explanation": "Una AMI contiene la información necesaria para lanzar una instancia: SO, aplicaciones y configuración de volúmenes.",
+      "notes": [
+        "Es una IP pública estática.",
+        "Define CPU, memoria y red.",
+        "Correcta.",
+        "Filtra tráfico."
+      ]
+    }
+  },
+  {
+    "id": "clf-092",
+    "domain": "technology",
+    "topics": [
+      "ec2",
+      "pricing"
+    ],
+    "difficulty": 2,
+    "stem": "A company must run software licensed per physical socket and requires its instances to run on a physical server dedicated to it, with visibility of sockets and cores. Which option should it use?",
+    "options": [
+      "Spot Instances",
+      "Dedicated Hosts",
+      "AWS Lambda",
+      "Shared On-Demand Instances"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Dedicated Hosts are physical servers dedicated to you that let you use existing per-socket/per-core licenses (BYOL) and meet compliance requirements.",
+    "notes": [
+      "Run on shared hardware and can be interrupted.",
+      "Correct.",
+      "No control over hardware.",
+      "Shared hardware."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ],
+    "es": {
+      "stem": "Una empresa necesita ejecutar software con licencias por socket físico y requiere que sus instancias corran en un servidor físico dedicado a ella con visibilidad de sockets y núcleos. ¿Qué opción debe usar?",
+      "options": [
+        "Instancias Spot",
+        "Dedicated Hosts",
+        "AWS Lambda",
+        "Instancias bajo demanda compartidas"
+      ],
+      "explanation": "Los Dedicated Hosts son servidores físicos dedicados que permiten usar licencias existentes por socket/núcleo (BYOL) y cumplir requisitos de cumplimiento.",
+      "notes": [
+        "Se ejecutan en hardware compartido y pueden interrumpirse.",
+        "Correcta.",
+        "No da control del hardware.",
+        "Hardware compartido."
+      ]
+    }
+  },
+  {
+    "id": "clf-093",
+    "domain": "technology",
+    "topics": [
+      "ec2",
+      "storage"
+    ],
+    "difficulty": 1,
+    "stem": "Which persistent block storage attaches to EC2 instances and keeps data even if the instance is stopped?",
+    "options": [
+      "Instance store",
+      "Amazon ElastiCache",
+      "Amazon EBS",
+      "Amazon S3"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "EBS volumes are persistent network block storage, replicated within their AZ, and can be backed up with snapshots.",
+    "notes": [
+      "Ephemeral: lost when the instance stops or terminates.",
+      "An in-memory cache.",
+      "Correct.",
+      "Object storage."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ],
+    "es": {
+      "stem": "¿Qué almacenamiento de bloque persistente se adjunta a instancias EC2 y conserva los datos aunque la instancia se detenga?",
+      "options": [
+        "Instance store",
+        "Amazon ElastiCache",
+        "Amazon EBS",
+        "Amazon S3"
+      ],
+      "explanation": "Los volúmenes EBS son almacenamiento de bloque persistente en red, replicados dentro de su AZ; se pueden respaldar con snapshots.",
+      "notes": [
+        "Es efímero: se pierde al detener o terminar la instancia.",
+        "Es una caché en memoria.",
+        "Correcta.",
+        "Es almacenamiento de objetos."
+      ]
+    }
+  },
+  {
+    "id": "clf-094",
+    "domain": "technology",
+    "topics": [
+      "serverless-containers"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to run Docker containers without managing servers or EC2 clusters. Which option should it use?",
+    "options": [
+      "Amazon ECS on self-managed EC2 instances",
+      "Amazon ECS with AWS Fargate",
+      "Amazon Lightsail",
+      "AWS Batch on EC2"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Fargate is a serverless compute engine for containers that works with ECS and EKS; there are no servers to provision or patch.",
+    "notes": [
+      "Requires managing the cluster instances.",
+      "Correct.",
+      "Offers simple VPS, not serverless containers.",
+      "Requires EC2 capacity (unless it uses Fargate)."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html",
+      "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere ejecutar contenedores Docker sin administrar servidores ni clústeres de EC2. ¿Qué opción debe usar?",
+      "options": [
+        "Amazon ECS en instancias EC2 autoadministradas",
+        "Amazon ECS con AWS Fargate",
+        "Amazon Lightsail",
+        "AWS Batch en EC2"
+      ],
+      "explanation": "Fargate es un motor de cómputo serverless para contenedores que funciona con ECS y EKS: no hay servidores que aprovisionar ni parchear.",
+      "notes": [
+        "Requiere administrar las instancias del clúster.",
+        "Correcta.",
+        "Ofrece VPS simples, no contenedores serverless.",
+        "Requiere capacidad EC2 (salvo que use Fargate)."
+      ]
+    }
+  },
+  {
+    "id": "clf-095",
+    "domain": "technology",
+    "topics": [
+      "serverless-containers"
+    ],
+    "difficulty": 1,
+    "stem": "Which managed service runs Kubernetes clusters on AWS?",
+    "options": [
+      "Amazon MQ",
+      "AWS App Runner",
+      "Amazon ECR",
+      "Amazon EKS"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Amazon Elastic Kubernetes Service (EKS) manages the Kubernetes control plane.",
+    "notes": [
+      "A message broker.",
+      "Deploys web apps without managing Kubernetes.",
+      "ECR is a container image registry.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html",
+      "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio administrado ejecuta clústeres de Kubernetes en AWS?",
+      "options": [
+        "Amazon MQ",
+        "AWS App Runner",
+        "Amazon ECR",
+        "Amazon EKS"
+      ],
+      "explanation": "Amazon Elastic Kubernetes Service (EKS) administra el plano de control de Kubernetes.",
+      "notes": [
+        "Es un broker de mensajes.",
+        "App Runner despliega apps web desde código o imagen sin gestionar Kubernetes.",
+        "ECR es un registro de imágenes de contenedor.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-096",
+    "domain": "technology",
+    "topics": [
+      "ec2"
+    ],
+    "difficulty": 1,
+    "stem": "A developer wants a virtual private server with a fixed, predictable monthly price for a simple blog, with very simple setup. Which service should the developer use?",
+    "options": [
+      "Amazon Lightsail",
+      "AWS Outposts",
+      "Amazon EMR",
+      "Amazon EC2 with Savings Plans"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Lightsail offers virtual servers, storage, and networking in fixed-price bundles, ideal for simple sites and apps.",
+    "notes": [
+      "Correct.",
+      "For on-premises.",
+      "For big data.",
+      "More complex and the price varies with usage."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ],
+    "es": {
+      "stem": "Un desarrollador quiere un servidor privado virtual con un precio mensual fijo y predecible para un blog sencillo, con una configuración muy simple. ¿Qué servicio debe usar?",
+      "options": [
+        "Amazon Lightsail",
+        "AWS Outposts",
+        "Amazon EMR",
+        "Amazon EC2 con Savings Plans"
+      ],
+      "explanation": "Lightsail ofrece servidores virtuales, almacenamiento y red en paquetes de precio fijo, ideal para sitios y apps sencillas.",
+      "notes": [
+        "Correcta.",
+        "Es para on-premises.",
+        "Es para big data.",
+        "Es más complejo y el precio varía con el uso."
+      ]
+    }
+  },
+  {
+    "id": "clf-097",
+    "domain": "technology",
+    "topics": [
+      "s3"
+    ],
+    "difficulty": 2,
+    "stem": "Which S3 storage class automatically moves objects between access tiers based on usage patterns, with no retrieval charges?",
+    "options": [
+      "S3 Standard-IA",
+      "S3 Glacier Deep Archive",
+      "S3 One Zone-IA",
+      "S3 Intelligent-Tiering"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Intelligent-Tiering monitors access and moves objects between tiers automatically; it charges a small monitoring fee and no retrieval fees.",
+    "notes": [
+      "Has retrieval charges and does not move objects on its own.",
+      "Archive with hours-long retrieval.",
+      "Stores data in a single AZ.",
+      "Correct."
+    ],
+    "sources": [
+      "https://aws.amazon.com/s3/storage-classes/intelligent-tiering/",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+    ],
+    "es": {
+      "stem": "¿Qué clase de almacenamiento de S3 mueve automáticamente los objetos entre niveles de acceso según los patrones de uso, sin cargos de recuperación?",
+      "options": [
+        "S3 Standard-IA",
+        "S3 Glacier Deep Archive",
+        "S3 One Zone-IA",
+        "S3 Intelligent-Tiering"
+      ],
+      "explanation": "Intelligent-Tiering monitorea el acceso y mueve objetos entre niveles automáticamente; cobra una pequeña tarifa de monitoreo, sin cargos de recuperación.",
+      "notes": [
+        "Tiene cargo por recuperación y no mueve objetos solo.",
+        "Es archivo con recuperación de horas.",
+        "Guarda datos en una sola AZ.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-098",
+    "domain": "technology",
+    "topics": [
+      "s3"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to protect against accidental deletions in an S3 bucket and be able to recover previous versions of objects. What should it enable?",
+    "options": [
+      "S3 Transfer Acceleration",
+      "S3 Versioning",
+      "Requester Pays",
+      "Static website hosting"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "With versioning, S3 keeps every version of an object; a delete only adds a delete marker.",
+    "notes": [
+      "Speeds up uploads.",
+      "Correct.",
+      "Shifts download costs to the requester.",
+      "Serves web content."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere protegerse contra borrados accidentales en un bucket de S3 y poder recuperar versiones anteriores de los objetos. ¿Qué debe habilitar?",
+      "options": [
+        "S3 Transfer Acceleration",
+        "Versionado de S3",
+        "Requester Pays",
+        "Alojamiento de sitio web estático"
+      ],
+      "explanation": "Con el versionado, S3 conserva todas las versiones de un objeto; un borrado sólo agrega un marcador de eliminación.",
+      "notes": [
+        "Acelera cargas.",
+        "Correcta.",
+        "Traslada costos de descarga al solicitante.",
+        "Sirve contenido web."
+      ]
+    }
+  },
+  {
+    "id": "clf-099",
+    "domain": "technology",
+    "topics": [
+      "s3"
+    ],
+    "difficulty": 2,
+    "stem": "What is the designed durability of objects stored in S3 Standard?",
+    "options": [
+      "99.9%",
+      "100% guaranteed by contract",
+      "99.999999999% (11 nines)",
+      "99.99%"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "S3 is designed for 11 nines of durability by storing data redundantly across multiple AZs. S3 Standard's designed availability is 99.99%.",
+    "notes": [
+      "Much lower.",
+      "There is no 100% guarantee.",
+      "Correct.",
+      "That is the designed availability, not durability."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/DataDurability.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+    ],
+    "es": {
+      "stem": "¿Cuál es la durabilidad de diseño de los objetos almacenados en S3 Standard?",
+      "options": [
+        "99.9%",
+        "100% garantizado por contrato",
+        "99.999999999% (11 nueves)",
+        "99.99%"
+      ],
+      "explanation": "S3 está diseñado para 11 nueves de durabilidad al almacenar datos de forma redundante en varias AZ. La disponibilidad de S3 Standard es 99.99%.",
+      "notes": [
+        "Muy por debajo.",
+        "No existe una garantía del 100%.",
+        "Correcta.",
+        "Esa es la disponibilidad de diseño, no la durabilidad."
+      ]
+    }
+  },
+  {
+    "id": "clf-100",
+    "domain": "technology",
+    "topics": [
+      "s3"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to publish a website of HTML, CSS, and images without managing servers and at the lowest cost. Which solution is the most appropriate?",
+    "options": [
+      "Amazon EMR",
+      "Host the static site in Amazon S3 (optionally behind CloudFront)",
+      "An EC2 cluster with Auto Scaling",
+      "Amazon RDS"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "S3 can serve static websites directly; CloudFront adds HTTPS and global caching.",
+    "notes": [
+      "For big data.",
+      "Correct.",
+      "Works but costs more and requires management.",
+      "A database."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere publicar un sitio web con HTML, CSS e imágenes sin administrar servidores y al menor costo. ¿Qué solución es la más adecuada?",
+      "options": [
+        "Amazon EMR",
+        "Alojar el sitio estático en Amazon S3 (opcionalmente detrás de CloudFront)",
+        "Un clúster de EC2 con Auto Scaling",
+        "Amazon RDS"
+      ],
+      "explanation": "S3 puede servir sitios web estáticos directamente; con CloudFront se agrega HTTPS y caché global.",
+      "notes": [
+        "Es para big data.",
+        "Correcta.",
+        "Funciona pero es más caro y requiere administración.",
+        "Es una base de datos."
+      ]
+    }
+  }
+]

@@ -1,0 +1,458 @@
+[
+  {
+    "id": "clf-121",
+    "domain": "technology",
+    "topics": [
+      "dev-tools"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to create its AWS infrastructure repeatably from JSON or YAML templates. Which service should it use?",
+    "options": [
+      "AWS CodeCommit",
+      "AWS Config",
+      "AWS CloudFormation",
+      "Amazon CloudWatch"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "CloudFormation implements infrastructure as code: you describe resources in a template and the service creates and updates them as a stack.",
+    "notes": [
+      "A Git repository service (closed to new customers).",
+      "Evaluates configurations.",
+      "Correct.",
+      "Monitoring."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/developer-tools.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere crear su infraestructura de AWS de forma repetible a partir de plantillas en JSON o YAML. ¿Qué servicio debe usar?",
+      "options": [
+        "AWS CodeCommit",
+        "AWS Config",
+        "AWS CloudFormation",
+        "Amazon CloudWatch"
+      ],
+      "explanation": "CloudFormation implementa infraestructura como código: describes los recursos en una plantilla y el servicio los crea y actualiza como un stack.",
+      "notes": [
+        "Es un repositorio Git (sin nuevos clientes).",
+        "Evalúa configuraciones.",
+        "Correcta.",
+        "Es monitoreo."
+      ]
+    }
+  },
+  {
+    "id": "clf-122",
+    "domain": "technology",
+    "topics": [
+      "dev-tools"
+    ],
+    "difficulty": 1,
+    "stem": "A team wants to automate building, testing, and deploying every time code is pushed. Which combination of AWS services forms a CI/CD pipeline?",
+    "options": [
+      "AWS Budgets and AWS Cost Explorer",
+      "AWS CodePipeline, AWS CodeBuild, and AWS CodeDeploy",
+      "Amazon SQS and Amazon SNS",
+      "Amazon S3, Amazon EBS, and Amazon EFS"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "CodePipeline orchestrates the pipeline, CodeBuild compiles and tests, and CodeDeploy deploys to EC2, Lambda, ECS, or on-premises servers.",
+    "notes": [
+      "Cost tools.",
+      "Correct.",
+      "Messaging services.",
+      "Storage services."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/developer-tools.html"
+    ],
+    "es": {
+      "stem": "Un equipo quiere automatizar compilación, pruebas y despliegue cada vez que se sube código. ¿Qué combinación de servicios de AWS forma una canalización de CI/CD?",
+      "options": [
+        "AWS Budgets y AWS Cost Explorer",
+        "AWS CodePipeline, AWS CodeBuild y AWS CodeDeploy",
+        "Amazon SQS y Amazon SNS",
+        "Amazon S3, Amazon EBS y Amazon EFS"
+      ],
+      "explanation": "CodePipeline orquesta la canalización, CodeBuild compila y prueba, y CodeDeploy despliega en EC2, Lambda, ECS u on-premises.",
+      "notes": [
+        "Son herramientas de costos.",
+        "Correcta.",
+        "Son de mensajería.",
+        "Son servicios de almacenamiento."
+      ]
+    }
+  },
+  {
+    "id": "clf-123",
+    "domain": "technology",
+    "topics": [
+      "dev-tools"
+    ],
+    "difficulty": 2,
+    "stem": "A developer wants to define AWS infrastructure using programming languages such as TypeScript or Python. Which tool should the developer use?",
+    "options": [
+      "AWS Snowcone",
+      "AWS Cloud Development Kit (AWS CDK)",
+      "AWS CLI with manual commands",
+      "Amazon Q Developer as the only method"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "The AWS CDK lets you define infrastructure in programming languages and synthesizes it into CloudFormation templates.",
+    "notes": [
+      "An edge device.",
+      "Correct.",
+      "The CLI runs commands; it does not define declarative infrastructure.",
+      "An AI assistant, not an IaC framework."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/cdk/v2/guide/home.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/developer-tools.html"
+    ],
+    "es": {
+      "stem": "Un desarrollador quiere definir infraestructura de AWS usando lenguajes de programación como TypeScript o Python. ¿Qué herramienta debe usar?",
+      "options": [
+        "AWS Snowcone",
+        "AWS Cloud Development Kit (AWS CDK)",
+        "AWS CLI con comandos manuales",
+        "Amazon Q Developer como único método"
+      ],
+      "explanation": "El AWS CDK permite definir infraestructura con lenguajes de programación y la sintetiza en plantillas de CloudFormation.",
+      "notes": [
+        "Es un dispositivo de edge.",
+        "Correcta.",
+        "La CLI ejecuta comandos, no define infraestructura declarativa.",
+        "Es un asistente de IA, no un framework de IaC."
+      ]
+    }
+  },
+  {
+    "id": "clf-124",
+    "domain": "technology",
+    "topics": [
+      "dev-tools",
+      "monitoring"
+    ],
+    "difficulty": 2,
+    "stem": "Which service helps analyze and debug distributed applications by showing the path of requests through services (traces)?",
+    "options": [
+      "VPC Flow Logs",
+      "Amazon Athena",
+      "AWS X-Ray",
+      "AWS CloudTrail"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "X-Ray collects traces and shows a service map to identify bottlenecks and errors.",
+    "notes": [
+      "Records IP traffic.",
+      "Queries data in S3 with SQL.",
+      "Correct.",
+      "Records AWS API calls."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/developer-tools.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio ayuda a analizar y depurar aplicaciones distribuidas mostrando el recorrido de las solicitudes a través de los servicios (trazas)?",
+      "options": [
+        "VPC Flow Logs",
+        "Amazon Athena",
+        "AWS X-Ray",
+        "AWS CloudTrail"
+      ],
+      "explanation": "X-Ray recopila trazas y muestra un mapa de servicios para identificar cuellos de botella y errores.",
+      "notes": [
+        "Registra tráfico IP.",
+        "Consulta datos en S3 con SQL.",
+        "Correcta.",
+        "Registra llamadas a la API de AWS."
+      ]
+    }
+  },
+  {
+    "id": "clf-125",
+    "domain": "technology",
+    "topics": [
+      "dev-tools"
+    ],
+    "difficulty": 1,
+    "stem": "Which TWO ways can you interact with AWS services besides the web console? (Choose two.)",
+    "options": [
+      "AWS Marketplace",
+      "Edge locations",
+      "AWS CLI",
+      "AWS Artifact",
+      "AWS SDKs"
+    ],
+    "correct": [
+      2,
+      4
+    ],
+    "explanation": "Besides the console, AWS is accessed through the AWS CLI, the SDKs for many languages, and the APIs (also AWS CloudShell).",
+    "notes": [
+      "A software store.",
+      "Network infrastructure.",
+      "Correct.",
+      "Provides compliance reports.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/developer-tools.html"
+    ],
+    "es": {
+      "stem": "¿Cuáles son DOS formas de interactuar con los servicios de AWS además de la consola web? (Elige 2)",
+      "options": [
+        "AWS Marketplace",
+        "Edge locations",
+        "AWS CLI",
+        "AWS Artifact",
+        "AWS SDK"
+      ],
+      "explanation": "Además de la consola, se accede a AWS mediante la AWS CLI, los SDK en distintos lenguajes y las APIs (también AWS CloudShell).",
+      "notes": [
+        "Es una tienda de software.",
+        "Son infraestructura de red.",
+        "Correcta.",
+        "Da informes de cumplimiento.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-126",
+    "domain": "technology",
+    "topics": [
+      "app-integration"
+    ],
+    "difficulty": 1,
+    "stem": "An application must send the same notification to multiple subscribers (email, SMS, SQS queues, Lambda functions) using the publish/subscribe model. Which service should it use?",
+    "options": [
+      "Amazon Data Firehose",
+      "AWS Step Functions",
+      "Amazon SQS",
+      "Amazon SNS"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Amazon SNS is a pub/sub service: a message is published to a topic and delivered to all of its subscribers.",
+    "notes": [
+      "Delivers streams to data destinations.",
+      "Orchestrates workflows.",
+      "SQS is a point-to-point queue.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/sns/latest/dg/welcome.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/application-integration.html"
+    ],
+    "es": {
+      "stem": "Una aplicación debe enviar la misma notificación a varios suscriptores (correo, SMS, colas SQS, funciones Lambda) mediante el modelo publicación/suscripción. ¿Qué servicio debe usar?",
+      "options": [
+        "Amazon Kinesis Data Firehose",
+        "AWS Step Functions",
+        "Amazon SQS",
+        "Amazon SNS"
+      ],
+      "explanation": "Amazon SNS es un servicio pub/sub: se publica un mensaje en un tema y se entrega a todos sus suscriptores.",
+      "notes": [
+        "Entrega streams a destinos de datos.",
+        "Orquesta flujos de trabajo.",
+        "SQS es una cola punto a punto.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-127",
+    "domain": "technology",
+    "topics": [
+      "app-integration"
+    ],
+    "difficulty": 2,
+    "stem": "Which service coordinates multiple Lambda functions and AWS services in a visual workflow with steps, retries, and branching?",
+    "options": [
+      "AWS Batch",
+      "AWS Step Functions",
+      "Amazon EventBridge Scheduler",
+      "Amazon MQ"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Step Functions orchestrates workflows as state machines, with error handling, retries, and parallel execution.",
+    "notes": [
+      "Runs batch jobs.",
+      "Correct.",
+      "Schedules invocations; does not orchestrate steps.",
+      "An ActiveMQ/RabbitMQ broker."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/application-integration.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio permite coordinar varias funciones Lambda y servicios de AWS en un flujo de trabajo visual con pasos, reintentos y ramificaciones?",
+      "options": [
+        "AWS Batch",
+        "AWS Step Functions",
+        "Amazon EventBridge Scheduler",
+        "Amazon MQ"
+      ],
+      "explanation": "Step Functions orquesta flujos de trabajo como máquinas de estado, con manejo de errores, reintentos y ejecución paralela.",
+      "notes": [
+        "Ejecuta trabajos por lotes.",
+        "Correcta.",
+        "Programa invocaciones, no orquesta pasos.",
+        "Es un broker ActiveMQ/RabbitMQ."
+      ]
+    }
+  },
+  {
+    "id": "clf-128",
+    "domain": "technology",
+    "topics": [
+      "app-integration"
+    ],
+    "difficulty": 2,
+    "stem": "A company wants to react to events from SaaS applications and AWS services by routing them with rules to different targets. Which service is appropriate?",
+    "options": [
+      "AWS Direct Connect",
+      "Amazon Redshift",
+      "Amazon SQS FIFO",
+      "Amazon EventBridge"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "EventBridge is a serverless event bus that routes events from AWS, SaaS, and your own apps based on rules.",
+    "notes": [
+      "Connectivity.",
+      "A data warehouse.",
+      "An ordered queue, not an event router.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/application-integration.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere reaccionar a eventos de aplicaciones SaaS y servicios de AWS enrutándolos con reglas hacia distintos destinos. ¿Qué servicio es el adecuado?",
+      "options": [
+        "AWS Direct Connect",
+        "Amazon Redshift",
+        "Amazon SQS FIFO",
+        "Amazon EventBridge"
+      ],
+      "explanation": "EventBridge es un bus de eventos serverless que enruta eventos de AWS, SaaS y apps propias según reglas.",
+      "notes": [
+        "Es conectividad.",
+        "Es un data warehouse.",
+        "Es una cola ordenada, no un enrutador de eventos.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-129",
+    "domain": "technology",
+    "topics": [
+      "analytics-ml"
+    ],
+    "difficulty": 1,
+    "stem": "An analyst wants to query CSV and Parquet files stored in S3 with standard SQL, without loading data into a database or managing servers. Which service should the analyst use?",
+    "options": [
+      "Amazon RDS",
+      "Amazon EMR with a long-running cluster",
+      "Amazon Athena",
+      "Amazon Neptune"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Athena is a serverless query service over S3; you pay for the data scanned.",
+    "notes": [
+      "Requires loading data.",
+      "Requires managing clusters.",
+      "Correct.",
+      "A graph database."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/athena/latest/ug/what-is.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/analytics.html"
+    ],
+    "es": {
+      "stem": "Un analista quiere consultar con SQL estándar archivos CSV y Parquet almacenados en S3, sin cargar datos en una base de datos ni administrar servidores. ¿Qué servicio debe usar?",
+      "options": [
+        "Amazon RDS",
+        "Amazon EMR con clúster permanente",
+        "Amazon Athena",
+        "Amazon Neptune"
+      ],
+      "explanation": "Athena es un servicio de consultas serverless sobre S3; se paga por datos escaneados.",
+      "notes": [
+        "Requiere cargar datos.",
+        "Requiere administrar clústeres.",
+        "Correcta.",
+        "Es una base de datos de grafos."
+      ]
+    }
+  },
+  {
+    "id": "clf-130",
+    "domain": "technology",
+    "topics": [
+      "analytics-ml"
+    ],
+    "difficulty": 2,
+    "stem": "Which service is a serverless ETL service that also maintains a data catalog to discover and prepare data for analytics?",
+    "options": [
+      "Amazon QuickSight",
+      "AWS Snowball",
+      "AWS Glue",
+      "Amazon Kinesis Video Streams"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "AWS Glue discovers, catalogs, cleans, and transforms data; its Data Catalog is used by Athena, EMR, and Redshift Spectrum.",
+    "notes": [
+      "For BI visualizations and dashboards.",
+      "Physical data transfer.",
+      "Correct.",
+      "Ingests video."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/analytics.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio es un ETL serverless que además mantiene un catálogo de datos para descubrir y preparar datos para análisis?",
+      "options": [
+        "Amazon QuickSight",
+        "AWS Snowball",
+        "AWS Glue",
+        "Amazon Kinesis Video Streams"
+      ],
+      "explanation": "AWS Glue descubre, cataloga, limpia y transforma datos; su Data Catalog lo usan Athena, EMR y Redshift Spectrum.",
+      "notes": [
+        "Es para visualización y dashboards de BI.",
+        "Transfiere datos físicamente.",
+        "Correcta.",
+        "Ingesta video."
+      ]
+    }
+  }
+]

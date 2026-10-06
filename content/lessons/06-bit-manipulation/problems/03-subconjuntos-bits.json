@@ -1,0 +1,28 @@
+{
+  "id": "suma-subconjunto-bitmask",
+  "title": "¿Existe un subconjunto con esa suma?",
+  "difficulty": "media",
+  "description": "Dado un arreglo `nums` de **como máximo 15 enteros** y un entero `objetivo`, devuelve `true` si algún subconjunto (posiblemente vacío) suma exactamente `objetivo`.\n\nUsa una **máscara de bits** para enumerar los 2ⁿ subconjuntos.\n\n**Ejemplos**\n\n```\nnums = [3, 34, 4, 12, 5, 2], objetivo = 9   → true   // 4 + 5\nnums = [3, 34, 4, 12, 5, 2], objetivo = 30  → false\nnums = [], objetivo = 0                     → true   // subconjunto vacío\n```",
+  "functionName": "existeSuma",
+  "starter": {
+    "javascript": "function existeSuma(nums, objetivo) {\n  // tu código aquí\n}\n",
+    "python": "def existeSuma(nums, objetivo):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": [[3, 34, 4, 12, 5, 2], 9], "expected": true },
+    { "args": [[3, 34, 4, 12, 5, 2], 30], "expected": false },
+    { "args": [[], 0], "expected": true },
+    { "args": [[1, 2, 3], 7], "expected": false },
+    { "args": [[-2, 5, 1], 3], "expected": true },
+    { "args": [[10, 20, 30, 40], 100], "expected": true }
+  ],
+  "hints": [
+    "Cada número entre 0 y 2ⁿ - 1 representa un subconjunto: el bit i indica si incluyes nums[i].",
+    "Para cada máscara, suma los nums[i] cuyo bit esté encendido."
+  ],
+  "solution": {
+    "explanation": "Recorremos todas las máscaras `0 … 2ⁿ - 1`. Para cada una, sumamos los elementos cuyos bits están encendidos. Es fuerza bruta, pero con n ≤ 15 son sólo 32,768 subconjuntos.\n\n(Para n grande y valores pequeños se usa programación dinámica, lección 9.)\n\n**Tiempo:** O(2ⁿ · n) · **Espacio:** O(1)",
+    "javascript": "function existeSuma(nums, objetivo) {\n  const n = nums.length;\n  for (let mask = 0; mask < (1 << n); mask++) {\n    let suma = 0;\n    for (let i = 0; i < n; i++) if (mask & (1 << i)) suma += nums[i];\n    if (suma === objetivo) return true;\n  }\n  return false;\n}\n",
+    "python": "def existeSuma(nums, objetivo):\n    n = len(nums)\n    for mask in range(1 << n):\n        suma = sum(nums[i] for i in range(n) if mask & (1 << i))\n        if suma == objetivo:\n            return True\n    return False\n"
+  }
+}

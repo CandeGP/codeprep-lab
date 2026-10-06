@@ -1,0 +1,342 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  username      String         @unique
+  passwordHash  String
+  // Idioma de las preguntas de certificación: "en" | "es"
+  lang          String         @default("en")
+  createdAt     DateTime       @default(now())
+  sessions      Session[]
+  notes         Note[]
+  bookmarks     Bookmark[]
+  progress      Progress[]
+  reviewCards   ReviewCard[]
+  submissions   Submission[]
+  chatMessages  ChatMessage[]
+  pdf           PdfFile?
+  loginEvents   LoginEvent[]
+  examAttempts  ExamAttempt[]
+  questionMarks QuestionMark[]
+  studyCards    StudyCard[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// visibility: "PRIVATE" | "SHARED"
+model Note {
+  id         String   @id @default(cuid())
+  userId     String
+  lessonSlug String?
+  pdfPage    Int?
+  title      String
+  body       String
+  visibility String   @default("PRIVATE")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([lessonSlug])
+  @@index([visibility])
+}
+
+// type: "LESSON" | "SECTION" | "PROBLEM" | "PDF_PAGE"
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  ref       String
+  label     String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type, ref])
+}
+
+model Progress {
+  userId      String
+  lessonSlug  String
+  completedAt DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, lessonSlug])
+}
+
+// Repetición espaciada (SM-2) por pregunta de quiz
+model ReviewCard {
+  userId      String
+  questionId  String
+  lessonSlug  String
+  ease        Float    @default(2.5)
+  interval    Int      @default(0)
+  repetitions Int      @default(0)
+  lapses      Int      @default(0)
+  dueAt       DateTime @default(now())
+  lastResult  Boolean?
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, questionId])
+  @@index([userId, dueAt])
+}
+
+model Submission {
+  id        String   @id @default(cuid())
+  userId    String
+  problemId String
+  language  String
+  code      String
+  passed    Boolean
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, problemId])
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  userId     String
+  lessonSlug String?
+  role       String
+  content    String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model PdfFile {
+  userId     String   @id
+  filename   String
+  size       Int
+  uploadedAt DateTime @default(now())
+  lastPage   Int      @default(1)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Metadata de cada registro/inicio de sesión (para el panel de admin)
+// kind: "REGISTER" | "LOGIN"
+model LoginEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  kind      String
+  ip        String?
+  userAgent String?
+  language  String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+// ================= Certificaciones (simulador de exámenes) =================
+
+// source: "CURATED" | "AI" | "USER"
+model Course {
+  id            String          @id @default(cuid())
+  slug          String          @unique
+  title         String
+  provider      String
+  code          String
+  description   String          @default("")
+  examQuestions Int             @default(65)
+  simQuestions  Int             @default(60)
+  timeLimitMin  Int             @default(90)
+  passingPct    Int             @default(70)
+  // Puntaje escalado (100-1000) necesario para aprobar el examen real
+  passingScore  Int             @default(700)
+  source        String          @default("CURATED")
+  createdById   String?
+  createdAt     DateTime        @default(now())
+  domains       Domain[]
+  topics        Topic[]
+  questions     Question[]
+  flashcards    Flashcard[]
+  attempts      ExamAttempt[]
+  jobs          GenerationJob[]
+}
+
+model Domain {
+  id        String     @id @default(cuid())
+  courseId  String
+  slug      String
+  name      String
+  nameEn    String?
+  weight    Int
+  order     Int        @default(0)
+  course    Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions Question[]
+
+  @@unique([courseId, slug])
+}
+
+model Topic {
+  id         String          @id @default(cuid())
+  courseId   String
+  slug       String
+  name       String
+  nameEn     String?
+  course     Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions  QuestionTopic[]
+  flashcards Flashcard[]
+
+  @@unique([courseId, slug])
+}
+
+// type: "SINGLE" | "MULTI"; status: "ACTIVE" | "FLAGGED" | "HIDDEN"
+// options / correct / optionNotes son JSON (string[] / number[] / string[])
+model Question {
+  id            String          @id
+  courseId      String
+  domainId      String
+  type          String          @default("SINGLE")
+  stem          String
+  options       String
+  correct       String
+  explanation   String
+  optionNotes   String          @default("[]")
+  // Traducción al español (el contenido principal está en inglés)
+  stemEs        String?
+  optionsEs     String?
+  explanationEs String?
+  optionNotesEs String?
+  // URLs de documentación oficial que respaldan la pregunta (JSON string[])
+  sources       String          @default("[]")
+  difficulty    Int             @default(2)
+  source        String          @default("CURATED")
+  stemHash      String
+  status        String          @default("ACTIVE")
+  reports       Int             @default(0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  course        Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  domain        Domain          @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  topics        QuestionTopic[]
+
+  @@unique([courseId, stemHash])
+  @@index([courseId, status])
+}
+
+model QuestionTopic {
+  questionId String
+  topicId    String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  topic      Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([questionId, topicId])
+  @@index([topicId])
+}
+
+model Flashcard {
+  id        String   @id
+  courseId  String
+  topicId   String?
+  front     String
+  back      String
+  frontEs   String?
+  backEs    String?
+  source    String   @default("CURATED")
+  createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  topic     Topic?   @relation(fields: [topicId], references: [id], onDelete: SetNull)
+
+  @@index([courseId])
+}
+
+// kind: "FULL" | "CUSTOM" | "REVIEW"; mode: "INSTANT" | "END"
+// status: "IN_PROGRESS" | "FINISHED"
+model ExamAttempt {
+  id           String          @id @default(cuid())
+  userId       String
+  courseId     String
+  kind         String
+  mode         String
+  title        String
+  filters      String          @default("{}")
+  questionIds  String
+  timeLimitSec Int?
+  status       String          @default("IN_PROGRESS")
+  score        Float?
+  startedAt    DateTime        @default(now())
+  finishedAt   DateTime?
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course       Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  answers      AttemptAnswer[]
+
+  @@index([userId, courseId, startedAt])
+}
+
+model AttemptAnswer {
+  attemptId  String
+  questionId String
+  selected   String      @default("[]")
+  correct    Boolean     @default(false)
+  flagged    Boolean     @default(false)
+  timeMs     Int         @default(0)
+  answeredAt DateTime    @default(now())
+  attempt    ExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@id([attemptId, questionId])
+  @@index([questionId])
+}
+
+// kind: "PENDING" (por estudiar) | "SAVED"
+model QuestionMark {
+  userId     String
+  questionId String
+  courseId   String
+  kind       String   @default("PENDING")
+  note       String?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, questionId])
+  @@index([userId, courseId])
+}
+
+// Repetición espaciada (SM-2) para preguntas falladas y flashcards
+// itemType: "QUESTION" | "FLASHCARD"
+model StudyCard {
+  userId      String
+  itemType    String
+  itemId      String
+  courseId    String
+  ease        Float    @default(2.5)
+  interval    Int      @default(0)
+  repetitions Int      @default(0)
+  lapses      Int      @default(0)
+  dueAt       DateTime @default(now())
+  lastResult  Boolean?
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, itemType, itemId])
+  @@index([userId, dueAt])
+}
+
+// Generación de preguntas con IA por lotes. status: "RUNNING" | "DONE" | "ERROR"
+model GenerationJob {
+  id        String   @id @default(cuid())
+  courseId  String
+  userId    String
+  topics    String   @default("[]")
+  target    Int
+  done      Int      @default(0)
+  status    String   @default("RUNNING")
+  error     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}

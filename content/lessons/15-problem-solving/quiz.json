@@ -1,0 +1,69 @@
+[
+  {
+    "id": "q1",
+    "question": "Te dan un problema con n ≤ 15. ¿Qué te sugiere ese límite?",
+    "options": [
+      "Que la solución debe ser O(1)",
+      "Que una solución exponencial (backtracking o máscaras de bits) puede ser aceptable",
+      "Que debes usar búsqueda binaria",
+      "Nada, el tamaño no importa"
+    ],
+    "answer": 1,
+    "explanation": "2¹⁵ ≈ 32,000: algo exponencial es perfectamente viable con esa entrada."
+  },
+  {
+    "id": "q2",
+    "question": "¿Por qué conviene enunciar primero una solución directa aunque sea lenta?",
+    "options": [
+      "Porque siempre es la que se espera",
+      "Porque asegura una respuesta y sirve de base para optimizar",
+      "Porque es más fácil de escribir en código",
+      "Para ganar tiempo sin pensar"
+    ],
+    "answer": 1,
+    "explanation": "Muestra que entendiste el problema y da un punto de partida concreto."
+  },
+  {
+    "id": "q3",
+    "question": "El enunciado pide 'el mínimo número de movimientos' en un tablero. ¿Qué técnica consideras primero?",
+    "options": ["DFS", "BFS", "Ordenar", "Pila monótona"],
+    "answer": 1,
+    "explanation": "El mínimo número de pasos en un grafo sin pesos es la distancia BFS."
+  },
+  {
+    "id": "q4",
+    "question": "¿Qué hacer antes de empezar a escribir código?",
+    "options": [
+      "Nada, programar cuanto antes",
+      "Acordar el enfoque y su complejidad con el entrevistador",
+      "Escribir todas las pruebas unitarias",
+      "Pedir más tiempo"
+    ],
+    "answer": 1,
+    "explanation": "Evita invertir 20 minutos en un enfoque que el entrevistador sabe que no funciona."
+  },
+  {
+    "id": "q5",
+    "question": "¿Por qué conviene crear tu propio ejemplo en lugar de usar sólo el del enunciado?",
+    "options": [
+      "Porque el del enunciado siempre está mal",
+      "Porque los ejemplos pequeños o muy simétricos pueden esconder casos importantes",
+      "Porque el entrevistador lo exige",
+      "No conviene"
+    ],
+    "answer": 1,
+    "explanation": "Un ejemplo mediano y 'desordenado' revela mejor el comportamiento del algoritmo."
+  },
+  {
+    "id": "q6",
+    "question": "Si tu solución ya es O(n) y cualquier solución debe leer toda la entrada, ¿qué conviene hacer?",
+    "options": [
+      "Seguir buscando una solución O(log n)",
+      "Dejar de optimizar el tiempo y enfocarte en espacio, claridad o implementación",
+      "Cambiar de lenguaje",
+      "Usar programación dinámica"
+    ],
+    "answer": 1,
+    "explanation": "Si ya alcanzaste lo mínimo posible, seguir optimizando el tiempo no rinde."
+  }
+]

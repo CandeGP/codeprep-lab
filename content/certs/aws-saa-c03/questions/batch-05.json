@@ -1,0 +1,454 @@
+[
+  {
+    "id": "saa2-041",
+    "domain": "secure",
+    "topics": [
+      "s3",
+      "lambda",
+      "iam"
+    ],
+    "difficulty": 3,
+    "stem": "A Lambda function generates S3 presigned URLs for customers to download invoices. The function sets an expiration of 7 days, but customers report that the links stop working after a few hours. Security policy prohibits long-term IAM user access keys. The company needs links that remain valid for 7 days. What should a solutions architect do?",
+    "options": [
+      "Create an IAM user with access keys and use it only in the Lambda function to sign the URLs.",
+      "Increase the maximum session duration of the Lambda execution role to 12 hours.",
+      "Serve the invoices through Amazon CloudFront with origin access control and generate CloudFront signed URLs with a 7-day expiration.",
+      "Increase the Lambda function timeout to 15 minutes."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "A presigned URL created with temporary credentials expires when the credentials expire, even if a later expiration time is requested. CloudFront signed URLs are signed with a key pair associated with the distribution, so they can remain valid for the required 7 days without long-term IAM credentials.",
+    "notes": [
+      "Would work technically, but long-term IAM access keys are prohibited.",
+      "Still far shorter than 7 days, and Lambda does not always honor the role's session duration.",
+      "Correct: independent of the temporary credentials of the Lambda role.",
+      "Timeout controls execution length, not URL validity."
+    ],
+    "sources": [
+      "https://repost.aws/knowledge-center/presigned-url-s3-bucket-expiration"
+    ],
+    "es": {
+      "stem": "Una función Lambda genera URL prefirmadas de S3 para que los clientes descarguen facturas. La función fija una expiración de 7 días, pero los clientes reportan que los enlaces dejan de funcionar tras unas horas. La política de seguridad prohíbe access keys de usuarios de IAM de larga duración. La empresa necesita enlaces válidos por 7 días. ¿Qué debe hacer un arquitecto de soluciones?",
+      "options": [
+        "Crear un usuario de IAM con access keys y usarlo sólo en la función Lambda para firmar las URL.",
+        "Aumentar la duración máxima de sesión del rol de ejecución de Lambda a 12 horas.",
+        "Servir las facturas mediante Amazon CloudFront con origin access control y generar signed URL de CloudFront con expiración de 7 días.",
+        "Aumentar el timeout de la función Lambda a 15 minutos."
+      ],
+      "explanation": "Una URL prefirmada creada con credenciales temporales expira cuando expiran las credenciales, aunque se pida una expiración posterior. Las signed URL de CloudFront se firman con un par de claves asociado a la distribución, así que pueden ser válidas los 7 días requeridos sin credenciales de IAM de larga duración.",
+      "notes": [
+        "Técnicamente funcionaría, pero las access keys de larga duración están prohibidas.",
+        "Sigue siendo mucho menos de 7 días, y Lambda no siempre respeta la duración de sesión del rol.",
+        "Correcta: no depende de las credenciales temporales del rol de Lambda.",
+        "El timeout controla la duración de la ejecución, no la validez de la URL."
+      ]
+    }
+  },
+  {
+    "id": "saa2-042",
+    "domain": "secure",
+    "topics": [
+      "api-gateway",
+      "vpc"
+    ],
+    "difficulty": 2,
+    "stem": "A company exposes internal microservices through Amazon API Gateway REST APIs. The APIs must be reachable only from the company's VPC and from the data center over AWS Direct Connect, never from the internet, and must continue to use API Gateway features such as request validation and throttling. What should a solutions architect do?",
+    "options": [
+      "Create private REST APIs, create an interface VPC endpoint for execute-api, and add a resource policy that allows execute-api:Invoke only when aws:SourceVpce matches the endpoint.",
+      "Create edge-optimized REST APIs and restrict them with CloudFront geographic restrictions.",
+      "Create regional REST APIs and attach an AWS WAF web ACL that allows only the data center IP range.",
+      "Replace API Gateway with an internet-facing Application Load Balancer that has a security group limited to the VPC CIDR."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Private REST APIs are accessible only through interface VPC endpoints for execute-api. A resource policy with the aws:SourceVpce condition allows invocation only through the approved endpoint; on-premises clients reach the endpoint over Direct Connect.",
+    "notes": [
+      "Correct: not reachable from the internet, and API Gateway features are preserved.",
+      "Edge-optimized APIs are public; geographic restrictions do not limit access to the VPC.",
+      "The endpoint remains public on the internet; WAF only filters requests.",
+      "Loses API Gateway features, and an internet-facing ALB is still public."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/compute/accessing-private-amazon-api-gateway-endpoints-through-custom-amazon-cloudfront-distribution-using-vpc-origins/"
+    ],
+    "es": {
+      "stem": "Una empresa expone microservicios internos mediante REST API de Amazon API Gateway. Las API sólo deben ser accesibles desde la VPC de la empresa y desde el centro de datos por AWS Direct Connect, nunca desde Internet, y deben seguir usando funciones de API Gateway como validación de solicitudes y throttling. ¿Qué debe hacer un arquitecto de soluciones?",
+      "options": [
+        "Crear REST API privadas, crear un interface VPC endpoint para execute-api y agregar una resource policy que permita execute-api:Invoke sólo cuando aws:SourceVpce coincida con el endpoint.",
+        "Crear REST API edge-optimized y restringirlas con restricciones geográficas de CloudFront.",
+        "Crear REST API regionales y adjuntar una web ACL de AWS WAF que permita sólo el rango de IP del centro de datos.",
+        "Reemplazar API Gateway por un Application Load Balancer público con un security group limitado al CIDR de la VPC."
+      ],
+      "explanation": "Las REST API privadas sólo son accesibles mediante interface VPC endpoints para execute-api. Una resource policy con la condición aws:SourceVpce permite invocarlas sólo por el endpoint aprobado; los clientes on-premises llegan al endpoint por Direct Connect.",
+      "notes": [
+        "Correcta: no son accesibles desde Internet y se conservan las funciones de API Gateway.",
+        "Las API edge-optimized son públicas; las restricciones geográficas no limitan el acceso a la VPC.",
+        "El endpoint sigue siendo público en Internet; WAF sólo filtra solicitudes.",
+        "Pierde las funciones de API Gateway, y un ALB expuesto a Internet sigue siendo público."
+      ]
+    }
+  },
+  {
+    "id": "saa2-043",
+    "domain": "secure",
+    "topics": [
+      "containers",
+      "iam"
+    ],
+    "difficulty": 2,
+    "stem": "An Amazon ECS service on AWS Fargate pulls its image from a private Amazon ECR repository, writes logs to CloudWatch Logs, and its application code reads messages from an SQS queue and writes objects to an S3 bucket. A security review found that the application code can also call ecr:BatchGetImage and logs:PutLogEvents, which it does not need. How should the solutions architect separate the permissions?",
+    "options": [
+      "Store IAM user access keys for SQS and S3 in the container image.",
+      "Grant ECR and CloudWatch Logs permissions in the task execution role, and grant only the SQS and S3 permissions in the task role used by the application.",
+      "Grant all permissions in the task execution role and remove the task role.",
+      "Grant all permissions in the task role and remove the task execution role."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "The task execution role gives the ECS and Fargate agents permissions to pull images from ECR, send logs, and fetch referenced secrets; those credentials are not directly available to the containers. The task role provides the permissions the application code needs. Separating them follows least privilege.",
+    "notes": [
+      "Long-term keys in images are insecure and hard to rotate.",
+      "Correct: agent permissions and application permissions are separated.",
+      "The application would not receive any credentials for SQS and S3.",
+      "The agent could not pull the image or send logs, and the application would keep extra permissions."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html"
+    ],
+    "es": {
+      "stem": "Un servicio de Amazon ECS en AWS Fargate descarga su imagen de un repositorio privado de Amazon ECR, escribe logs en CloudWatch Logs, y su código lee mensajes de una cola SQS y escribe objetos en un bucket de S3. Una revisión de seguridad encontró que el código de la aplicación también puede llamar a ecr:BatchGetImage y logs:PutLogEvents, que no necesita. ¿Cómo debe separar los permisos el arquitecto de soluciones?",
+      "options": [
+        "Guardar access keys de un usuario de IAM para SQS y S3 en la imagen del contenedor.",
+        "Dar los permisos de ECR y CloudWatch Logs en el task execution role, y sólo los de SQS y S3 en el task role que usa la aplicación.",
+        "Dar todos los permisos en el task execution role y eliminar el task role.",
+        "Dar todos los permisos en el task role y eliminar el task execution role."
+      ],
+      "explanation": "El task execution role da a los agentes de ECS y Fargate permisos para descargar imágenes de ECR, enviar logs y obtener secretos referenciados; esas credenciales no están disponibles directamente para los contenedores. El task role da los permisos que necesita el código de la aplicación. Separarlos respeta el mínimo privilegio.",
+      "notes": [
+        "Las claves de larga duración en imágenes son inseguras y difíciles de rotar.",
+        "Correcta: los permisos del agente y los de la aplicación quedan separados.",
+        "La aplicación no recibiría credenciales para SQS y S3.",
+        "El agente no podría descargar la imagen ni enviar logs, y la aplicación conservaría permisos de más."
+      ]
+    }
+  },
+  {
+    "id": "saa2-044",
+    "domain": "secure",
+    "topics": [
+      "s3",
+      "iam"
+    ],
+    "difficulty": 2,
+    "stem": "A company's S3 buckets receive objects uploaded by partner accounts. Because of legacy ACLs, some uploaded objects are owned by the partners, and the company cannot manage or share them through its bucket policies. The company wants every object in its buckets to be owned by the company and access to be controlled only through policies. What should a solutions architect do?",
+    "options": [
+      "Set S3 Object Ownership to Bucket owner enforced on the buckets.",
+      "Enable S3 Versioning so that new versions belong to the bucket owner.",
+      "Enable S3 Block Public Access on the buckets.",
+      "Require partners to include the bucket-owner-full-control canned ACL on every upload."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "With Object Ownership set to Bucket owner enforced, ACLs are disabled and the bucket owner automatically owns every object and manages access exclusively with policies. This is the default for new buckets.",
+    "notes": [
+      "Correct: disables ACLs and gives the bucket owner ownership of all objects.",
+      "Versioning does not change object ownership.",
+      "Block Public Access does not change ownership or disable ACLs for cross-account uploads.",
+      "Grants control but does not change ownership and still relies on ACLs."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/help-panel/AmazonS3/latest/console/hp-create-bucket-page.html"
+    ],
+    "es": {
+      "stem": "Los buckets de S3 de una empresa reciben objetos que suben cuentas de socios. Por ACL heredadas, algunos objetos subidos pertenecen a los socios y la empresa no puede administrarlos ni compartirlos mediante sus políticas de bucket. La empresa quiere que todos los objetos de sus buckets le pertenezcan y que el acceso se controle sólo con políticas. ¿Qué debe hacer un arquitecto de soluciones?",
+      "options": [
+        "Configurar S3 Object Ownership en Bucket owner enforced en los buckets.",
+        "Habilitar S3 Versioning para que las nuevas versiones pertenezcan al dueño del bucket.",
+        "Habilitar S3 Block Public Access en los buckets.",
+        "Exigir a los socios que incluyan la ACL predefinida bucket-owner-full-control en cada carga."
+      ],
+      "explanation": "Con Object Ownership en Bucket owner enforced, las ACL quedan deshabilitadas y el dueño del bucket es automáticamente dueño de todos los objetos, administrando el acceso sólo con políticas. Es el valor predeterminado para buckets nuevos.",
+      "notes": [
+        "Correcta: deshabilita las ACL y hace al dueño del bucket propietario de todos los objetos.",
+        "El versionado no cambia la propiedad de los objetos.",
+        "Block Public Access no cambia la propiedad ni deshabilita las ACL en cargas entre cuentas.",
+        "Da control, pero no cambia la propiedad y sigue dependiendo de ACL."
+      ]
+    }
+  },
+  {
+    "id": "saa2-045",
+    "domain": "secure",
+    "topics": [
+      "organizations",
+      "s3",
+      "kms-encryption"
+    ],
+    "difficulty": 3,
+    "stem": "A company with 300 accounts wants to guarantee that its S3 buckets, KMS keys, SQS queues, and Secrets Manager secrets can never be accessed by principals outside its AWS organization, even if an account owner writes an overly permissive resource-based policy. The control must be enforced centrally and must not require changes to each resource's policy. What should the solutions architect use?",
+    "options": [
+      "An AWS Config rule that detects public resource policies.",
+      "A resource control policy (RCP) attached in AWS Organizations that denies access when aws:PrincipalOrgID does not match the organization.",
+      "A service control policy (SCP) that denies s3:*, kms:*, sqs:*, and secretsmanager:* to principals outside the organization.",
+      "An IAM permissions boundary on every role in the organization."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "RCPs set the maximum permissions available on resources in the organization and are evaluated whenever those resources are accessed, regardless of who makes the request. SCPs only restrict principals inside the organization, so they cannot block external principals from accessing internal resources.",
+    "notes": [
+      "Detective only; it does not prevent access.",
+      "Correct: central, preventive control on resources for external access.",
+      "SCPs apply to principals in the organization, not to external principals.",
+      "Boundaries limit the organization's own identities, not external principals."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/aws/introducing-resource-control-policies-rcps-a-new-authorization-policy/"
+    ],
+    "es": {
+      "stem": "Una empresa con 300 cuentas quiere garantizar que sus buckets de S3, claves de KMS, colas de SQS y secretos de Secrets Manager nunca puedan ser accedidos por principales fuera de su organización de AWS, aunque el dueño de una cuenta escriba una política de recurso demasiado permisiva. El control debe aplicarse de forma central y sin cambiar la política de cada recurso. ¿Qué debe usar el arquitecto de soluciones?",
+      "options": [
+        "Una regla de AWS Config que detecte políticas de recursos públicas.",
+        "Una resource control policy (RCP) en AWS Organizations que deniegue el acceso cuando aws:PrincipalOrgID no coincida con la organización.",
+        "Una service control policy (SCP) que deniegue s3:*, kms:*, sqs:* y secretsmanager:* a principales fuera de la organización.",
+        "Un permissions boundary de IAM en cada rol de la organización."
+      ],
+      "explanation": "Las RCP fijan el máximo de permisos disponibles sobre los recursos de la organización y se evalúan cada vez que se accede a ellos, sin importar quién hace la solicitud. Las SCP sólo restringen a principales dentro de la organización, así que no pueden bloquear a principales externos que acceden a recursos internos.",
+      "notes": [
+        "Sólo detecta; no previene el acceso.",
+        "Correcta: control central y preventivo sobre los recursos frente a accesos externos.",
+        "Las SCP aplican a principales de la organización, no a principales externos.",
+        "Los boundaries limitan las identidades propias, no a principales externos."
+      ]
+    }
+  },
+  {
+    "id": "saa2-046",
+    "domain": "secure",
+    "topics": [
+      "kms-encryption"
+    ],
+    "difficulty": 1,
+    "stem": "A company's compliance standard requires that the cryptographic material of encryption keys be rotated at least once a year, and that data encrypted before a rotation remain decryptable without re-encrypting it. The company uses symmetric customer managed KMS keys. What is the simplest way to meet this requirement?",
+    "options": [
+      "Delete the key every year and import new key material into the same key.",
+      "Create a new KMS key every year and re-encrypt all data with it.",
+      "Enable automatic key rotation on the customer managed keys with a rotation period of 365 days or less.",
+      "Rotate the key aliases every year so that they point to new keys."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "With automatic rotation, AWS KMS rotates the key material on the defined rotation period (365 days by default) and keeps all previous key material so that data encrypted earlier can still be decrypted. The key ID and ARN do not change.",
+    "notes": [
+      "Deleting the key would make existing data unrecoverable.",
+      "Works, but re-encrypting all data is unnecessary operational effort.",
+      "Correct: automatic, and older data stays decryptable without re-encryption.",
+      "Moving aliases to new keys does not let old ciphertext be decrypted with the new key and requires tracking old keys manually."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/help-panel/kms/latest/console/hp-automatic-key-rotation.html"
+    ],
+    "es": {
+      "stem": "El estándar de cumplimiento de una empresa exige rotar el material criptográfico de las claves de cifrado al menos una vez al año, y que los datos cifrados antes de una rotación sigan pudiendo descifrarse sin volver a cifrarlos. La empresa usa customer managed keys simétricas de KMS. ¿Cuál es la forma más sencilla de cumplirlo?",
+      "options": [
+        "Borrar la clave cada año e importar nuevo material de clave en la misma clave.",
+        "Crear una nueva clave de KMS cada año y volver a cifrar todos los datos con ella.",
+        "Habilitar la rotación automática en las customer managed keys con un periodo de rotación de 365 días o menos.",
+        "Rotar cada año los alias para que apunten a claves nuevas."
+      ],
+      "explanation": "Con la rotación automática, AWS KMS rota el material de la clave en el periodo definido (365 días por defecto) y conserva todo el material anterior para que los datos cifrados antes se puedan descifrar. El ID y el ARN de la clave no cambian.",
+      "notes": [
+        "Borrar la clave dejaría irrecuperables los datos existentes.",
+        "Funciona, pero volver a cifrar todo es un esfuerzo innecesario.",
+        "Correcta: automática, y los datos anteriores siguen siendo descifrables sin volver a cifrarlos.",
+        "Mover alias a claves nuevas no permite descifrar el texto cifrado antiguo con la clave nueva y obliga a rastrear las claves viejas a mano."
+      ]
+    }
+  },
+  {
+    "id": "saa2-047",
+    "domain": "secure",
+    "topics": [
+      "containers",
+      "iam"
+    ],
+    "difficulty": 3,
+    "stem": "A company runs several applications on a shared Amazon EKS cluster. Each application's pods need different AWS permissions (one reads from DynamoDB, another writes to S3). Currently all pods use the node instance role, so every pod has every permission. The company wants per-application least privilege with the simplest setup and no OIDC provider management. What should the solutions architect do?",
+    "options": [
+      "Add all required permissions to the node instance role and rely on Kubernetes namespaces for isolation.",
+      "Store IAM user access keys for each application in Kubernetes secrets.",
+      "Use EKS Pod Identity to associate a separate IAM role with each application's Kubernetes service account, and restrict pod access to the instance metadata service.",
+      "Create a separate node group per application with a different node instance role."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "EKS Pod Identity scopes IAM permissions to a service account so that only pods using it receive those credentials. It does not require OIDC identity providers, unlike IAM roles for service accounts. Restricting IMDS access prevents pods from falling back to the node role.",
+    "notes": [
+      "Namespaces do not isolate AWS IAM permissions.",
+      "Long-term keys are insecure and hard to rotate.",
+      "Correct: per-application roles with simple configuration and credential isolation.",
+      "Works but wastes capacity and adds node group management."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html"
+    ],
+    "es": {
+      "stem": "Una empresa ejecuta varias aplicaciones en un clúster compartido de Amazon EKS. Los pods de cada aplicación necesitan permisos de AWS distintos (una lee de DynamoDB, otra escribe en S3). Hoy todos los pods usan el rol de instancia del nodo, así que todos tienen todos los permisos. La empresa quiere mínimo privilegio por aplicación con la configuración más simple y sin administrar un proveedor OIDC. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Agregar todos los permisos al rol de instancia del nodo y confiar en los namespaces de Kubernetes para aislar.",
+        "Guardar access keys de usuarios de IAM de cada aplicación en secrets de Kubernetes.",
+        "Usar EKS Pod Identity para asociar un rol de IAM distinto a la service account de Kubernetes de cada aplicación y restringir el acceso de los pods al servicio de metadatos de la instancia.",
+        "Crear un node group por aplicación con un rol de instancia distinto."
+      ],
+      "explanation": "EKS Pod Identity limita los permisos de IAM a una service account, de modo que sólo los pods que la usan reciben esas credenciales. No requiere proveedores de identidad OIDC, a diferencia de IAM roles for service accounts. Restringir el acceso a IMDS evita que los pods usen el rol del nodo.",
+      "notes": [
+        "Los namespaces no aíslan permisos de IAM de AWS.",
+        "Las claves de larga duración son inseguras y difíciles de rotar.",
+        "Correcta: roles por aplicación con configuración simple y aislamiento de credenciales.",
+        "Funciona, pero desperdicia capacidad y agrega gestión de node groups."
+      ]
+    }
+  },
+  {
+    "id": "saa2-048",
+    "domain": "secure",
+    "topics": [
+      "cloudfront",
+      "security-services"
+    ],
+    "difficulty": 3,
+    "stem": "An e-commerce site collects credit card numbers through a web form served by Amazon CloudFront. The request passes through several internal services before reaching the payment service. The company wants the card number to be encrypted at the edge so that only the payment service, which holds the private key, can decrypt it, while other services can still read the rest of the request. What should the solutions architect use?",
+    "options": [
+      "SSE-KMS encryption on the S3 bucket where orders are stored.",
+      "AWS WAF rules that mask the card number field.",
+      "CloudFront field-level encryption with a public key and a profile that encrypts the card number field.",
+      "HTTPS between viewers and CloudFront and between CloudFront and the origin."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Field-level encryption encrypts specific fields of a POST request at the edge with a public key. The data stays encrypted throughout the application stack, and only components that have the private key can decrypt the field.",
+    "notes": [
+      "Protects data at rest only, after the request has passed through all services.",
+      "WAF inspects and filters requests; it does not encrypt fields.",
+      "Correct: protects specific fields end to end through internal services.",
+      "Protects data in transit only; every internal service would see the card number."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/field-level-encryption.html"
+    ],
+    "es": {
+      "stem": "Un sitio de comercio electrónico recoge números de tarjeta de crédito con un formulario web servido por Amazon CloudFront. La solicitud pasa por varios servicios internos antes de llegar al servicio de pagos. La empresa quiere que el número de tarjeta se cifre en el edge para que sólo el servicio de pagos, que tiene la clave privada, pueda descifrarlo, mientras los demás servicios pueden leer el resto de la solicitud. ¿Qué debe usar el arquitecto de soluciones?",
+      "options": [
+        "Cifrado SSE-KMS en el bucket de S3 donde se guardan los pedidos.",
+        "Reglas de AWS WAF que enmascaren el campo del número de tarjeta.",
+        "Field-level encryption de CloudFront con una clave pública y un perfil que cifre el campo del número de tarjeta.",
+        "HTTPS entre los usuarios y CloudFront y entre CloudFront y el origen."
+      ],
+      "explanation": "Field-level encryption cifra campos específicos de una solicitud POST en el edge con una clave pública. Los datos permanecen cifrados en todo el stack de la aplicación y sólo los componentes con la clave privada pueden descifrar el campo.",
+      "notes": [
+        "Sólo protege en reposo, después de que la solicitud pasó por todos los servicios.",
+        "WAF inspecciona y filtra solicitudes; no cifra campos.",
+        "Correcta: protege campos específicos de extremo a extremo por los servicios internos.",
+        "Sólo protege en tránsito; cada servicio interno vería el número de tarjeta."
+      ]
+    }
+  },
+  {
+    "id": "saa2-049",
+    "domain": "secure",
+    "topics": [
+      "lambda",
+      "vpc",
+      "security-services"
+    ],
+    "difficulty": 2,
+    "stem": "A Lambda function attached to private subnets of a VPC must read database credentials from AWS Secrets Manager. The subnets have no NAT gateway and the company does not want to add internet access. Currently the function times out when it calls Secrets Manager. What should the solutions architect do?",
+    "options": [
+      "Increase the function's timeout and memory.",
+      "Create an interface VPC endpoint for Secrets Manager in the VPC with private DNS enabled, and allow HTTPS from the function's security group.",
+      "Remove the function from the VPC so that it can reach Secrets Manager over the internet.",
+      "Create a gateway VPC endpoint for Secrets Manager."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Functions in a VPC need a network path to AWS service endpoints. An interface VPC endpoint (AWS PrivateLink) for Secrets Manager provides private connectivity without a NAT gateway; with private DNS, the SDK uses the default endpoint name.",
+    "notes": [
+      "The function has no route to the service; more time does not help.",
+      "Correct: private path to Secrets Manager without internet access.",
+      "The function needs VPC access to reach the database.",
+      "Gateway endpoints exist only for Amazon S3 and DynamoDB."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html"
+    ],
+    "es": {
+      "stem": "Una función Lambda conectada a subredes privadas de una VPC debe leer credenciales de base de datos de AWS Secrets Manager. Las subredes no tienen NAT gateway y la empresa no quiere agregar acceso a Internet. Hoy la función agota su tiempo al llamar a Secrets Manager. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Aumentar el timeout y la memoria de la función.",
+        "Crear en la VPC un interface VPC endpoint para Secrets Manager con DNS privado habilitado y permitir HTTPS desde el security group de la función.",
+        "Sacar la función de la VPC para que llegue a Secrets Manager por Internet.",
+        "Crear un gateway VPC endpoint para Secrets Manager."
+      ],
+      "explanation": "Las funciones en una VPC necesitan una ruta de red a los endpoints de los servicios de AWS. Un interface VPC endpoint (AWS PrivateLink) para Secrets Manager da conectividad privada sin NAT gateway; con DNS privado, el SDK usa el nombre de endpoint predeterminado.",
+      "notes": [
+        "La función no tiene ruta al servicio; más tiempo no ayuda.",
+        "Correcta: ruta privada a Secrets Manager sin acceso a Internet.",
+        "La función necesita acceso a la VPC para llegar a la base de datos.",
+        "Los gateway endpoints sólo existen para Amazon S3 y DynamoDB."
+      ]
+    }
+  },
+  {
+    "id": "saa2-050",
+    "domain": "secure",
+    "topics": [
+      "iam",
+      "security-services"
+    ],
+    "difficulty": 2,
+    "stem": "A company wants to allow a group of support engineers to temporarily elevate their permissions to perform production changes. Each elevation must be approved, be time-limited to 2 hours, and be fully auditable. Engineers already sign in through IAM Identity Center. Which approach best follows AWS security best practices?",
+    "options": [
+      "Share the root user credentials with the on-call engineer and rotate the password afterward.",
+      "Create IAM users with administrator permissions and disable them manually after 2 hours.",
+      "Give engineers permanent AdministratorAccess and ask them to use it only when needed.",
+      "Implement temporary elevated (just-in-time) access integrated with IAM Identity Center, such as a validated partner solution, so engineers request a permission set for a limited time with approval, and actions are logged in CloudTrail."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Least privilege with just-in-time elevation minimizes standing access. Temporary elevated access lets users request, get approval for, and use a permission set for a specified time. IAM Identity Center integrates with validated AWS Security Competency partner solutions for this, and all actions are recorded in AWS CloudTrail.",
+    "notes": [
+      "Root credentials must never be shared.",
+      "Manual steps are error-prone and IAM users create long-term credentials.",
+      "Standing administrator access violates least privilege.",
+      "Correct: approved, time-bound, auditable elevation."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/temporary-elevated-access.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere permitir que un grupo de ingenieros de soporte eleve temporalmente sus permisos para hacer cambios en producción. Cada elevación debe aprobarse, durar como máximo 2 horas y ser totalmente auditable. Los ingenieros ya inician sesión con IAM Identity Center. ¿Qué enfoque sigue mejor las buenas prácticas de seguridad de AWS?",
+      "options": [
+        "Compartir las credenciales del usuario raíz con el ingeniero de guardia y rotar la contraseña después.",
+        "Crear usuarios de IAM con permisos de administrador y deshabilitarlos a mano después de 2 horas.",
+        "Dar a los ingenieros AdministratorAccess permanente y pedirles que lo usen sólo cuando lo necesiten.",
+        "Implementar acceso elevado temporal (justo a tiempo) integrado con IAM Identity Center, como una solución validada de un socio, para que los ingenieros soliciten un permission set por tiempo limitado con aprobación, y que las acciones queden en CloudTrail."
+      ],
+      "explanation": "El mínimo privilegio con elevación justo a tiempo reduce el acceso permanente. El acceso elevado temporal permite solicitar, aprobar y usar un permission set durante un tiempo definido. IAM Identity Center se integra con soluciones validadas de socios de AWS Security Competency para esto, y todas las acciones quedan en AWS CloudTrail.",
+      "notes": [
+        "Nunca se deben compartir las credenciales del usuario raíz.",
+        "Los pasos manuales son propensos a errores y los usuarios de IAM crean credenciales de larga duración.",
+        "El acceso de administrador permanente viola el mínimo privilegio.",
+        "Correcta: elevación aprobada, limitada en el tiempo y auditable."
+      ]
+    }
+  }
+]

@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --surface-2: #f0efeb;
+  --border: #e3e1dc;
+  --text: #1c1b19;
+  --muted: #6b6860;
+  --accent: #2f6fed;
+  --accent-fg: #ffffff;
+  --ok: #1f8a4c;
+  --bad: #c43d3d;
+  --warn: #b7791f;
+}
+
+.dark {
+  --bg: #111214;
+  --surface: #191b1f;
+  --surface-2: #22252a;
+  --border: #2e3238;
+  --text: #e8e6e1;
+  --muted: #9a978f;
+  --accent: #6b9bff;
+  --accent-fg: #0d1117;
+  --ok: #4cc27f;
+  --bad: #f07171;
+  --warn: #e2b04a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --color-warn: var(--warn);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-mono-code), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
+
+/* ---------- componentes base ---------- */
+@layer components {
+  .input { @apply w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20; }
+  .btn { @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium hover:bg-surface-2 disabled:opacity-50 transition-colors cursor-pointer; }
+  .btn-primary { @apply inline-flex items-center justify-center gap-1.5 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-fg hover:opacity-90 disabled:opacity-50 transition-opacity cursor-pointer; }
+  .card { @apply rounded-xl border border-border bg-surface; }
+  .chip { @apply inline-flex items-center rounded-full border border-border px-2 py-0.5 text-xs text-muted; }
+}
+
+/* ---------- markdown (lecciones, notas, IA) ---------- */
+.prose-lesson { line-height: 1.75; font-size: 1.02rem; }
+.prose-lesson h1 { font-size: 1.8rem; font-weight: 750; margin: 0 0 1rem; }
+.prose-lesson h2 { font-size: 1.45rem; font-weight: 700; margin: 2.2rem 0 0.8rem; scroll-margin-top: 5rem; }
+.prose-lesson h3 { font-size: 1.15rem; font-weight: 650; margin: 1.6rem 0 0.6rem; scroll-margin-top: 5rem; }
+.prose-lesson p { margin: 0.8rem 0; }
+.prose-lesson ul { list-style: disc; padding-left: 1.4rem; margin: 0.8rem 0; }
+.prose-lesson ol { list-style: decimal; padding-left: 1.4rem; margin: 0.8rem 0; }
+.prose-lesson li { margin: 0.3rem 0; }
+.prose-lesson a { color: var(--accent); text-decoration: underline; }
+.prose-lesson strong { font-weight: 650; }
+.prose-lesson blockquote { border-left: 3px solid var(--accent); padding: 0.4rem 1rem; background: var(--surface-2); border-radius: 0 8px 8px 0; margin: 1rem 0; }
+.prose-lesson table { border-collapse: collapse; margin: 1rem 0; font-size: 0.93rem; display: block; overflow-x: auto; }
+.prose-lesson th, .prose-lesson td { border: 1px solid var(--border); padding: 0.45rem 0.75rem; text-align: left; }
+.prose-lesson th { background: var(--surface-2); font-weight: 600; }
+.prose-lesson :not(pre) > code { font-family: var(--font-mono); font-size: 0.86em; background: var(--surface-2); padding: 0.12em 0.35em; border-radius: 4px; }
+.prose-lesson pre { font-family: var(--font-mono); font-size: 0.85rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1rem; overflow-x: auto; margin: 1rem 0; line-height: 1.55; }
+.prose-lesson figure[data-rehype-pretty-code-figure] { margin: 1rem 0; }
+.prose-lesson code[data-theme] span { color: var(--shiki-light); }
+.dark .prose-lesson code[data-theme] span { color: var(--shiki-dark); }
+.prose-compact { font-size: 0.92rem; line-height: 1.6; }
+.prose-compact h2, .prose-compact h3 { margin: 1rem 0 0.4rem; font-size: 1rem; }
+.prose-compact pre { font-size: 0.8rem; }

@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# datos locales
+/prisma/*.db
+/prisma/*.db-journal
+/storage/*
+!/storage/pdf/
+/storage/pdf/*
+!/storage/pdf/.gitkeep
+!.env.example
+/public/pdf.worker.min.mjs

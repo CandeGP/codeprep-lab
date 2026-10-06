@@ -1,0 +1,59 @@
+[
+  {
+    "id": "q1",
+    "question": "¿Cuál debería ser tu primer paso ante 'Diseña el sistema de una biblioteca'?",
+    "options": [
+      "Escribir la clase Libro",
+      "Hacer preguntas para acotar el alcance y los casos de uso",
+      "Elegir la base de datos",
+      "Dibujar la jerarquía de herencia completa"
+    ],
+    "answer": 1,
+    "explanation": "Sin requisitos claros, cualquier diseño es una apuesta. Primero pregunta quién lo usa y qué debe hacer."
+  },
+  {
+    "id": "q2",
+    "question": "¿Qué principio se viola si cambiar el formato de un reporte obliga a modificar la clase que calcula la nómina?",
+    "options": ["Liskov", "Responsabilidad única (SRP)", "Segregación de interfaces", "Abierto/cerrado"],
+    "answer": 1,
+    "explanation": "La clase tiene dos razones para cambiar (cálculo y presentación); deberían separarse."
+  },
+  {
+    "id": "q3",
+    "question": "Quieres cambiar la forma de calcular tarifas sin tocar la clase Estacionamiento. ¿Qué patrón encaja?",
+    "options": ["Singleton", "Strategy", "Observer", "Decorator"],
+    "answer": 1,
+    "explanation": "Strategy encapsula algoritmos intercambiables detrás de una interfaz común."
+  },
+  {
+    "id": "q4",
+    "question": "¿Qué combinación de estructuras permite una caché LRU con get y put en O(1)?",
+    "options": [
+      "Arreglo ordenado + búsqueda binaria",
+      "Mapa hash + lista doblemente enlazada",
+      "Heap + pila",
+      "Árbol BST + cola"
+    ],
+    "answer": 1,
+    "explanation": "El mapa localiza el nodo en O(1) y la lista permite moverlo al frente o quitar el último en O(1)."
+  },
+  {
+    "id": "q5",
+    "question": "'Composición sobre herencia' significa…",
+    "options": [
+      "Nunca usar herencia",
+      "Preferir construir objetos a partir de otros objetos antes que crear jerarquías profundas",
+      "Usar sólo funciones puras",
+      "Heredar de varias clases a la vez"
+    ],
+    "answer": 1,
+    "explanation": "La composición da flexibilidad y evita la explosión de subclases."
+  },
+  {
+    "id": "q6",
+    "question": "Una subclase Pinguino hereda de Ave y lanza error en volar(). ¿Qué principio se rompe?",
+    "options": ["Liskov", "Inversión de dependencias", "Responsabilidad única", "Ninguno"],
+    "answer": 0,
+    "explanation": "Donde se espera un Ave que vuela, un Pinguino rompe el comportamiento: no es sustituible."
+  }
+]

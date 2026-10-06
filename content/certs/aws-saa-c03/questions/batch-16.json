@@ -1,0 +1,452 @@
+[
+  {
+    "id": "saa2-151",
+    "domain": "performance",
+    "topics": [
+      "s3"
+    ],
+    "difficulty": 2,
+    "stem": "A photo-sharing app uploads images from users worldwide to one S3 bucket. Uploads from distant continents are slow. The company wants faster long-distance uploads with minimal code changes. What should the solutions architect recommend?",
+    "options": [
+      "Enable S3 Transfer Acceleration and upload through the accelerate endpoint.",
+      "Enable S3 Versioning.",
+      "Create one bucket per continent and merge them nightly.",
+      "Use S3 Glacier Instant Retrieval."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Transfer Acceleration uses CloudFront edge locations and an optimized AWS network path for long-distance uploads to a centralized bucket.",
+    "notes": [
+      "Correct.",
+      "Does not affect upload speed.",
+      "Adds complexity and delays consistency.",
+      "A storage class for rarely accessed data."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/whitepapers/latest/s3-optimizing-performance-best-practices/use-amazon-s3-transfer-acceleration-to-minimize-latency-caused-by-distance.html"
+    ],
+    "es": {
+      "stem": "Una app para compartir fotos sube imágenes de usuarios de todo el mundo a un solo bucket de S3. Las cargas desde continentes lejanos son lentas. La empresa quiere cargas más rápidas a larga distancia con cambios mínimos de código. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Habilitar S3 Transfer Acceleration y subir por el endpoint acelerado.",
+        "Habilitar S3 Versioning.",
+        "Crear un bucket por continente y unirlos cada noche.",
+        "Usar S3 Glacier Instant Retrieval."
+      ],
+      "explanation": "Transfer Acceleration usa edge locations de CloudFront y una ruta optimizada de la red de AWS para cargas a larga distancia hacia un bucket central.",
+      "notes": [
+        "Correcta.",
+        "No afecta la velocidad de carga.",
+        "Agrega complejidad y retrasa la consistencia.",
+        "Es una clase para datos poco accedidos."
+      ]
+    }
+  },
+  {
+    "id": "saa2-152",
+    "domain": "performance",
+    "topics": [
+      "dynamodb",
+      "caching"
+    ],
+    "difficulty": 2,
+    "stem": "A leaderboard reads the same DynamoDB items thousands of times per second and needs microsecond latency. Writes are rare. The team wants to reduce read capacity costs and avoid managing a separate caching protocol. What should the solutions architect recommend?",
+    "options": [
+      "A global secondary index.",
+      "DynamoDB Streams.",
+      "Point-in-time recovery.",
+      "DynamoDB Accelerator (DAX)."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "DAX is a DynamoDB-compatible in-memory cache that serves eventually consistent reads in microseconds and reduces the read capacity needed for repeated keys.",
+    "notes": [
+      "Does not reduce latency.",
+      "Captures changes only.",
+      "A backup feature.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html"
+    ],
+    "es": {
+      "stem": "Un marcador lee los mismos ítems de DynamoDB miles de veces por segundo y necesita latencia de microsegundos. Las escrituras son raras. El equipo quiere reducir el costo de lectura y no administrar otro protocolo de caché. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Un índice secundario global.",
+        "DynamoDB Streams.",
+        "Point-in-time recovery.",
+        "DynamoDB Accelerator (DAX)."
+      ],
+      "explanation": "DAX es una caché en memoria compatible con DynamoDB que atiende lecturas eventualmente consistentes en microsegundos y reduce la capacidad de lectura necesaria para claves repetidas.",
+      "notes": [
+        "No reduce la latencia.",
+        "Sólo captura cambios.",
+        "Es una función de respaldo.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "saa2-153",
+    "domain": "performance",
+    "topics": [
+      "cloudfront",
+      "s3"
+    ],
+    "difficulty": 1,
+    "stem": "A software company distributes large installers from S3 to customers worldwide. Downloads are slow for distant users and S3 data transfer costs are high. What should the solutions architect recommend?",
+    "options": [
+      "Replicate the bucket to every Region.",
+      "Enable S3 Transfer Acceleration for downloads.",
+      "Serve the files through Amazon CloudFront with the S3 bucket as the origin.",
+      "Enable Requester Pays."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "CloudFront caches content at edge locations close to users, reducing latency and origin requests; a minimal cache key maximizes cache hits.",
+    "notes": [
+      "Costly and complex.",
+      "Mainly for uploads and more expensive.",
+      "Correct.",
+      "Shifts cost but does not improve performance."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/understanding-the-cache-key.html"
+    ],
+    "es": {
+      "stem": "Una empresa de software distribuye instaladores grandes desde S3 a clientes de todo el mundo. Las descargas son lentas para usuarios lejanos y el costo de transferencia de S3 es alto. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Replicar el bucket a todas las regiones.",
+        "Habilitar S3 Transfer Acceleration para las descargas.",
+        "Servir los archivos mediante Amazon CloudFront con el bucket de S3 como origen.",
+        "Habilitar Requester Pays."
+      ],
+      "explanation": "CloudFront guarda el contenido en caché en edge locations cercanas a los usuarios, reduciendo latencia y solicitudes al origen; una cache key mínima maximiza los aciertos.",
+      "notes": [
+        "Costoso y complejo.",
+        "Sirve sobre todo para cargas y es más caro.",
+        "Correcta.",
+        "Traslada el costo, pero no mejora el rendimiento."
+      ]
+    }
+  },
+  {
+    "id": "saa2-154",
+    "domain": "performance",
+    "topics": [
+      "api-gateway",
+      "caching"
+    ],
+    "difficulty": 1,
+    "stem": "An API Gateway REST API returns a product catalog that changes once an hour. The backend is overloaded by identical GET requests. What is the simplest way to improve performance?",
+    "options": [
+      "Increase the Lambda timeout.",
+      "Add AWS WAF rate-based rules.",
+      "Move the API to a WebSocket API.",
+      "Enable API Gateway stage caching with a TTL of up to one hour for the GET method."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "API Gateway caching stores responses per stage with a configurable TTL, serving identical requests without calling the backend.",
+    "notes": [
+      "Does not reduce backend calls.",
+      "Blocks traffic instead of serving it faster.",
+      "Different protocol; does not cache.",
+      "Correct."
+    ],
+    "sources": [
+      "https://aws.amazon.com/api-gateway/faqs/"
+    ],
+    "es": {
+      "stem": "Una REST API de API Gateway devuelve un catálogo que cambia una vez por hora. El backend está saturado por solicitudes GET idénticas. ¿Cuál es la forma más sencilla de mejorar el rendimiento?",
+      "options": [
+        "Aumentar el timeout de Lambda.",
+        "Agregar reglas rate-based de AWS WAF.",
+        "Mover la API a una WebSocket API.",
+        "Habilitar la caché del stage de API Gateway con un TTL de hasta una hora para el método GET."
+      ],
+      "explanation": "La caché de API Gateway guarda respuestas por stage con un TTL configurable y atiende solicitudes idénticas sin llamar al backend.",
+      "notes": [
+        "No reduce las llamadas al backend.",
+        "Bloquea tráfico en lugar de atenderlo más rápido.",
+        "Es otro protocolo; no guarda en caché.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "saa2-155",
+    "domain": "performance",
+    "topics": [
+      "elb-asg",
+      "ec2"
+    ],
+    "difficulty": 2,
+    "stem": "An Auto Scaling group's instances need 5 minutes of bootstrapping before serving traffic, so scale-out lags behind traffic spikes. The company does not want to keep extra running capacity all day. What should the solutions architect configure?",
+    "options": [
+      "A larger minimum capacity at all times.",
+      "A shorter health check grace period.",
+      "A cluster placement group.",
+      "An Auto Scaling warm pool of pre-initialized stopped instances."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Warm pools keep instances that have completed initialization so they can enter service much faster when the group scales out; stopped instances avoid instance-hour charges.",
+    "notes": [
+      "Pays for idle running capacity.",
+      "Instances would be marked unhealthy before they are ready.",
+      "Affects network latency, not startup time.",
+      "Correct."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/compute/scaling-your-applications-faster-with-ec2-auto-scaling-warm-pools/"
+    ],
+    "es": {
+      "stem": "Las instancias de un Auto Scaling group necesitan 5 minutos de arranque antes de atender tráfico, así que el escalado va detrás de los picos. La empresa no quiere mantener capacidad extra en ejecución todo el día. ¿Qué debe configurar el arquitecto de soluciones?",
+      "options": [
+        "Una capacidad mínima mayor todo el tiempo.",
+        "Un health check grace period más corto.",
+        "Un cluster placement group.",
+        "Un warm pool de Auto Scaling con instancias preinicializadas detenidas."
+      ],
+      "explanation": "Los warm pools mantienen instancias que ya completaron su inicialización para que entren en servicio mucho más rápido al escalar; las instancias detenidas no generan cargos por hora de instancia.",
+      "notes": [
+        "Paga capacidad ociosa en ejecución.",
+        "Las instancias se marcarían no sanas antes de estar listas.",
+        "Afecta la latencia de red, no el arranque.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "saa2-156",
+    "domain": "performance",
+    "topics": [
+      "ebs-efs-fsx"
+    ],
+    "difficulty": 2,
+    "stem": "A database on EC2 needs 60,000 IOPS and 1,500 MiB/s of throughput on a 2 TiB volume. Sub-millisecond latency and 99.999% durability are not required. The company wants the most cost-effective EBS volume that meets the performance needs. What should the solutions architect choose?",
+    "options": [
+      "st1.",
+      "gp3 with 60,000 provisioned IOPS and 1,500 MiB/s of throughput.",
+      "io2 Block Express.",
+      "Several gp2 volumes in RAID 0."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "gp3 now supports up to 80,000 IOPS and 2,000 MiB/s per volume, with performance provisioned independently of size, at a lower cost than io2.",
+    "notes": [
+      "HDD cannot deliver this random IOPS level.",
+      "Correct.",
+      "Meets the need but costs more than necessary.",
+      "More complex and IOPS depend on size."
+    ],
+    "sources": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/09/amazon-ebs-size-provisioned-performance-gp3-volumes/"
+    ],
+    "es": {
+      "stem": "Una base de datos en EC2 necesita 60,000 IOPS y 1,500 MiB/s de rendimiento en un volumen de 2 TiB. No requiere latencia inferior a un milisegundo ni durabilidad de 99.999%. La empresa quiere el volumen EBS más rentable que cumpla el rendimiento. ¿Qué debe elegir el arquitecto de soluciones?",
+      "options": [
+        "st1.",
+        "gp3 con 60,000 IOPS y 1,500 MiB/s aprovisionados.",
+        "io2 Block Express.",
+        "Varios volúmenes gp2 en RAID 0."
+      ],
+      "explanation": "gp3 ahora admite hasta 80,000 IOPS y 2,000 MiB/s por volumen, con rendimiento aprovisionado independientemente del tamaño, a menor costo que io2.",
+      "notes": [
+        "Un HDD no entrega esas IOPS aleatorias.",
+        "Correcta.",
+        "Cumple, pero cuesta más de lo necesario.",
+        "Más complejo y las IOPS dependen del tamaño."
+      ]
+    }
+  },
+  {
+    "id": "saa2-157",
+    "domain": "performance",
+    "topics": [
+      "rds-aurora",
+      "lambda"
+    ],
+    "difficulty": 2,
+    "stem": "A Lambda-based API opens a new database connection on every invocation to an RDS for PostgreSQL instance. At peak, the database spends most of its CPU on connection setup and hits max_connections. What should the solutions architect add?",
+    "options": [
+      "Amazon RDS Proxy.",
+      "A larger instance storage volume.",
+      "Amazon ElastiCache for all writes.",
+      "A read replica."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "RDS Proxy pools and reuses database connections, reducing the overhead of frequent connections from Lambda and preventing connection exhaustion.",
+    "notes": [
+      "Correct.",
+      "Storage does not affect connections.",
+      "A cache does not replace database writes.",
+      "Does not reduce connection churn on the primary."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-proxy.howitworks.html"
+    ],
+    "es": {
+      "stem": "Una API basada en Lambda abre una nueva conexión a una instancia RDS for PostgreSQL en cada invocación. En los picos, la base gasta casi toda su CPU estableciendo conexiones y alcanza max_connections. ¿Qué debe agregar el arquitecto de soluciones?",
+      "options": [
+        "Amazon RDS Proxy.",
+        "Un volumen de almacenamiento más grande.",
+        "Amazon ElastiCache para todas las escrituras.",
+        "Una réplica de lectura."
+      ],
+      "explanation": "RDS Proxy agrupa y reutiliza conexiones, reduciendo la sobrecarga de las conexiones frecuentes desde Lambda y evitando el agotamiento de conexiones.",
+      "notes": [
+        "Correcta.",
+        "El almacenamiento no afecta las conexiones.",
+        "Una caché no reemplaza las escrituras.",
+        "No reduce la apertura de conexiones en el primario."
+      ]
+    }
+  },
+  {
+    "id": "saa2-158",
+    "domain": "performance",
+    "topics": [
+      "s3"
+    ],
+    "difficulty": 2,
+    "stem": "An application reads 5,000 small objects per second from the prefix images/2024/ and occasionally receives 503 Slow Down responses during spikes. What design change improves the sustainable request rate?",
+    "options": [
+      "Spread objects across multiple prefixes so each prefix scales independently.",
+      "Use larger objects.",
+      "Enable S3 Versioning.",
+      "Move to S3 One Zone-IA."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "S3 supports at least 5,500 GET/HEAD requests per second per partitioned prefix with no limit on prefixes; spreading reads across prefixes raises total throughput.",
+    "notes": [
+      "Correct.",
+      "Changes the application's access pattern.",
+      "Does not affect request rates.",
+      "Changes cost, not throughput."
+    ],
+    "sources": [
+      "https://repost.aws/knowledge-center/s3-object-key-naming-pattern"
+    ],
+    "es": {
+      "stem": "Una aplicación lee 5,000 objetos pequeños por segundo del prefijo images/2024/ y en los picos recibe a veces respuestas 503 Slow Down. ¿Qué cambio de diseño mejora la tasa de solicitudes sostenible?",
+      "options": [
+        "Repartir los objetos en varios prefijos para que cada uno escale de forma independiente.",
+        "Usar objetos más grandes.",
+        "Habilitar S3 Versioning.",
+        "Pasar a S3 One Zone-IA."
+      ],
+      "explanation": "S3 admite al menos 5,500 GET/HEAD por segundo por prefijo particionado sin límite de prefijos; repartir las lecturas aumenta el rendimiento total.",
+      "notes": [
+        "Correcta.",
+        "Cambia el patrón de acceso de la aplicación.",
+        "No afecta la tasa de solicitudes.",
+        "Cambia el costo, no el rendimiento."
+      ]
+    }
+  },
+  {
+    "id": "saa2-159",
+    "domain": "performance",
+    "topics": [
+      "lambda"
+    ],
+    "difficulty": 1,
+    "stem": "A Lambda function that compresses videos is CPU-bound and runs close to its 15-minute limit with 1,024 MB of memory. What is the first change the solutions architect should test to make it faster?",
+    "options": [
+      "Increase reserved concurrency.",
+      "Move the function into a VPC.",
+      "Add provisioned concurrency.",
+      "Increase the memory setting to get proportionally more CPU."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Lambda allocates CPU in proportion to memory, up to 10,240 MB. More memory means more CPU for CPU-bound work.",
+    "notes": [
+      "Allows more parallel executions, not faster ones.",
+      "Does not add CPU.",
+      "Reduces cold starts only.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html"
+    ],
+    "es": {
+      "stem": "Una función Lambda que comprime videos está limitada por CPU y se acerca a su límite de 15 minutos con 1,024 MB de memoria. ¿Cuál es el primer cambio que debe probar el arquitecto de soluciones para hacerla más rápida?",
+      "options": [
+        "Aumentar la concurrencia reservada.",
+        "Mover la función a una VPC.",
+        "Agregar provisioned concurrency.",
+        "Aumentar la memoria para obtener proporcionalmente más CPU."
+      ],
+      "explanation": "Lambda asigna CPU en proporción a la memoria, hasta 10,240 MB. Más memoria significa más CPU para trabajo limitado por CPU.",
+      "notes": [
+        "Permite más ejecuciones en paralelo, no más rápidas.",
+        "No agrega CPU.",
+        "Sólo reduce los cold starts.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "saa2-160",
+    "domain": "performance",
+    "topics": [
+      "analytics"
+    ],
+    "difficulty": 2,
+    "stem": "Analysts complain that Athena queries over 3 TB of JSON logs are slow and expensive. Queries always filter by date and select a few fields. What should the solutions architect do? (Choose two.)",
+    "options": [
+      "Increase the S3 storage class to S3 Standard.",
+      "Add more AWS Glue crawlers.",
+      "Partition the data by date.",
+      "Convert the logs to a compressed columnar format such as Parquet.",
+      "Split each record into its own object."
+    ],
+    "correct": [
+      2,
+      3
+    ],
+    "explanation": "Athena charges by data scanned. Columnar formats read only the needed columns, and partitions let Athena skip irrelevant dates, improving speed and cost.",
+    "notes": [
+      "The storage class does not change scan speed.",
+      "Crawlers catalog data; they do not speed up queries.",
+      "Correct.",
+      "Correct.",
+      "Many tiny objects slow queries down."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/apn/empirical-approach-to-improving-performance-and-reducing-costs-with-amazon-athena/"
+    ],
+    "es": {
+      "stem": "Los analistas se quejan de que las consultas de Athena sobre 3 TB de logs JSON son lentas y caras. Las consultas siempre filtran por fecha y seleccionan pocos campos. ¿Qué debe hacer el arquitecto de soluciones? (Elige 2)",
+      "options": [
+        "Cambiar la clase de almacenamiento a S3 Standard.",
+        "Agregar más crawlers de AWS Glue.",
+        "Particionar los datos por fecha.",
+        "Convertir los logs a un formato columnar comprimido como Parquet.",
+        "Dividir cada registro en su propio objeto."
+      ],
+      "explanation": "Athena cobra por datos escaneados. Los formatos columnares leen sólo las columnas necesarias y las particiones permiten saltar fechas irrelevantes, mejorando velocidad y costo.",
+      "notes": [
+        "La clase de almacenamiento no cambia la velocidad de escaneo.",
+        "Los crawlers catalogan datos; no aceleran consultas.",
+        "Correcta.",
+        "Correcta.",
+        "Muchos objetos diminutos hacen más lentas las consultas."
+      ]
+    }
+  }
+]

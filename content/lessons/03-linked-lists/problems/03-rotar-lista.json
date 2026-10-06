@@ -1,0 +1,31 @@
+{
+  "id": "rotar-lista",
+  "title": "Rotar una lista a la derecha",
+  "difficulty": "media",
+  "description": "Dada la cabeza de una lista enlazada y un entero `k >= 0`, rota la lista **k posiciones a la derecha** y devuelve la nueva cabeza. `k` puede ser mayor que la longitud de la lista.\n\n**Ejemplo**\n\n```\n1 → 2 → 3 → 4 → 5, k = 2   ⟹   4 → 5 → 1 → 2 → 3\n0 → 1 → 2, k = 4           ⟹   2 → 0 → 1\n```",
+  "functionName": "rotarDerecha",
+  "argAdapters": ["list", null],
+  "returnAdapter": "list",
+  "starter": {
+    "javascript": "function rotarDerecha(cabeza, k) {\n  // tu código aquí\n}\n",
+    "python": "def rotarDerecha(cabeza, k):\n    # tu código aquí\n    pass\n"
+  },
+  "tests": [
+    { "args": [[1, 2, 3, 4, 5], 2], "expected": [4, 5, 1, 2, 3] },
+    { "args": [[0, 1, 2], 4], "expected": [2, 0, 1] },
+    { "args": [[], 3], "expected": [] },
+    { "args": [[1], 99], "expected": [1] },
+    { "args": [[1, 2, 3], 0], "expected": [1, 2, 3] },
+    { "args": [[1, 2, 3], 3], "expected": [1, 2, 3] }
+  ],
+  "hints": [
+    "Primero calcula la longitud n; rotar n veces deja la lista igual, así que usa k % n.",
+    "Si cierras la lista en un anillo (último → cabeza), sólo tienes que decidir dónde cortarla.",
+    "El nuevo último nodo está en la posición n - (k % n) - 1 contando desde 0."
+  ],
+  "solution": {
+    "explanation": "1. Recorremos para obtener `n` y el último nodo.\n2. Reducimos `k = k % n`; si es 0 no hay nada que hacer.\n3. Conectamos el último con la cabeza (anillo), avanzamos `n - k` pasos desde el último para llegar al nuevo final y cortamos.\n\n**Tiempo:** O(n) · **Espacio:** O(1)",
+    "javascript": "function rotarDerecha(cabeza, k) {\n  if (!cabeza || !cabeza.next) return cabeza;\n  let n = 1, ultimo = cabeza;\n  while (ultimo.next) { ultimo = ultimo.next; n++; }\n  k %= n;\n  if (k === 0) return cabeza;\n  ultimo.next = cabeza; // anillo\n  let nuevoFinal = ultimo;\n  for (let i = 0; i < n - k; i++) nuevoFinal = nuevoFinal.next;\n  const nuevaCabeza = nuevoFinal.next;\n  nuevoFinal.next = null;\n  return nuevaCabeza;\n}\n",
+    "python": "def rotarDerecha(cabeza, k):\n    if not cabeza or not cabeza.next:\n        return cabeza\n    n, ultimo = 1, cabeza\n    while ultimo.next:\n        ultimo = ultimo.next\n        n += 1\n    k %= n\n    if k == 0:\n        return cabeza\n    ultimo.next = cabeza\n    nuevo_final = ultimo\n    for _ in range(n - k):\n        nuevo_final = nuevo_final.next\n    nueva_cabeza = nuevo_final.next\n    nuevo_final.next = None\n    return nueva_cabeza\n"
+  }
+}

@@ -1,0 +1,451 @@
+[
+  {
+    "id": "clf2-031",
+    "domain": "billing",
+    "topics": [
+      "support"
+    ],
+    "difficulty": 2,
+    "stem": "Which is the MOST cost-effective AWS Support plan that includes a designated Technical Account Manager (TAM)?",
+    "options": [
+      "Business Support+",
+      "Enterprise Support",
+      "Unified Operations",
+      "Basic Support"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "In the current AWS Support lineup, a designated TAM starts with Enterprise Support. Unified Operations also includes one but is a higher-tier plan for mission-critical workloads. Business Support+ and Basic do not include a designated TAM.",
+    "notes": [
+      "Does not include a designated TAM.",
+      "Correct.",
+      "Includes a TAM, but it is a higher (more expensive) tier.",
+      "Free plan with no technical support."
+    ],
+    "sources": [
+      "https://aws.amazon.com/premiumsupport/plans/"
+    ],
+    "es": {
+      "stem": "¿Cuál es el plan de AWS Support MÁS económico que incluye un Technical Account Manager (TAM) designado?",
+      "options": [
+        "Business Support+",
+        "Enterprise Support",
+        "Unified Operations",
+        "Basic Support"
+      ],
+      "explanation": "En la oferta actual de AWS Support, el TAM designado empieza en Enterprise Support. Unified Operations también lo incluye, pero es un nivel superior para cargas de misión crítica. Business Support+ y Basic no incluyen TAM designado.",
+      "notes": [
+        "No incluye TAM designado.",
+        "Correcta.",
+        "Incluye TAM, pero es un nivel superior (más caro).",
+        "Plan gratuito sin soporte técnico."
+      ]
+    }
+  },
+  {
+    "id": "clf2-032",
+    "domain": "billing",
+    "topics": [
+      "support"
+    ],
+    "difficulty": 2,
+    "stem": "Which is the MOST cost-effective AWS Support plan that provides 24/7 phone, web, and chat access to support engineers and the full set of AWS Trusted Advisor checks?",
+    "options": [
+      "Basic Support",
+      "Enterprise Support",
+      "Business Support+",
+      "Unified Operations"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Business Support+ is the entry paid plan, recommended by AWS as the minimum for production workloads. It includes 24/7 technical support by phone, web, chat, and email and the full set of Trusted Advisor checks.",
+    "notes": [
+      "Only customer service and core Trusted Advisor checks.",
+      "Meets the requirements but costs more.",
+      "Correct.",
+      "Meets the requirements but is the highest tier."
+    ],
+    "sources": [
+      "https://aws.amazon.com/premiumsupport/plans/"
+    ],
+    "es": {
+      "stem": "¿Cuál es el plan de AWS Support MÁS económico que ofrece acceso 24/7 por teléfono, web y chat a ingenieros de soporte y el conjunto completo de comprobaciones de AWS Trusted Advisor?",
+      "options": [
+        "Basic Support",
+        "Enterprise Support",
+        "Business Support+",
+        "Unified Operations"
+      ],
+      "explanation": "Business Support+ es el plan de pago de entrada, recomendado por AWS como mínimo para cargas de producción. Incluye soporte técnico 24/7 por teléfono, web, chat y correo y todas las comprobaciones de Trusted Advisor.",
+      "notes": [
+        "Sólo servicio al cliente y comprobaciones básicas de Trusted Advisor.",
+        "Cumple, pero cuesta más.",
+        "Correcta.",
+        "Cumple, pero es el nivel más alto."
+      ]
+    }
+  },
+  {
+    "id": "clf-033",
+    "domain": "billing",
+    "topics": [
+      "billing-tools"
+    ],
+    "difficulty": 1,
+    "stem": "A manager wants an alert when the forecasted monthly spend exceeds USD 1,000. Which service should the manager use?",
+    "options": [
+      "AWS Cost and Usage Report",
+      "AWS Pricing Calculator",
+      "AWS Budgets",
+      "AWS Cost Explorer"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "AWS Budgets lets you define cost, usage, or coverage budgets and alerts when actual or forecasted spend exceeds the threshold.",
+    "notes": [
+      "The most detailed cost report, without alerts.",
+      "Estimates costs before deploying.",
+      "Correct.",
+      "Visualizes and analyzes costs; no threshold alerts."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html",
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+    ],
+    "es": {
+      "stem": "Un gerente quiere recibir una alerta cuando el gasto mensual previsto supere los 1,000 USD. ¿Qué servicio debe usar?",
+      "options": [
+        "AWS Cost and Usage Report",
+        "AWS Pricing Calculator",
+        "AWS Budgets",
+        "AWS Cost Explorer"
+      ],
+      "explanation": "AWS Budgets permite definir presupuestos de costo, uso o cobertura de reservas y enviar alertas cuando el gasto real o previsto supera el umbral.",
+      "notes": [
+        "Es el informe más detallado de costos, sin alertas.",
+        "Estima costos antes de desplegar.",
+        "Correcta.",
+        "Sirve para visualizar y analizar costos, no para alertar sobre umbrales."
+      ]
+    }
+  },
+  {
+    "id": "clf-034",
+    "domain": "billing",
+    "topics": [
+      "billing-tools"
+    ],
+    "difficulty": 1,
+    "stem": "Before migrating, a company wants to estimate the monthly cost of a new AWS architecture. Which tool should it use?",
+    "options": [
+      "AWS Trusted Advisor",
+      "AWS Budgets",
+      "AWS Cost Explorer",
+      "AWS Pricing Calculator"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "AWS Pricing Calculator lets you model solutions and estimate their cost before deploying them.",
+    "notes": [
+      "Recommends optimizations for existing resources.",
+      "Budgets tracks actual/forecasted spend for deployed resources.",
+      "Analyzes historical costs.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/pricing-calculator/latest/userguide/what-is-pricing-calculator.html",
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+    ],
+    "es": {
+      "stem": "Antes de migrar, una empresa quiere estimar el costo mensual de una nueva arquitectura en AWS. ¿Qué herramienta debe usar?",
+      "options": [
+        "AWS Trusted Advisor",
+        "AWS Budgets",
+        "AWS Cost Explorer",
+        "AWS Pricing Calculator"
+      ],
+      "explanation": "AWS Pricing Calculator permite modelar soluciones y estimar su costo antes de desplegarlas.",
+      "notes": [
+        "Trusted Advisor recomienda optimizaciones de recursos existentes.",
+        "Budgets controla gastos reales/previstos de lo ya desplegado.",
+        "Cost Explorer analiza costos históricos.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-035",
+    "domain": "billing",
+    "topics": [
+      "pricing"
+    ],
+    "difficulty": 2,
+    "stem": "Which pricing option provides a discount in exchange for committing to a consistent amount of compute usage (USD per hour) for 1 or 3 years and applies to EC2, Fargate, and Lambda?",
+    "options": [
+      "Standard Reserved Instances",
+      "On-Demand Capacity Reservations",
+      "Spot Instances",
+      "Compute Savings Plans"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Compute Savings Plans automatically apply to EC2 (any family, Region, OS), Fargate, and Lambda in exchange for an hourly spend commitment.",
+    "notes": [
+      "Apply only to EC2 with fixed attributes.",
+      "Reserve capacity without a discount.",
+      "No commitment, but can be interrupted.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html",
+      "https://aws.amazon.com/pricing/"
+    ],
+    "es": {
+      "stem": "¿Qué opción de precios ofrece un descuento a cambio de comprometerse a una cantidad constante de uso de cómputo (USD/hora) durante 1 o 3 años, aplicable a EC2, Fargate y Lambda?",
+      "options": [
+        "Instancias reservadas estándar",
+        "Capacity Reservations bajo demanda",
+        "Instancias Spot",
+        "Compute Savings Plans"
+      ],
+      "explanation": "Compute Savings Plans aplican automáticamente a EC2 (cualquier familia, región, SO), Fargate y Lambda a cambio de un compromiso de gasto por hora.",
+      "notes": [
+        "Sólo aplican a EC2 con atributos fijos.",
+        "Reservan capacidad sin descuento.",
+        "No requieren compromiso, pero pueden interrumpirse.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-036",
+    "domain": "billing",
+    "topics": [
+      "organizations",
+      "billing-tools"
+    ],
+    "difficulty": 1,
+    "stem": "A company has several AWS accounts and wants a single bill and combined volume discounts. What should it use?",
+    "options": [
+      "AWS Control Tower Account Factory",
+      "Cost allocation tags",
+      "AWS Organizations with consolidated billing",
+      "AWS Cost Explorer"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Consolidated billing in AWS Organizations groups accounts into one bill, aggregates usage for volume pricing tiers, and shares Reserved Instance and Savings Plans discounts.",
+    "notes": [
+      "Creates accounts, but consolidated billing comes from Organizations.",
+      "Classify costs; do not consolidate invoices.",
+      "Correct.",
+      "Analyzes costs; does not consolidate billing."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html",
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html"
+    ],
+    "es": {
+      "stem": "Una empresa tiene varias cuentas de AWS y quiere recibir una sola factura y aprovechar descuentos por volumen combinado. ¿Qué debe usar?",
+      "options": [
+        "AWS Control Tower Account Factory",
+        "Etiquetas de asignación de costos",
+        "AWS Organizations con facturación consolidada",
+        "AWS Cost Explorer"
+      ],
+      "explanation": "La facturación consolidada de AWS Organizations agrupa las cuentas en una factura y suma el uso para descuentos por niveles de volumen y compartir reservas/Savings Plans.",
+      "notes": [
+        "Crea cuentas, pero la facturación consolidada viene de Organizations.",
+        "Clasifican costos, no consolidan facturas.",
+        "Correcta.",
+        "Analiza costos, no unifica la facturación."
+      ]
+    }
+  },
+  {
+    "id": "clf-037",
+    "domain": "billing",
+    "topics": [
+      "billing-tools"
+    ],
+    "difficulty": 1,
+    "stem": "Which service provides recommendations in categories such as cost optimization, performance, security, fault tolerance, and service limits?",
+    "options": [
+      "AWS Well-Architected Tool",
+      "AWS Health Dashboard",
+      "AWS Trusted Advisor",
+      "AWS Compute Optimizer"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Trusted Advisor inspects your environment and provides recommendations in those categories (and operational excellence).",
+    "notes": [
+      "Reviews workloads against the pillars through questionnaires.",
+      "Reports AWS events that affect your resources.",
+      "Correct.",
+      "Recommends optimal sizes for compute resources."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html",
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio ofrece recomendaciones en cinco categorías: optimización de costos, rendimiento, seguridad, tolerancia a fallos y límites de servicio?",
+      "options": [
+        "AWS Well-Architected Tool",
+        "AWS Health Dashboard",
+        "AWS Trusted Advisor",
+        "AWS Compute Optimizer"
+      ],
+      "explanation": "Trusted Advisor inspecciona tu entorno y da recomendaciones en esas categorías (además de excelencia operativa).",
+      "notes": [
+        "Revisa cargas de trabajo contra los pilares mediante cuestionarios.",
+        "Informa de eventos de AWS que afectan tus recursos.",
+        "Correcta.",
+        "Recomienda tamaños óptimos de recursos de cómputo."
+      ]
+    }
+  },
+  {
+    "id": "clf-038",
+    "domain": "billing",
+    "topics": [
+      "pricing"
+    ],
+    "difficulty": 2,
+    "stem": "Which of the following data transfers is generally FREE in AWS?",
+    "options": [
+      "Data transfer between Availability Zones",
+      "Inbound data transfer from the internet into AWS",
+      "Outbound data transfer from AWS to the internet",
+      "Data transfer between Regions"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Inbound data transfer (ingress) from the internet is free. Outbound to the internet, inter-Region, and (in most cases) inter-AZ transfer are charged.",
+    "notes": [
+      "Usually charged in both directions.",
+      "Correct.",
+      "Charged per GB.",
+      "Charged."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/whitepapers/latest/how-aws-pricing-works/aws-pricingtco-tools.html",
+      "https://aws.amazon.com/pricing/"
+    ],
+    "es": {
+      "stem": "¿Cuál de las siguientes transferencias de datos generalmente NO tiene costo en AWS?",
+      "options": [
+        "Transferencia entre zonas de disponibilidad",
+        "Transferencia de datos de entrada desde Internet hacia AWS",
+        "Transferencia de datos de salida de AWS hacia Internet",
+        "Transferencia entre regiones"
+      ],
+      "explanation": "La transferencia de datos entrante (ingress) desde Internet es gratuita. La salida a Internet, entre regiones y (en la mayoría de los casos) entre AZ sí se cobra.",
+      "notes": [
+        "Normalmente se cobra en ambas direcciones.",
+        "Correcta.",
+        "Se cobra por GB de salida.",
+        "Se cobra."
+      ]
+    }
+  },
+  {
+    "id": "clf-039",
+    "domain": "technology",
+    "topics": [
+      "elb-asg"
+    ],
+    "difficulty": 1,
+    "stem": "Which service automatically adjusts the number of EC2 instances based on demand and replaces unhealthy instances?",
+    "options": [
+      "Elastic Load Balancing",
+      "Amazon EC2 Auto Scaling",
+      "Amazon CloudWatch",
+      "AWS Elastic Beanstalk"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "EC2 Auto Scaling maintains the desired number of instances, scales with policies, and replaces instances that fail health checks.",
+    "notes": [
+      "ELB distributes traffic but does not launch instances.",
+      "Correct.",
+      "CloudWatch triggers alarms but does not launch instances itself.",
+      "Beanstalk uses Auto Scaling underneath but is not the scaling service."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html",
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio ajusta automáticamente el número de instancias EC2 según la demanda y reemplaza instancias no saludables?",
+      "options": [
+        "Elastic Load Balancing",
+        "Amazon EC2 Auto Scaling",
+        "Amazon CloudWatch",
+        "AWS Elastic Beanstalk"
+      ],
+      "explanation": "EC2 Auto Scaling mantiene el número deseado de instancias, escala con políticas y reemplaza instancias que fallan los health checks.",
+      "notes": [
+        "ELB distribuye tráfico, pero no crea instancias.",
+        "Correcta.",
+        "CloudWatch dispara alarmas, pero no lanza instancias por sí mismo.",
+        "Beanstalk usa Auto Scaling por debajo, pero no es el servicio que escala."
+      ]
+    }
+  },
+  {
+    "id": "clf-040",
+    "domain": "technology",
+    "topics": [
+      "monitoring"
+    ],
+    "difficulty": 1,
+    "stem": "A team wants to be notified when an EC2 instance's CPU utilization exceeds 80% for 5 minutes. What should it configure?",
+    "options": [
+      "An AWS CloudTrail trail",
+      "An AWS Config rule",
+      "An Amazon Inspector finding",
+      "An Amazon CloudWatch alarm"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "CloudWatch alarms watch a metric and take actions (for example, notify through SNS or scale) when a threshold is crossed.",
+    "notes": [
+      "CloudTrail records API calls.",
+      "Config evaluates configurations, not usage metrics.",
+      "Inspector detects vulnerabilities.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html",
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+    ],
+    "es": {
+      "stem": "Un equipo quiere recibir una notificación cuando el uso de CPU de una instancia EC2 supere el 80% durante 5 minutos. ¿Qué debe configurar?",
+      "options": [
+        "Un trail de AWS CloudTrail",
+        "Una regla de AWS Config",
+        "Un hallazgo de Amazon Inspector",
+        "Una alarma de Amazon CloudWatch"
+      ],
+      "explanation": "Las alarmas de CloudWatch vigilan una métrica y ejecutan acciones (p. ej. notificar con SNS o escalar) cuando se cruza un umbral.",
+      "notes": [
+        "CloudTrail registra llamadas a la API.",
+        "Config evalúa configuraciones, no métricas de uso.",
+        "Inspector detecta vulnerabilidades.",
+        "Correcta."
+      ]
+    }
+  }
+]

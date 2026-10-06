@@ -1,0 +1,19 @@
+services:
+  codeprep:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-opus-5-5}
+      # Pon "true" si lo sirves detrás de HTTPS
+      COOKIE_SECURE: "false"
+      ADMIN_USERNAMES: ${ADMIN_USERNAMES:-}
+    volumes:
+      - codeprep-data:/app/data       # base de datos SQLite
+      - codeprep-storage:/app/storage # PDFs de cada usuario
+    restart: unless-stopped
+
+volumes:
+  codeprep-data:
+  codeprep-storage:

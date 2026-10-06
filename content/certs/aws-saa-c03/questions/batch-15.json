@@ -1,0 +1,449 @@
+[
+  {
+    "id": "saa2-141",
+    "domain": "performance",
+    "topics": [
+      "containers",
+      "elb-asg"
+    ],
+    "difficulty": 2,
+    "stem": "An ECS service on Fargate serves an API behind an ALB. Traffic doubles every weekday at 9:00 and CPU averages 85% during the morning. The team wants the number of tasks to follow demand automatically. What should the solutions architect configure?",
+    "options": [
+      "ECS Service Auto Scaling with a target tracking policy on average CPU utilization or ALBRequestCountPerTarget.",
+      "Placement constraints that spread tasks across AZs.",
+      "A scheduled EventBridge rule that runs RunTask every minute.",
+      "A larger task size with more vCPU and memory, keeping the same number of tasks."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Service Auto Scaling adjusts the service's desired count; target tracking keeps a metric such as CPU or requests per target near the target value.",
+    "notes": [
+      "Correct: the task count follows demand.",
+      "Placement affects distribution, not capacity.",
+      "Standalone tasks are not managed by the service.",
+      "Vertical scaling has limits and does not follow demand."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html"
+    ],
+    "es": {
+      "stem": "Un servicio de ECS en Fargate atiende una API detrás de un ALB. El tráfico se duplica cada día laboral a las 9:00 y la CPU promedia 85% en la mañana. El equipo quiere que el número de tareas siga la demanda automáticamente. ¿Qué debe configurar el arquitecto de soluciones?",
+      "options": [
+        "ECS Service Auto Scaling con una política de target tracking sobre el uso promedio de CPU o ALBRequestCountPerTarget.",
+        "Placement constraints que repartan las tareas entre AZ.",
+        "Una regla programada de EventBridge que ejecute RunTask cada minuto.",
+        "Un tamaño de tarea mayor con más vCPU y memoria, manteniendo el mismo número de tareas."
+      ],
+      "explanation": "Service Auto Scaling ajusta el desired count del servicio; target tracking mantiene una métrica como CPU o solicitudes por destino cerca del valor objetivo.",
+      "notes": [
+        "Correcta: el número de tareas sigue la demanda.",
+        "La colocación afecta la distribución, no la capacidad.",
+        "Las tareas independientes no las gestiona el servicio.",
+        "El escalado vertical tiene límites y no sigue la demanda."
+      ]
+    }
+  },
+  {
+    "id": "saa2-142",
+    "domain": "performance",
+    "topics": [
+      "elb-asg"
+    ],
+    "difficulty": 2,
+    "stem": "A financial trading application uses a proprietary TCP protocol, needs millions of connections per second with ultra-low latency, and requires one static IP address per AZ for partner allowlists. Which load balancer should the solutions architect choose?",
+    "options": [
+      "Gateway Load Balancer.",
+      "Network Load Balancer.",
+      "Classic Load Balancer.",
+      "Application Load Balancer."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "The NLB operates at layer 4 (TCP/UDP/TLS), handles millions of requests per second with very low latency, and supports a static IP address (or Elastic IP) per AZ.",
+    "notes": [
+      "Designed for third-party virtual appliances.",
+      "Correct.",
+      "Previous generation without static IP addresses per AZ.",
+      "The ALB is for HTTP/HTTPS and does not provide static IP addresses."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/help-panel/elasticloadbalancing/latest/console/hp-nlb-cross-zone-load-balancing.html"
+    ],
+    "es": {
+      "stem": "Una aplicación de trading usa un protocolo TCP propietario, necesita millones de conexiones por segundo con latencia ultrabaja y requiere una IP estática por AZ para las listas de permitidos de sus socios. ¿Qué balanceador debe elegir el arquitecto de soluciones?",
+      "options": [
+        "Gateway Load Balancer.",
+        "Network Load Balancer.",
+        "Classic Load Balancer.",
+        "Application Load Balancer."
+      ],
+      "explanation": "El NLB opera en capa 4 (TCP/UDP/TLS), maneja millones de solicitudes por segundo con latencia muy baja y admite una IP estática (o Elastic IP) por AZ.",
+      "notes": [
+        "Está pensado para appliances virtuales de terceros.",
+        "Correcta.",
+        "Generación anterior sin IP estáticas por AZ.",
+        "El ALB es para HTTP/HTTPS y no ofrece IP estáticas."
+      ]
+    }
+  },
+  {
+    "id": "saa2-143",
+    "domain": "performance",
+    "topics": [
+      "cloudfront"
+    ],
+    "difficulty": 2,
+    "stem": "A global SaaS API serves dynamic, non-cacheable responses from an ALB in us-east-1. Users in Asia and South America see high and variable latency caused by long internet paths. The company wants to improve TCP performance by getting traffic onto the AWS network as close to users as possible. What should the solutions architect recommend?",
+    "options": [
+      "Amazon CloudFront with a TTL of one year.",
+      "S3 Transfer Acceleration.",
+      "Route 53 geolocation records.",
+      "AWS Global Accelerator with the ALB as an endpoint."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Global Accelerator routes user traffic to the nearest edge location and then over the AWS global network to the endpoint, improving performance for non-cacheable TCP/UDP traffic.",
+    "notes": [
+      "Caching does not help dynamic, non-cacheable responses.",
+      "Only for uploads to S3.",
+      "DNS routing does not change the network path to one Region.",
+      "Correct."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/networking-and-content-delivery/deploying-multi-region-applications-in-aws-using-aws-global-accelerator/"
+    ],
+    "es": {
+      "stem": "Una API SaaS global devuelve respuestas dinámicas no cacheables desde un ALB en us-east-1. Los usuarios de Asia y Sudamérica ven latencia alta y variable por rutas largas de Internet. La empresa quiere mejorar el rendimiento TCP llevando el tráfico a la red de AWS lo más cerca posible de los usuarios. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Amazon CloudFront con un TTL de un año.",
+        "S3 Transfer Acceleration.",
+        "Registros de geolocalización de Route 53.",
+        "AWS Global Accelerator con el ALB como endpoint."
+      ],
+      "explanation": "Global Accelerator lleva el tráfico al edge más cercano y luego por la red global de AWS hasta el endpoint, mejorando el rendimiento del tráfico TCP/UDP no cacheable.",
+      "notes": [
+        "La caché no ayuda a respuestas dinámicas no cacheables.",
+        "Sólo sirve para cargas a S3.",
+        "El enrutamiento DNS no cambia la ruta de red hacia una sola región.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "saa2-144",
+    "domain": "performance",
+    "topics": [
+      "ec2",
+      "cost-tools"
+    ],
+    "difficulty": 2,
+    "stem": "A company runs Java microservices on x86 EC2 instances. The code has no architecture-specific dependencies. The company wants better price-performance for its compute without changing the application's architecture. What should the solutions architect recommend?",
+    "options": [
+      "Move to Dedicated Hosts.",
+      "Use larger x86 instances.",
+      "Move the workloads to AWS Graviton-based instance types.",
+      "Move to burstable T instances in unlimited mode."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "AWS Graviton processors provide better price-performance for many workloads compatible with ARM, such as Java applications. Compute Optimizer can also recommend newer instance generations.",
+    "notes": [
+      "More expensive and unnecessary.",
+      "Increases cost without improving price-performance.",
+      "Correct.",
+      "Not suited to sustained CPU usage."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-asg-recommendations.html"
+    ],
+    "es": {
+      "stem": "Una empresa ejecuta microservicios Java en instancias EC2 x86. El código no depende de la arquitectura. La empresa quiere mejor relación precio/rendimiento en su cómputo sin cambiar la arquitectura de la aplicación. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Pasar a Dedicated Hosts.",
+        "Usar instancias x86 más grandes.",
+        "Mover las cargas a tipos de instancia basados en AWS Graviton.",
+        "Pasar a instancias burstable T en modo unlimited."
+      ],
+      "explanation": "Los procesadores AWS Graviton ofrecen mejor relación precio/rendimiento para muchas cargas compatibles con ARM, como aplicaciones Java. Compute Optimizer también puede recomendar generaciones de instancias más nuevas.",
+      "notes": [
+        "Más caro e innecesario.",
+        "Aumenta el costo sin mejorar el precio/rendimiento.",
+        "Correcta.",
+        "No es adecuado para uso sostenido de CPU."
+      ]
+    }
+  },
+  {
+    "id": "saa2-145",
+    "domain": "performance",
+    "topics": [
+      "caching",
+      "rds-aurora"
+    ],
+    "difficulty": 2,
+    "stem": "A news site's MySQL database spends most of its CPU on the same few thousand queries for trending articles. Read replicas have been added but latency is still tens of milliseconds, and the business wants sub-millisecond reads for these hot items. What should the solutions architect add?",
+    "options": [
+      "A larger storage volume with more IOPS.",
+      "Amazon Redshift.",
+      "An Amazon ElastiCache (Valkey or Redis OSS) cluster to cache the query results.",
+      "More read replicas."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "An in-memory cache serves repeated reads with sub-millisecond latency and removes load from the database. Read replicas scale reads but still run the queries against disk-based storage.",
+    "notes": [
+      "Does not remove repeated query work.",
+      "A data warehouse for analytics, not a cache.",
+      "Correct.",
+      "Scales reads but keeps millisecond latency."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html"
+    ],
+    "es": {
+      "stem": "La base MySQL de un sitio de noticias gasta casi toda su CPU en las mismas miles de consultas de artículos populares. Ya se agregaron réplicas de lectura, pero la latencia sigue en decenas de milisegundos y el negocio quiere lecturas de menos de un milisegundo para esos artículos. ¿Qué debe agregar el arquitecto de soluciones?",
+      "options": [
+        "Un volumen más grande con más IOPS.",
+        "Amazon Redshift.",
+        "Un clúster de Amazon ElastiCache (Valkey o Redis OSS) para guardar en caché los resultados.",
+        "Más réplicas de lectura."
+      ],
+      "explanation": "Una caché en memoria atiende lecturas repetidas en menos de un milisegundo y quita carga a la base. Las réplicas escalan lecturas, pero siguen ejecutando las consultas.",
+      "notes": [
+        "No elimina el trabajo repetido de las consultas.",
+        "Es un data warehouse para analítica, no una caché.",
+        "Correcta.",
+        "Escala lecturas, pero mantiene latencia de milisegundos."
+      ]
+    }
+  },
+  {
+    "id": "saa2-146",
+    "domain": "performance",
+    "topics": [
+      "api-gateway",
+      "cost-tools"
+    ],
+    "difficulty": 2,
+    "stem": "A startup exposes a simple JSON API that proxies requests to Lambda. It needs JWT authorization but does not need API keys, usage plans, request validation, AWS WAF, or private endpoints. The team wants the lowest latency and cost. Which option should the solutions architect choose?",
+    "options": [
+      "An API Gateway REST API with a Lambda authorizer.",
+      "An API Gateway WebSocket API.",
+      "An API Gateway HTTP API with a JWT authorizer.",
+      "An internet-facing ALB with Lambda targets and custom auth code."
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "HTTP APIs are designed with minimal features so they can be offered at a lower price and with lower latency, and they support JWT authorizers. REST APIs are needed only for features such as API keys, per-client throttling, request validation, WAF, or private endpoints.",
+    "notes": [
+      "Works but costs more for unneeded features.",
+      "For bidirectional real-time communication.",
+      "Correct.",
+      "Requires custom authorization code."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html"
+    ],
+    "es": {
+      "stem": "Una startup expone una API JSON sencilla que reenvía solicitudes a Lambda. Necesita autorización JWT, pero no necesita API keys, usage plans, validación de solicitudes, AWS WAF ni endpoints privados. El equipo quiere la menor latencia y costo. ¿Qué opción debe elegir el arquitecto de soluciones?",
+      "options": [
+        "Una REST API de API Gateway con un autorizador Lambda.",
+        "Una WebSocket API de API Gateway.",
+        "Una HTTP API de API Gateway con un autorizador JWT.",
+        "Un ALB público con destinos Lambda y código de autenticación propio."
+      ],
+      "explanation": "Las HTTP API tienen funciones mínimas para ofrecerse a menor precio y con menor latencia, y admiten autorizadores JWT. Las REST API sólo hacen falta para funciones como API keys, throttling por cliente, validación, WAF o endpoints privados.",
+      "notes": [
+        "Funciona, pero cuesta más por funciones innecesarias.",
+        "Es para comunicación bidireccional en tiempo real.",
+        "Correcta.",
+        "Requiere código de autorización propio."
+      ]
+    }
+  },
+  {
+    "id": "saa2-147",
+    "domain": "performance",
+    "topics": [
+      "rds-aurora"
+    ],
+    "difficulty": 2,
+    "stem": "An application's Aurora cluster has a single writer that is saturated by read queries. The application already separates reads from writes in its code. The company wants to scale reads horizontally and have the number of readers adjust automatically with load. What should the solutions architect do?",
+    "options": [
+      "Create a DynamoDB table for reads.",
+      "Add Aurora Replicas, send reads to the reader endpoint, and configure Aurora Auto Scaling for replicas.",
+      "Enable Multi-AZ on the writer.",
+      "Increase the storage size."
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Aurora Replicas share the cluster volume and serve reads through the reader endpoint, which load-balances across readers. Aurora Auto Scaling adds or removes replicas based on metrics such as CPU or connections.",
+    "notes": [
+      "A redesign that is not needed.",
+      "Correct.",
+      "Improves availability, not read capacity.",
+      "Aurora storage grows automatically and does not add read capacity."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-analytics-dedicated-reader.html"
+    ],
+    "es": {
+      "stem": "El clúster de Aurora de una aplicación tiene un solo escritor saturado por consultas de lectura. La aplicación ya separa lecturas y escrituras en su código. La empresa quiere escalar las lecturas horizontalmente y que el número de lectores se ajuste automáticamente con la carga. ¿Qué debe hacer el arquitecto de soluciones?",
+      "options": [
+        "Crear una tabla de DynamoDB para las lecturas.",
+        "Agregar Aurora Replicas, enviar las lecturas al reader endpoint y configurar Aurora Auto Scaling para réplicas.",
+        "Habilitar Multi-AZ en el escritor.",
+        "Aumentar el tamaño del almacenamiento."
+      ],
+      "explanation": "Las Aurora Replicas comparten el volumen del clúster y atienden lecturas mediante el reader endpoint, que reparte la carga. Aurora Auto Scaling agrega o quita réplicas según métricas como CPU o conexiones.",
+      "notes": [
+        "Un rediseño innecesario.",
+        "Correcta.",
+        "Mejora la disponibilidad, no la capacidad de lectura.",
+        "El almacenamiento de Aurora crece solo y no agrega capacidad de lectura."
+      ]
+    }
+  },
+  {
+    "id": "saa2-148",
+    "domain": "performance",
+    "topics": [
+      "analytics",
+      "s3"
+    ],
+    "difficulty": 2,
+    "stem": "A company receives clickstream events at 20 MB per second and must make them available in S3 as compressed Parquet files within 5 minutes for Athena queries, without managing any infrastructure. What should the solutions architect use?",
+    "options": [
+      "Amazon RDS as a staging database.",
+      "An EC2 fleet running a custom batch writer.",
+      "Amazon SQS with one S3 object per message.",
+      "Amazon Data Firehose with format conversion to Parquet and buffering to S3."
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Firehose is a fully managed service that buffers streaming data, can convert records to Parquet, and delivers them to S3, scaling automatically.",
+    "notes": [
+      "Adds an unnecessary database.",
+      "Requires managing servers and code.",
+      "Creates millions of tiny objects that are slow to query.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html",
+      "https://aws.amazon.com/blogs/apn/empirical-approach-to-improving-performance-and-reducing-costs-with-amazon-athena/"
+    ],
+    "es": {
+      "stem": "Una empresa recibe eventos de clickstream a 20 MB por segundo y debe dejarlos disponibles en S3 como archivos Parquet comprimidos en menos de 5 minutos para consultarlos con Athena, sin administrar infraestructura. ¿Qué debe usar el arquitecto de soluciones?",
+      "options": [
+        "Amazon RDS como base de datos intermedia.",
+        "Una flota EC2 con un escritor por lotes propio.",
+        "Amazon SQS con un objeto de S3 por mensaje.",
+        "Amazon Data Firehose con conversión de formato a Parquet y buffering hacia S3."
+      ],
+      "explanation": "Firehose es un servicio totalmente administrado que agrupa datos de streaming, puede convertir los registros a Parquet y los entrega a S3, escalando automáticamente.",
+      "notes": [
+        "Agrega una base de datos innecesaria.",
+        "Requiere administrar servidores y código.",
+        "Crea millones de objetos diminutos que son lentos de consultar.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "saa2-149",
+    "domain": "performance",
+    "topics": [
+      "ebs-efs-fsx"
+    ],
+    "difficulty": 2,
+    "stem": "Hundreds of Linux containers in three AZs need a shared file system for user uploads. Throughput demand is spiky and hard to predict. The company wants multi-AZ durability and not to provision throughput in advance. What should the solutions architect recommend?",
+    "options": [
+      "An Amazon EFS Regional file system with Elastic throughput.",
+      "An EFS One Zone file system with Provisioned throughput.",
+      "An EBS gp3 volume attached to one container host and exported over NFS.",
+      "Amazon FSx for Lustre scratch."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "EFS Regional stores data across multiple AZs, and Elastic throughput scales automatically for spiky workloads, charging only for data read and written.",
+    "notes": [
+      "Correct.",
+      "One AZ and pays for peak throughput.",
+      "Single point of failure and limited to one AZ.",
+      "Scratch is temporary storage without replication."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/efs/latest/ug/features.html",
+      "https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+    ],
+    "es": {
+      "stem": "Cientos de contenedores Linux en tres AZ necesitan un sistema de archivos compartido para archivos de usuarios. La demanda de rendimiento es en ráfagas y difícil de predecir. La empresa quiere durabilidad multi-AZ y no aprovisionar rendimiento por adelantado. ¿Qué debe recomendar el arquitecto de soluciones?",
+      "options": [
+        "Un sistema de archivos Amazon EFS Regional con throughput Elastic.",
+        "Un sistema EFS One Zone con throughput Provisioned.",
+        "Un volumen EBS gp3 conectado a un host y exportado por NFS.",
+        "Amazon FSx for Lustre scratch."
+      ],
+      "explanation": "EFS Regional guarda los datos en varias AZ y el throughput Elastic escala automáticamente para cargas en ráfagas, cobrando sólo los datos leídos y escritos.",
+      "notes": [
+        "Correcta.",
+        "Una sola AZ y paga el rendimiento de pico.",
+        "Punto único de falla y limitado a una AZ.",
+        "Scratch es almacenamiento temporal sin replicación."
+      ]
+    }
+  },
+  {
+    "id": "saa2-150",
+    "domain": "performance",
+    "topics": [
+      "analytics"
+    ],
+    "difficulty": 2,
+    "stem": "A company's Redshift cluster runs nightly ETL that loads data from S3. Queries against the last 3 months are fast, but ad hoc queries that join 7 years of history in S3 require loading data that is rarely used. What should the solutions architect recommend to avoid enlarging the cluster?",
+    "options": [
+      "Query the historical data in place with Redshift Spectrum external tables.",
+      "Add nodes to the cluster.",
+      "Move all data to DynamoDB.",
+      "Export the cluster to CSV nightly."
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Redshift Spectrum queries data in S3 through external tables and joins it with local tables without loading it into the cluster.",
+    "notes": [
+      "Correct.",
+      "Pays for capacity that is rarely used.",
+      "Not designed for analytical joins.",
+      "Does not help queries."
+    ],
+    "sources": [
+      "https://aws.amazon.com/blogs/big-data/10-best-practices-for-amazon-redshift-spectrum/"
+    ],
+    "es": {
+      "stem": "El clúster de Redshift de una empresa ejecuta un ETL nocturno que carga datos desde S3. Las consultas de los últimos 3 meses son rápidas, pero las consultas ad hoc que unen 7 años de historial en S3 requieren cargar datos poco usados. ¿Qué debe recomendar el arquitecto de soluciones para no agrandar el clúster?",
+      "options": [
+        "Consultar el historial en su lugar con tablas externas de Redshift Spectrum.",
+        "Agregar nodos al clúster.",
+        "Mover todos los datos a DynamoDB.",
+        "Exportar el clúster a CSV cada noche."
+      ],
+      "explanation": "Redshift Spectrum consulta datos en S3 mediante tablas externas y los une con tablas locales sin cargarlos en el clúster.",
+      "notes": [
+        "Correcta.",
+        "Paga capacidad que casi no se usa.",
+        "No está diseñado para joins analíticos.",
+        "No ayuda a las consultas."
+      ]
+    }
+  }
+]

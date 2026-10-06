@@ -1,0 +1,455 @@
+[
+  {
+    "id": "clf-011",
+    "domain": "security",
+    "topics": [
+      "shared-responsibility"
+    ],
+    "difficulty": 1,
+    "stem": "According to the shared responsibility model, which of the following is the responsibility of AWS?",
+    "options": [
+      "Configuring security groups",
+      "Physical security of the data centers",
+      "Patching the guest operating system of EC2 instances",
+      "Encrypting customer data in Amazon S3"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "AWS is responsible for security OF the cloud: hardware, physical facilities, the global network, and virtualization software. The customer is responsible for security IN the cloud.",
+    "notes": [
+      "Security groups are configured by the customer.",
+      "Correct.",
+      "On EC2 (IaaS) the customer patches the guest OS.",
+      "Choosing and configuring encryption is the customer's job."
+    ],
+    "sources": [
+      "https://aws.amazon.com/compliance/shared-responsibility-model/"
+    ],
+    "es": {
+      "stem": "Según el modelo de responsabilidad compartida, ¿cuál de las siguientes es responsabilidad de AWS?",
+      "options": [
+        "Configurar los grupos de seguridad",
+        "La seguridad física de los centros de datos",
+        "Aplicar parches al sistema operativo invitado de las instancias EC2",
+        "Cifrar los datos del cliente en Amazon S3"
+      ],
+      "explanation": "AWS es responsable de la seguridad \"de\" la nube: hardware, instalaciones físicas, red global y software de virtualización. El cliente es responsable de la seguridad \"en\" la nube.",
+      "notes": [
+        "Los security groups los configura el cliente.",
+        "Correcta.",
+        "En EC2 (IaaS) el SO invitado lo parchea el cliente.",
+        "Decidir y configurar el cifrado de los datos es del cliente."
+      ]
+    }
+  },
+  {
+    "id": "clf-012",
+    "domain": "security",
+    "topics": [
+      "shared-responsibility"
+    ],
+    "difficulty": 2,
+    "stem": "Which TWO tasks are the customer's responsibility when using Amazon RDS? (Choose two.)",
+    "options": [
+      "Configuring the security group rules that allow access to the database",
+      "Replacing failed disks",
+      "Managing database users and permissions",
+      "Maintaining the underlying hardware",
+      "Patching the database engine"
+    ],
+    "correct": [
+      0,
+      2
+    ],
+    "explanation": "RDS is a managed service: AWS patches the OS and engine and maintains the hardware. The customer manages database users, network access (security groups), encryption, and data.",
+    "notes": [
+      "Correct.",
+      "AWS's responsibility.",
+      "Correct.",
+      "Hardware is AWS's responsibility.",
+      "AWS applies patches (the customer picks the maintenance window)."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html",
+      "https://aws.amazon.com/compliance/shared-responsibility-model/"
+    ],
+    "es": {
+      "stem": "¿Qué DOS tareas son responsabilidad del cliente al usar Amazon RDS? (Elige 2)",
+      "options": [
+        "Configurar las reglas de los grupos de seguridad que permiten acceso a la base de datos",
+        "Reemplazar discos defectuosos",
+        "Administrar usuarios y permisos de la base de datos",
+        "Mantener el hardware subyacente",
+        "Aplicar parches al motor de base de datos"
+      ],
+      "explanation": "RDS es un servicio administrado: AWS parchea el SO y el motor y mantiene el hardware. El cliente gestiona usuarios de la BD, acceso de red (security groups), cifrado y sus datos.",
+      "notes": [
+        "Correcta.",
+        "Es responsabilidad de AWS.",
+        "Correcta.",
+        "El hardware es responsabilidad de AWS.",
+        "AWS aplica los parches (el cliente elige la ventana de mantenimiento)."
+      ]
+    }
+  },
+  {
+    "id": "clf-013",
+    "domain": "security",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 1,
+    "stem": "What is the recommended practice for the root user of an AWS account?",
+    "options": [
+      "Enable MFA and use it only for the few tasks that require it",
+      "Create access keys for it and use them in scripts",
+      "Use it for daily administrative tasks",
+      "Share its credentials with the operations team"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Protect the root user with MFA, do not create access keys for it, and use it only for tasks that require it (for example, changing the support plan or closing the account). Use IAM identities or IAM Identity Center for daily work.",
+    "notes": [
+      "Correct.",
+      "Do not create access keys for the root user.",
+      "Bad practice: it has unrestricted access.",
+      "Never share credentials."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "es": {
+      "stem": "¿Cuál es la práctica recomendada para el usuario raíz (root) de una cuenta de AWS?",
+      "options": [
+        "Habilitar MFA y usarlo sólo para las pocas tareas que lo requieren",
+        "Crear claves de acceso para él y usarlas en scripts",
+        "Usarlo para las tareas administrativas diarias",
+        "Compartir sus credenciales con el equipo de operaciones"
+      ],
+      "explanation": "Protege el usuario raíz con MFA, no crees access keys para él y úsalo sólo en tareas que lo exigen (p. ej. cambiar el plan de soporte o cerrar la cuenta). Para el día a día usa identidades de IAM o IAM Identity Center.",
+      "notes": [
+        "Correcta.",
+        "No se deben crear access keys para root.",
+        "Mala práctica: tiene acceso ilimitado.",
+        "Nunca se comparten credenciales."
+      ]
+    }
+  },
+  {
+    "id": "clf-014",
+    "domain": "security",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 1,
+    "stem": "An application running on an EC2 instance needs to read objects from an S3 bucket. What is the MOST secure way to grant access?",
+    "options": [
+      "Make the bucket public",
+      "Attach an IAM role to the EC2 instance",
+      "Store an IAM user's access keys in the code",
+      "Use the root user credentials"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "IAM roles provide temporary credentials that rotate automatically and are attached to the instance through an instance profile, so there are no long-term keys in the code.",
+    "notes": [
+      "Exposes the data to the whole internet.",
+      "Correct.",
+      "Embedded keys can leak.",
+      "Never use root for applications."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "es": {
+      "stem": "Una aplicación que corre en una instancia EC2 necesita leer objetos de un bucket de S3. ¿Cuál es la forma MÁS segura de darle acceso?",
+      "options": [
+        "Hacer público el bucket",
+        "Asignar un rol de IAM a la instancia EC2",
+        "Guardar las access keys de un usuario IAM en el código",
+        "Usar las credenciales del usuario raíz"
+      ],
+      "explanation": "Los roles de IAM entregan credenciales temporales que rotan automáticamente; se asocian a la instancia mediante un instance profile. Así no hay claves de larga duración en el código.",
+      "notes": [
+        "Expone los datos a todo Internet.",
+        "Correcta.",
+        "Las claves embebidas pueden filtrarse.",
+        "Nunca se usa root para aplicaciones."
+      ]
+    }
+  },
+  {
+    "id": "clf-015",
+    "domain": "security",
+    "topics": [
+      "iam"
+    ],
+    "difficulty": 1,
+    "stem": "Which security principle states that users should have only the permissions needed to do their job?",
+    "options": [
+      "Defense in depth",
+      "Separation of duties",
+      "Least privilege",
+      "Encryption at rest"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "The principle of least privilege means granting only the permissions required, and nothing more.",
+    "notes": [
+      "Applying security at multiple layers.",
+      "Splitting critical tasks among several people.",
+      "Correct.",
+      "A data protection technique."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ],
+    "es": {
+      "stem": "¿Qué principio de seguridad indica que los usuarios deben tener sólo los permisos necesarios para realizar su trabajo?",
+      "options": [
+        "Defensa en profundidad",
+        "Separación de funciones",
+        "Mínimo privilegio",
+        "Cifrado en reposo"
+      ],
+      "explanation": "El principio de mínimo privilegio (least privilege) consiste en otorgar solamente los permisos necesarios y nada más.",
+      "notes": [
+        "Defensa en profundidad es aplicar seguridad en varias capas.",
+        "Separación de funciones reparte tareas críticas entre varias personas.",
+        "Correcta.",
+        "Es una técnica de protección de datos."
+      ]
+    }
+  },
+  {
+    "id": "clf-016",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 1,
+    "stem": "Which AWS service uses machine learning to detect threats by analyzing CloudTrail events, VPC Flow Logs, and DNS logs?",
+    "options": [
+      "Amazon Inspector",
+      "AWS Shield",
+      "Amazon Macie",
+      "Amazon GuardDuty"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "GuardDuty is a continuous threat detection service that analyzes CloudTrail events, VPC Flow Logs, and DNS logs, among other sources.",
+    "notes": [
+      "Assesses vulnerabilities in EC2, container images, and Lambda.",
+      "Protects against DDoS attacks.",
+      "Discovers sensitive data (PII) in S3.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio de AWS usa machine learning para detectar amenazas analizando CloudTrail, registros de flujo de VPC y registros DNS?",
+      "options": [
+        "Amazon Inspector",
+        "AWS Shield",
+        "Amazon Macie",
+        "Amazon GuardDuty"
+      ],
+      "explanation": "GuardDuty es un servicio de detección de amenazas continuo que analiza eventos de CloudTrail, VPC Flow Logs y logs de DNS, entre otros.",
+      "notes": [
+        "Inspector evalúa vulnerabilidades en EC2, imágenes de contenedores y Lambda.",
+        "Shield protege contra ataques DDoS.",
+        "Macie descubre datos sensibles (PII) en S3.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-017",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to automatically find personally identifiable information (PII) stored in its Amazon S3 buckets. Which service should it use?",
+    "options": [
+      "Amazon Detective",
+      "Amazon Macie",
+      "AWS Artifact",
+      "AWS Config"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Amazon Macie uses machine learning and pattern matching to discover and protect sensitive data in S3.",
+    "notes": [
+      "Helps investigate the root cause of security findings.",
+      "Correct.",
+      "Provides compliance reports.",
+      "Evaluates resource configurations."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere encontrar automáticamente información personal identificable (PII) almacenada en sus buckets de Amazon S3. ¿Qué servicio debe usar?",
+      "options": [
+        "Amazon Detective",
+        "Amazon Macie",
+        "AWS Artifact",
+        "AWS Config"
+      ],
+      "explanation": "Amazon Macie usa ML y coincidencia de patrones para descubrir y proteger datos sensibles en S3.",
+      "notes": [
+        "Detective ayuda a investigar la causa raíz de hallazgos de seguridad.",
+        "Correcta.",
+        "Artifact ofrece informes de cumplimiento.",
+        "Config evalúa configuraciones de recursos."
+      ]
+    }
+  },
+  {
+    "id": "clf-018",
+    "domain": "security",
+    "topics": [
+      "security-services"
+    ],
+    "difficulty": 1,
+    "stem": "Which service protects web applications against common attacks such as SQL injection and cross-site scripting (XSS)?",
+    "options": [
+      "AWS Shield Standard",
+      "AWS Firewall Manager",
+      "Security groups",
+      "AWS WAF"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "AWS WAF is a web application firewall (layer 7) that filters HTTP/HTTPS requests with rules, including SQLi and XSS. It integrates with CloudFront, ALB, and API Gateway.",
+    "notes": [
+      "Shield protects against DDoS, not SQLi/XSS.",
+      "Firewall Manager manages rules centrally, but WAF does the filtering.",
+      "Security groups filter by IP/port, not content.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/security-services.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio protege las aplicaciones web contra ataques comunes como inyección SQL y cross-site scripting (XSS)?",
+      "options": [
+        "AWS Shield Standard",
+        "AWS Firewall Manager",
+        "Security groups",
+        "AWS WAF"
+      ],
+      "explanation": "AWS WAF es un firewall de aplicaciones web (capa 7) que filtra solicitudes HTTP/HTTPS según reglas, incluyendo SQLi y XSS. Se integra con CloudFront, ALB y API Gateway.",
+      "notes": [
+        "Shield protege contra DDoS, no inspecciona SQLi/XSS.",
+        "Firewall Manager administra reglas centralmente, pero el filtrado lo hace WAF.",
+        "Los security groups filtran por IP/puerto, no por contenido.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-019",
+    "domain": "security",
+    "topics": [
+      "compliance"
+    ],
+    "difficulty": 1,
+    "stem": "An auditor asks for the AWS SOC reports and ISO certifications. Where can the customer download them?",
+    "options": [
+      "AWS Artifact",
+      "AWS Trusted Advisor",
+      "AWS Security Hub",
+      "AWS Audit Manager"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "AWS Artifact is the self-service portal for downloading AWS compliance reports (SOC, PCI, ISO) and accepting agreements such as the BAA.",
+    "notes": [
+      "Correct.",
+      "Provides best practice recommendations.",
+      "Aggregates security findings.",
+      "Collects evidence about YOUR AWS usage, not AWS's reports."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html"
+    ],
+    "es": {
+      "stem": "Un auditor solicita los informes SOC y certificaciones ISO de AWS. ¿Dónde puede el cliente descargarlos?",
+      "options": [
+        "AWS Artifact",
+        "AWS Trusted Advisor",
+        "AWS Security Hub",
+        "AWS Audit Manager"
+      ],
+      "explanation": "AWS Artifact es el portal de autoservicio para descargar informes de cumplimiento de AWS (SOC, PCI, ISO) y aceptar acuerdos como el BAA.",
+      "notes": [
+        "Correcta.",
+        "Trusted Advisor da recomendaciones de buenas prácticas.",
+        "Security Hub agrega hallazgos de seguridad.",
+        "Audit Manager recopila evidencia de TU uso de AWS, no los informes de AWS."
+      ]
+    }
+  },
+  {
+    "id": "clf-020",
+    "domain": "security",
+    "topics": [
+      "compliance",
+      "monitoring"
+    ],
+    "difficulty": 1,
+    "stem": "An administrator needs to know who deleted an S3 bucket yesterday and from which IP address. Which service provides this information?",
+    "options": [
+      "AWS CloudTrail",
+      "VPC Flow Logs",
+      "AWS Config",
+      "Amazon CloudWatch"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "CloudTrail records API calls in the account: who did what, when, and from where.",
+    "notes": [
+      "Correct.",
+      "Records IP traffic, not API calls.",
+      "Records configuration changes, but caller identity and IP come from CloudTrail.",
+      "Metrics, logs, and alarms."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html",
+      "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html"
+    ],
+    "es": {
+      "stem": "Un administrador necesita saber quién eliminó un bucket de S3 ayer y desde qué dirección IP. ¿Qué servicio le da esta información?",
+      "options": [
+        "AWS CloudTrail",
+        "VPC Flow Logs",
+        "AWS Config",
+        "Amazon CloudWatch"
+      ],
+      "explanation": "CloudTrail registra las llamadas a la API de la cuenta: quién hizo qué, cuándo y desde dónde.",
+      "notes": [
+        "Correcta.",
+        "Flow Logs registra tráfico de red IP, no llamadas a API.",
+        "Config registra cambios de configuración de recursos, pero la identidad y la IP de la llamada vienen de CloudTrail.",
+        "CloudWatch es para métricas, logs y alarmas."
+      ]
+    }
+  }
+]

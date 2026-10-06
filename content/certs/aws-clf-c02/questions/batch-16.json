@@ -1,0 +1,454 @@
+[
+  {
+    "id": "clf-151",
+    "domain": "billing",
+    "topics": [
+      "pricing"
+    ],
+    "difficulty": 2,
+    "stem": "A company will run a steady 24/7 application on the same EC2 instance type for 3 years. Which purchasing option provides the LARGEST discount?",
+    "options": [
+      "1-year Reserved Instances with no upfront payment",
+      "On-Demand Instances",
+      "Spot Instances",
+      "3-year Standard Reserved Instances with all upfront payment"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "The largest reservation discount comes from a 3-year term with All Upfront payment. Spot could be cheaper but can be interrupted, which does not suit steady workloads.",
+    "notes": [
+      "Smaller discount than 3 years All Upfront.",
+      "No discount.",
+      "Can be interrupted.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html",
+      "https://aws.amazon.com/pricing/"
+    ],
+    "es": {
+      "stem": "Una empresa ejecutará una aplicación estable 24/7 en el mismo tipo de instancia EC2 durante 3 años. ¿Qué opción de compra ofrece el MAYOR descuento?",
+      "options": [
+        "Instancias reservadas a 1 año sin pago adelantado",
+        "Instancias bajo demanda",
+        "Instancias Spot",
+        "Instancias reservadas estándar a 3 años con pago total por adelantado"
+      ],
+      "explanation": "El mayor descuento de las reservas se obtiene con plazo de 3 años y pago total por adelantado (All Upfront). Spot podría ser más barato pero se interrumpe, inadecuado para cargas estables.",
+      "notes": [
+        "Descuento menor que el de 3 años con pago total.",
+        "Sin descuento.",
+        "Pueden interrumpirse.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-152",
+    "domain": "billing",
+    "topics": [
+      "pricing"
+    ],
+    "difficulty": 2,
+    "stem": "Which are the main factors that determine the cost of Amazon EC2? (Choose two.)",
+    "options": [
+      "The instance type and size and how long it runs",
+      "The number of security groups",
+      "The number of IAM users in the account",
+      "Outbound data transfer",
+      "The number of enabled Regions"
+    ],
+    "correct": [
+      0,
+      3
+    ],
+    "explanation": "EC2 is charged by instance type/size and running time (per second on Linux), plus EBS storage and outbound data transfer.",
+    "notes": [
+      "Correct.",
+      "Security groups have no cost.",
+      "IAM has no cost.",
+      "Correct.",
+      "Has no cost in itself."
+    ],
+    "sources": [
+      "https://aws.amazon.com/pricing/"
+    ],
+    "es": {
+      "stem": "¿Qué factores principales determinan el costo de Amazon EC2? (Elige 2)",
+      "options": [
+        "El tipo y tamaño de instancia y el tiempo que se ejecuta",
+        "La cantidad de security groups",
+        "El número de usuarios IAM de la cuenta",
+        "La transferencia de datos de salida",
+        "El número de regiones habilitadas"
+      ],
+      "explanation": "EC2 se cobra por tipo/tamaño de instancia y tiempo de ejecución (por segundo en Linux), además de almacenamiento EBS y transferencia de datos saliente.",
+      "notes": [
+        "Correcta.",
+        "Los security groups no tienen costo.",
+        "IAM no tiene costo.",
+        "Correcta.",
+        "No tiene costo en sí."
+      ]
+    }
+  },
+  {
+    "id": "clf-153",
+    "domain": "billing",
+    "topics": [
+      "pricing"
+    ],
+    "difficulty": 1,
+    "stem": "Which of the following services has NO additional charge for its use?",
+    "options": [
+      "Amazon RDS",
+      "AWS Identity and Access Management (IAM)",
+      "NAT gateway",
+      "Amazon EC2"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "IAM, the VPC itself, Organizations, and CloudFormation (with AWS resources) have no additional charge; you pay for the resources they create or use.",
+    "notes": [
+      "Charged by usage.",
+      "Correct.",
+      "Charged per hour and per GB processed.",
+      "Charged by usage."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html",
+      "https://aws.amazon.com/pricing/"
+    ],
+    "es": {
+      "stem": "¿Cuál de los siguientes servicios NO tiene costo adicional por su uso?",
+      "options": [
+        "Amazon RDS",
+        "AWS Identity and Access Management (IAM)",
+        "NAT gateway",
+        "Amazon EC2"
+      ],
+      "explanation": "IAM, VPC (la red en sí), Organizations y CloudFormation (con recursos de AWS) no tienen costo adicional; se paga por los recursos que crean o usan.",
+      "notes": [
+        "Se cobra por uso.",
+        "Correcta.",
+        "Se cobra por hora y por GB procesado.",
+        "Se cobra por uso."
+      ]
+    }
+  },
+  {
+    "id": "clf2-154",
+    "domain": "billing",
+    "topics": [
+      "pricing"
+    ],
+    "difficulty": 2,
+    "stem": "A new customer creates an AWS account today. What does the AWS Free Tier offer?",
+    "options": [
+      "Unlimited use of every service for 12 months",
+      "Free Enterprise Support for the first year",
+      "Up to USD 200 in credits (USD 100 at sign-up and up to USD 100 more for completing activities), a choice of a free plan, and always-free offers for some services",
+      "Free Reserved Instances for one year"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Since July 15, 2025, new customers receive USD 100 in credits at sign-up and can earn up to USD 100 more by exploring services. They choose a free plan (up to 6 months or until credits run out, with no charges) or a paid plan. Always-free offers, such as monthly Lambda requests, still apply.",
+    "notes": [
+      "There are limits per service and per plan.",
+      "Support plans are not part of the Free Tier.",
+      "Correct.",
+      "Does not exist."
+    ],
+    "sources": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/07/aws-free-tier-credits-month-free-plan/"
+    ],
+    "es": {
+      "stem": "Un cliente nuevo crea hoy una cuenta de AWS. ¿Qué ofrece la capa gratuita (AWS Free Tier)?",
+      "options": [
+        "Uso ilimitado de todos los servicios durante 12 meses",
+        "Enterprise Support gratis el primer año",
+        "Hasta USD 200 en créditos (USD 100 al registrarse y hasta USD 100 más al completar actividades), la opción de un plan gratuito y ofertas siempre gratuitas en algunos servicios",
+        "Instancias reservadas gratuitas por un año"
+      ],
+      "explanation": "Desde el 15 de julio de 2025, los clientes nuevos reciben USD 100 en créditos al registrarse y pueden ganar hasta USD 100 más explorando servicios. Eligen un plan gratuito (hasta 6 meses o hasta agotar créditos, sin cargos) o un plan de pago. Las ofertas siempre gratuitas, como solicitudes mensuales de Lambda, siguen vigentes.",
+      "notes": [
+        "Hay límites por servicio y por plan.",
+        "Los planes de soporte no forman parte de la capa gratuita.",
+        "Correcta.",
+        "No existe."
+      ]
+    }
+  },
+  {
+    "id": "clf-155",
+    "domain": "billing",
+    "topics": [
+      "billing-tools"
+    ],
+    "difficulty": 1,
+    "stem": "A financial analyst wants to visualize costs for the last 12 months grouped by service and get a spending forecast. Which tool should the analyst use?",
+    "options": [
+      "AWS Cost Explorer",
+      "AWS Pricing Calculator",
+      "AWS Organizations",
+      "AWS Artifact"
+    ],
+    "correct": [
+      0
+    ],
+    "explanation": "Cost Explorer charts historical spending with filters and groupings and forecasts future spend.",
+    "notes": [
+      "Correct.",
+      "Estimates costs of future architectures.",
+      "Manages accounts.",
+      "Compliance reports."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html",
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+    ],
+    "es": {
+      "stem": "Un analista financiero quiere visualizar los costos de los últimos 12 meses agrupados por servicio y obtener un pronóstico de gasto. ¿Qué herramienta debe usar?",
+      "options": [
+        "AWS Cost Explorer",
+        "AWS Pricing Calculator",
+        "AWS Organizations",
+        "AWS Artifact"
+      ],
+      "explanation": "Cost Explorer muestra gráficas del gasto histórico con filtros y agrupaciones, y pronostica el gasto futuro.",
+      "notes": [
+        "Correcta.",
+        "Estima costos de arquitecturas futuras.",
+        "Gestiona cuentas.",
+        "Informes de cumplimiento."
+      ]
+    }
+  },
+  {
+    "id": "clf-156",
+    "domain": "billing",
+    "topics": [
+      "billing-tools"
+    ],
+    "difficulty": 1,
+    "stem": "A company wants to allocate AWS costs to each department (marketing, sales, IT). What should it do?",
+    "options": [
+      "Create a security group per department",
+      "Use a different Region per department",
+      "Tag resources and activate the tags as cost allocation tags",
+      "Ask AWS Support to split the bill"
+    ],
+    "correct": [
+      2
+    ],
+    "explanation": "Cost allocation tags let you filter and group costs in Cost Explorer and in the Cost and Usage Report.",
+    "notes": [
+      "Security groups do not affect billing.",
+      "Neither practical nor necessary.",
+      "Correct.",
+      "Not the way to do it."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html",
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+    ],
+    "es": {
+      "stem": "Una empresa quiere asignar los costos de AWS a cada departamento (marketing, ventas, TI). ¿Qué debe hacer?",
+      "options": [
+        "Crear un security group por departamento",
+        "Usar una región diferente por departamento",
+        "Aplicar etiquetas a los recursos y activarlas como etiquetas de asignación de costos",
+        "Pedirle a AWS Support que divida la factura"
+      ],
+      "explanation": "Las etiquetas de asignación de costos (cost allocation tags) permiten filtrar y agrupar costos en Cost Explorer y en el Cost and Usage Report.",
+      "notes": [
+        "Los security groups no afectan la facturación.",
+        "No es práctico ni necesario.",
+        "Correcta.",
+        "No es la forma."
+      ]
+    }
+  },
+  {
+    "id": "clf-157",
+    "domain": "billing",
+    "topics": [
+      "billing-tools"
+    ],
+    "difficulty": 2,
+    "stem": "Which report provides the MOST granular detail (hourly and per resource) of AWS costs and usage, delivered to an S3 bucket?",
+    "options": [
+      "AWS Budgets",
+      "The monthly PDF invoice",
+      "AWS Trusted Advisor",
+      "AWS Cost and Usage Report (CUR)"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "The Cost and Usage Report (and its data exports) contains the most detailed cost and usage line items and can be analyzed with Athena or QuickSight.",
+    "notes": [
+      "Generates alerts, not a detailed report.",
+      "A summary.",
+      "Provides recommendations.",
+      "Correct."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html",
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+    ],
+    "es": {
+      "stem": "¿Qué informe proporciona el nivel de detalle MÁS granular (por hora y por recurso) de los costos y el uso de AWS, entregado en un bucket de S3?",
+      "options": [
+        "AWS Budgets",
+        "La factura mensual en PDF",
+        "AWS Trusted Advisor",
+        "AWS Cost and Usage Report (CUR)"
+      ],
+      "explanation": "El Cost and Usage Report (y sus exportaciones de datos) contiene las partidas más detalladas de uso y costo, y se puede analizar con Athena o QuickSight.",
+      "notes": [
+        "Genera alertas, no un informe detallado.",
+        "Es un resumen.",
+        "Da recomendaciones.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-158",
+    "domain": "billing",
+    "topics": [
+      "billing-tools"
+    ],
+    "difficulty": 2,
+    "stem": "Which service uses machine learning to detect unusual spending in the account and alert about it?",
+    "options": [
+      "Amazon GuardDuty",
+      "AWS Cost Anomaly Detection",
+      "Amazon Inspector",
+      "AWS Pricing Calculator"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Cost Anomaly Detection (part of AWS Cost Management) monitors spending with ML and notifies you of anomalies and their root cause.",
+    "notes": [
+      "Detects security threats, not cost issues.",
+      "Correct.",
+      "Scans for vulnerabilities.",
+      "Estimates costs."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/manage-ad.html",
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-costmanagement.html"
+    ],
+    "es": {
+      "stem": "¿Qué servicio usa machine learning para detectar gastos inusuales en la cuenta y alertar sobre ellos?",
+      "options": [
+        "Amazon GuardDuty",
+        "AWS Cost Anomaly Detection",
+        "Amazon Inspector",
+        "AWS Pricing Calculator"
+      ],
+      "explanation": "Cost Anomaly Detection (parte de AWS Cost Management) monitorea los gastos con ML y notifica anomalías y su causa raíz.",
+      "notes": [
+        "Detecta amenazas de seguridad, no de costos.",
+        "Correcta.",
+        "Busca vulnerabilidades.",
+        "Estima costos."
+      ]
+    }
+  },
+  {
+    "id": "clf2-159",
+    "domain": "billing",
+    "topics": [
+      "support"
+    ],
+    "difficulty": 3,
+    "stem": "Which is the MOST cost-effective AWS Support plan with a response time target of less than 15 minutes when a business-critical system is down?",
+    "options": [
+      "Business Support+",
+      "Basic Support",
+      "Unified Operations",
+      "Enterprise Support"
+    ],
+    "correct": [
+      3
+    ],
+    "explanation": "Response times for a business- or mission-critical system down: Business Support+ < 30 minutes, Enterprise Support < 15 minutes, and Unified Operations < 5 minutes. Enterprise Support is the cheapest plan that meets the 15-minute target.",
+    "notes": [
+      "Its target is < 30 minutes.",
+      "Does not include technical support cases.",
+      "Meets the target (< 5 minutes) but is the most expensive tier.",
+      "Correct."
+    ],
+    "sources": [
+      "https://aws.amazon.com/premiumsupport/plans/"
+    ],
+    "es": {
+      "stem": "¿Cuál es el plan de AWS Support MÁS económico con un tiempo de respuesta objetivo menor a 15 minutos cuando un sistema crítico para el negocio está caído?",
+      "options": [
+        "Business Support+",
+        "Basic Support",
+        "Unified Operations",
+        "Enterprise Support"
+      ],
+      "explanation": "Tiempos de respuesta para un sistema crítico caído: Business Support+ < 30 minutos, Enterprise Support < 15 minutos y Unified Operations < 5 minutos. Enterprise Support es el plan más barato que cumple los 15 minutos.",
+      "notes": [
+        "Su objetivo es < 30 minutos.",
+        "No incluye casos de soporte técnico.",
+        "Cumple (< 5 minutos), pero es el nivel más caro.",
+        "Correcta."
+      ]
+    }
+  },
+  {
+    "id": "clf-160",
+    "domain": "billing",
+    "topics": [
+      "support"
+    ],
+    "difficulty": 1,
+    "stem": "What does the Basic Support plan include at no cost?",
+    "options": [
+      "A Technical Account Manager",
+      "Customer service for account and billing questions, documentation, re:Post, AWS Health, and core Trusted Advisor checks",
+      "Architecture reviews",
+      "24/7 phone access to support engineers"
+    ],
+    "correct": [
+      1
+    ],
+    "explanation": "Basic Support includes 24/7 customer service, documentation, whitepapers, AWS re:Post, the AWS Health Dashboard, and the core Trusted Advisor checks.",
+    "notes": [
+      "A designated TAM requires Enterprise Support or higher.",
+      "Correct.",
+      "Requires a paid plan.",
+      "Requires Business Support+ or higher."
+    ],
+    "sources": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html",
+      "https://aws.amazon.com/premiumsupport/plans/"
+    ],
+    "es": {
+      "stem": "¿Qué incluye el plan de soporte Basic sin costo?",
+      "options": [
+        "Un Technical Account Manager",
+        "Servicio al cliente para cuentas y facturación, documentación, re:Post y comprobaciones básicas de Trusted Advisor",
+        "Revisiones de arquitectura",
+        "Acceso 24/7 por teléfono a ingenieros de soporte"
+      ],
+      "explanation": "Basic incluye servicio al cliente 24/7, documentación, whitepapers, AWS re:Post, AWS Health Dashboard y las comprobaciones básicas de Trusted Advisor.",
+      "notes": [
+        "Un TAM designado requiere Enterprise Support o superior.",
+        "Correcta.",
+        "Requiere un plan de pago.",
+        "Requiere Business Support+ o superior."
+      ]
+    }
+  }
+]

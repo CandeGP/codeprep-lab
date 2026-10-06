@@ -1,0 +1,69 @@
+[
+  {
+    "id": "q1",
+    "question": "¿Qué dos elementos necesita toda función recursiva correcta?",
+    "options": [
+      "Un ciclo y una variable global",
+      "Un caso base y un paso que reduzca el problema",
+      "Memoización y una tabla",
+      "Dos llamadas recursivas"
+    ],
+    "answer": 1,
+    "explanation": "Sin caso base no termina; sin reducir el problema, nunca llega al caso base."
+  },
+  {
+    "id": "q2",
+    "question": "¿Cuándo es aplicable la programación dinámica?",
+    "options": [
+      "Cuando el problema tiene subproblemas repetidos y subestructura óptima",
+      "Siempre que haya recursión",
+      "Sólo en problemas con matrices",
+      "Cuando la entrada está ordenada"
+    ],
+    "answer": 0,
+    "explanation": "DP brilla cuando los mismos subproblemas se resuelven varias veces y la solución se arma a partir de soluciones óptimas de subproblemas."
+  },
+  {
+    "id": "q3",
+    "question": "¿Cuál es la diferencia principal entre memoización y tabulación?",
+    "options": [
+      "La memoización es más lenta asintóticamente",
+      "Memoización es top-down (recursiva con caché); tabulación es bottom-up (iterativa llenando una tabla)",
+      "La tabulación no usa memoria",
+      "Sólo la memoización sirve para cadenas"
+    ],
+    "answer": 1,
+    "explanation": "Ambas tienen la misma complejidad típica; cambia el orden de cálculo y el uso de la pila."
+  },
+  {
+    "id": "q4",
+    "question": "En backtracking, ¿para qué sirve el paso de 'deshacer' (por ejemplo actual.pop())?",
+    "options": [
+      "Para liberar memoria del sistema",
+      "Para restaurar el estado antes de probar la siguiente opción",
+      "Para ordenar la solución",
+      "No es necesario"
+    ],
+    "answer": 1,
+    "explanation": "Cada rama debe partir del mismo estado; si no deshaces, las elecciones se acumulan entre ramas."
+  },
+  {
+    "id": "q5",
+    "question": "Para la LCS de dos strings de longitudes n y m, ¿cuál es la complejidad de la DP estándar?",
+    "options": ["O(n + m)", "O(n · m)", "O(2ⁿ)", "O(n log m)"],
+    "answer": 1,
+    "explanation": "Hay n·m estados y cada uno se calcula en O(1)."
+  },
+  {
+    "id": "q6",
+    "question": "Si cada fila de tu tabla DP sólo depende de la fila anterior, ¿qué optimización puedes aplicar?",
+    "options": [
+      "Usar recursión",
+      "Guardar sólo dos filas (o una) y reducir el espacio",
+      "Ordenar la entrada",
+      "Ninguna"
+    ],
+    "answer": 1,
+    "explanation": "Reduce el espacio de O(n·m) a O(m)."
+  }
+]
